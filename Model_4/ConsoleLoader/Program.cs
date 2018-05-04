@@ -18,7 +18,7 @@ namespace ConsoleLoader
             Console.WriteLine("2. Fuel consumption for hybrid vehicles");
             Console.WriteLine("0. Exit");
         }
-        static void PrintSecondPart(ICalculationOfFuel source)
+        static void PrintSecondPart(ITransport source)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
@@ -45,7 +45,7 @@ namespace ConsoleLoader
                 try
                 {
                     PrintFirstPartInfo();
-                    int choice = Convert.ToInt32(Console.ReadLine());
+                    int choice = Convert.ToInt32(Console.ReadLine());  
                     if (choice < 0 || choice > 3)
                     {
                         throw new Exception("You entered an incorrect value");
@@ -64,7 +64,7 @@ namespace ConsoleLoader
                             }
                         case 2:
                             {
-                                UICalculationFuel(new HybridCar());
+                                UICalculationFuel(new Boat());
                                 break;
                             }
                     }
@@ -81,7 +81,7 @@ namespace ConsoleLoader
                 }
             }
         }
-        static void UICalculationFuel(ICalculationOfFuel source)
+        static void UICalculationFuel(ITransport source)
         {
             bool isExit = false;
             do
@@ -103,17 +103,19 @@ namespace ConsoleLoader
                             }
                         case 1:
                             {
-                                source.AddFuel();
+                                Console.WriteLine("Enter your vehicle's fuel consumption ");
+                                source.CostFuel = Convert.ToInt32(Console.ReadLine());
                                 break;
                             }
                         case 2:
                             {
-                                source.AddDistance();
+                                Console.WriteLine("Enter the distance traveled ");
+                                source.Distance = Convert.ToInt32(Console.ReadLine());
                                 break;
                             }
                         case 3:
                             {
-                                source.GetResult();
+                                Console.WriteLine("Fuel consumption is {0}  [ liter / {1} km ]", source.GetResult(), source.Distance);
                                 Console.ReadKey();
                                 break;
                             }
