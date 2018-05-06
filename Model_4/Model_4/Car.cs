@@ -4,10 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model_4
+namespace Model
 {
     sealed public class Car : VehicleBase
     {
+        public Car()
+        {
+
+        }
+        public Car(string name, string serialNumber, double cost, DateTime data, double power, double consumption, int type) 
+            : base(name, cost, data)
+        {
+            
+            this.Power = power;
+            this.Consumption = consumption;
+            this.Type = type;
+            this.SerialNumber = serialNumber;
+        }
+        #region Private
+
         /// <summary>
         /// Types of car interior
         /// </summary>
@@ -17,24 +32,32 @@ namespace Model_4
             Sub,
             Compact,
             MidSize,
-            Large
+            Large,
+            NULL
         }
 
         /// <summary>
         /// Type of car interior
         /// </summary>
-        private InteriorTypes _type;
+        private InteriorTypes _type = InteriorTypes.NULL;
         
         /// <summary>
         /// The engine power of the car (up to 600 hp)
         /// </summary>
-        private double _power;
+        private double _power = 0;
 
         /// <summary>
         /// The fuel consumption of a vehicle per 100 km (up to 20 L/ 100 km)
         /// </summary>
-        private double _consumption;
+        private double _consumption = 0;
 
+        #endregion Private
+
+        #region Public and Protected
+
+        /// <summary>
+        /// The engine power of the car (up to 600 hp)
+        /// </summary>
         public double Power
         {
             get
@@ -58,6 +81,10 @@ namespace Model_4
                 }
             }
         }
+        
+        /// <summary>
+        /// The fuel consumption of a vehicle per 100 km (up to 20 L/ 100 km)
+        /// </summary>
         public double Consumption
         {
             get
@@ -82,6 +109,9 @@ namespace Model_4
             }
         }
 
+        /// <summary>
+        /// Type of car interior
+        /// </summary>
         public int Type
         {
             set
@@ -95,32 +125,17 @@ namespace Model_4
             }
         }
 
-
-        protected override bool IsSerialNumber(string source)
-        {
-            source = source.Trim();
-            if (source.Length != 17 || (string.IsNullOrWhiteSpace(source)))
-            {
-                return false;
-            }
-            else
-            {
-                source = source.ToUpper();
-                for (int i = 0; i < source.Length; i++) 
-                {
-                    if (!(IsEnglisLetter(source[i])) && !(IsNumber(source[i])))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+        /// <summary>
+        /// Features of transport
+        /// </summary>
         public override string PrintTransportsFeatures()
         {
             return Convert.ToString(Power + " " + Consumption + " " + _type);
         }
 
+        /// <summary>
+        /// The serial number of the transport    
+        /// </summary>
         public override string SerialNumber
         {
             get
@@ -140,6 +155,62 @@ namespace Model_4
                 }
             }
         }
+
+        /// <summary>
+        /// Checking the serial number
+        /// </summary>   
+        protected override bool IsSerialNumber(string source)
+        {
+            source = source.Trim();
+            if (source.Length != 17 || (string.IsNullOrWhiteSpace(source)))
+            {
+                return false;
+            }
+            else
+            {
+                source = source.ToUpper();
+                for (int i = 0; i < source.Length; i++)
+                {
+                    if (!(IsEnglisLetter(source[i])) && !(IsNumber(source[i])))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Changing personal characteristics 
+        /// | C - Consumption, P - Power, T - Type |
+        /// </summary>
+        public override void ChangePersonCharacteristics(string value, char symbol)
+        {
+            switch (symbol)
+            {
+                case 'P':
+                    {
+                        Power = Convert.ToDouble(value);
+                        break;
+                    }
+                case 'C':
+                    {
+                        Consumption = Convert.ToDouble(value);
+                        break;
+                    }
+                case 'T':
+                    {
+                        Type = Convert.ToInt32(value);
+                        break;
+                    }
+                default:
+                    {
+                        throw new FormatException("You entered an incorrect character");                       
+                    }
+            }
+        }
+
+        #endregion Public and Protected
     }
 
 }

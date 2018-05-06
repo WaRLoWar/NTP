@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.IO;
 
-namespace Model_4
+namespace Model
 {
     public abstract class VehicleBase: IVehicle
     {
-        public VehicleBase()
+
+        protected VehicleBase() { }
+        protected VehicleBase(string name, double cost, DateTime data)
         {
-               
+            this.Name = name;            
+            this.Cost = cost;
+            this.ManufacturesYear = data;
         }
         // ------------ Private fields and methods  ------------ //
         #region Private
@@ -23,7 +29,7 @@ namespace Model_4
         /// <summary>
         /// The cost of transport       
         /// </summary>
-        private double _cost;
+        private double _cost = 0;
 
         /// <summary>
         /// Year of manufacture
@@ -52,7 +58,7 @@ namespace Model_4
         /// <summary>
         /// The serial number of the transport    
         /// </summary>
-        protected string _serialNumber;
+        protected string _serialNumber = null;
 
         /// <summary>
         /// Checking the serial number
@@ -166,7 +172,21 @@ namespace Model_4
         /// </summary>
         public abstract string PrintTransportsFeatures();
 
+        /// <summary>
+        /// Print General data
+        /// </summary>        
+        public string PrintGeneralData()
+        {
+            return Convert.ToString(Name + " " + Cost + " " + SerialNumber + " " + ManufacturesYear);
+        }
+
+        /// <summary>
+        /// Changing personal characteristics         
+        /// | S - Speed, R - Range, C- Capacity / Consumption, D - Draft, P - Power, T - Type, B - BoatCapacity |
+        /// </summary>
+        public abstract void ChangePersonCharacteristics(string value, char symbol);
         #endregion Public
 
+       
     }
 }
