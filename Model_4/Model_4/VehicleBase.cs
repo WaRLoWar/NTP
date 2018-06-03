@@ -69,12 +69,8 @@ namespace Model
         /// Checking for the symbol of the English alphabet
         /// </summary>
         protected bool IsEnglisLetter(char symbol)
-        {
-            if (symbol < 'A' || symbol > 'Z')
-            {
-                return false;
-            }
-            return true;
+        {                   
+            return ((symbol < 'A' || symbol > 'Z') ? false : true);
         }
 
         /// <summary>
@@ -82,11 +78,7 @@ namespace Model
         /// </summary>        
         protected bool IsNumber(char symbol)
         {
-            if (symbol < '0' || symbol > '9')
-            {
-                return false;
-            }
-            return true;
+            return Char.IsDigit(symbol);            
         }
 
         /// <summary>

@@ -111,6 +111,7 @@ namespace Model
 
         /// <summary>
         /// Type of car interior
+        /// { Mini = 0, Sub = 1, Compact = 2, MidSize = 3, Large = 4, NULL = 5 }
         /// </summary>
         public int Type
         {
@@ -120,8 +121,7 @@ namespace Model
                 {
                     throw new FormatException("Input error");
                 }
-                _type = (InteriorTypes)Convert.ToInt32(value);
-                
+                _type = (InteriorTypes)Convert.ToInt32(value);                
             }
         }
 
@@ -144,7 +144,7 @@ namespace Model
             }
             set
             {
-                if (!(IsSerialNumber(value)))
+                if (!(IsSerialNumber(value.ToUpper())))
                 {
                     throw new FormatException("Serial code entered incorrectly");
                 }
@@ -167,8 +167,7 @@ namespace Model
                 return false;
             }
             else
-            {
-                source = source.ToUpper();
+            {               
                 for (int i = 0; i < source.Length; i++)
                 {
                     if (!(IsEnglisLetter(source[i])) && !(IsNumber(source[i])))

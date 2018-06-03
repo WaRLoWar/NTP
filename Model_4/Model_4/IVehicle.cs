@@ -16,14 +16,14 @@ namespace Model
         string Name { get; set; }
 
         /// <summary>
-        /// The cost of transport       
-        /// </summary>
-        double Cost { get; set; }
-
-        /// <summary>
         /// The serial number of the transport    
         /// </summary>        
         string SerialNumber { get; set; }
+
+        /// <summary>
+        /// The cost of transport       
+        /// </summary>
+        double Cost { get; set; }
 
         /// <summary>
         /// Year of manufacture
