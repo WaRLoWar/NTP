@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    sealed class Helicopter: VehicleBase
+    sealed public class Helicopter: VehicleBase
     {        
         
         public Helicopter() { }
@@ -24,22 +24,22 @@ namespace Model
         /// <summary>
         /// The practical range (Max. 1200 km)
         /// </summary>
-        private short _range = 0;
+        private int _range = 0;
 
         /// <summary>
         /// Maximum practical range value
         /// </summary>
-        private const short _MaxRange = 1200;
+        private const int _MaxRange = 1200;
 
         /// <summary>
         /// Helicopter capacity (up to 8000 kg)
         /// </summary>
-        private short _capacity = 0;
+        private int _capacity = 0;
 
         /// <summary>
         /// Maximum helicopter`s capacity value
         /// </summary>
-        private const short _MaxHelicopterCapacity = 8000;
+        private const int _MaxHelicopterCapacity = 8000;
 
         /// <summary>
         /// Helicopter speed ( up to 200 km/h )
@@ -82,7 +82,7 @@ namespace Model
         /// <summary>
         /// Helicopter capacity (up to 8000 kg)
         /// </summary>
-        public short Capacity
+        public int Capacity
         {
             get
             {

@@ -51,6 +51,7 @@
             this.rbtn_Helicopter = new System.Windows.Forms.RadioButton();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_OK = new System.Windows.Forms.Button();
+            this.cb_FirstPersonal = new System.Windows.Forms.ComboBox();
             this.gb_AddForm.SuspendLayout();
             this.gb_DistinctiveCharacteristic.SuspendLayout();
             this.gb_GeneralСharacteristic.SuspendLayout();
@@ -66,12 +67,13 @@
             this.gb_AddForm.Controls.Add(this.btn_OK);
             this.gb_AddForm.Location = new System.Drawing.Point(12, 12);
             this.gb_AddForm.Name = "gb_AddForm";
-            this.gb_AddForm.Size = new System.Drawing.Size(311, 387);
-            this.gb_AddForm.TabIndex = 0;
+            this.gb_AddForm.Size = new System.Drawing.Size(311, 354);
+            this.gb_AddForm.TabIndex = 10;
             this.gb_AddForm.TabStop = false;
             // 
             // gb_DistinctiveCharacteristic
             // 
+            this.gb_DistinctiveCharacteristic.Controls.Add(this.cb_FirstPersonal);
             this.gb_DistinctiveCharacteristic.Controls.Add(this.tb_ThirdPersonal);
             this.gb_DistinctiveCharacteristic.Controls.Add(this.tb_SecondPersonal);
             this.gb_DistinctiveCharacteristic.Controls.Add(this.tb_FirstPersonal);
@@ -80,8 +82,8 @@
             this.gb_DistinctiveCharacteristic.Controls.Add(this.l_FirstPersonal);
             this.gb_DistinctiveCharacteristic.Location = new System.Drawing.Point(6, 203);
             this.gb_DistinctiveCharacteristic.Name = "gb_DistinctiveCharacteristic";
-            this.gb_DistinctiveCharacteristic.Size = new System.Drawing.Size(274, 105);
-            this.gb_DistinctiveCharacteristic.TabIndex = 18;
+            this.gb_DistinctiveCharacteristic.Size = new System.Drawing.Size(274, 104);
+            this.gb_DistinctiveCharacteristic.TabIndex = 7;
             this.gb_DistinctiveCharacteristic.TabStop = false;
             this.gb_DistinctiveCharacteristic.Text = "Distinctive Characteristic";
             // 
@@ -90,7 +92,7 @@
             this.tb_ThirdPersonal.Location = new System.Drawing.Point(115, 71);
             this.tb_ThirdPersonal.Name = "tb_ThirdPersonal";
             this.tb_ThirdPersonal.Size = new System.Drawing.Size(125, 20);
-            this.tb_ThirdPersonal.TabIndex = 22;
+            this.tb_ThirdPersonal.TabIndex = 9;
             this.tb_ThirdPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_ThirdPersonal_KeyPress);
             this.tb_ThirdPersonal.Leave += new System.EventHandler(this.tb_ThirdPersonal_Leave);
             // 
@@ -99,7 +101,7 @@
             this.tb_SecondPersonal.Location = new System.Drawing.Point(115, 45);
             this.tb_SecondPersonal.Name = "tb_SecondPersonal";
             this.tb_SecondPersonal.Size = new System.Drawing.Size(125, 20);
-            this.tb_SecondPersonal.TabIndex = 21;
+            this.tb_SecondPersonal.TabIndex = 8;
             this.tb_SecondPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_SecondPersonal_KeyPress);
             this.tb_SecondPersonal.Leave += new System.EventHandler(this.tb_SecondPersonal_Leave);
             // 
@@ -108,7 +110,9 @@
             this.tb_FirstPersonal.Location = new System.Drawing.Point(115, 19);
             this.tb_FirstPersonal.Name = "tb_FirstPersonal";
             this.tb_FirstPersonal.Size = new System.Drawing.Size(125, 20);
-            this.tb_FirstPersonal.TabIndex = 20;
+            this.tb_FirstPersonal.TabIndex = 7;
+            this.tb_FirstPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_FirstPersonal_KeyPress);
+            this.tb_FirstPersonal.Leave += new System.EventHandler(this.tb_FirstPersonal_Leave);
             // 
             // l_ThirdPersonal
             // 
@@ -150,7 +154,7 @@
             this.gb_GeneralСharacteristic.Location = new System.Drawing.Point(6, 73);
             this.gb_GeneralСharacteristic.Name = "gb_GeneralСharacteristic";
             this.gb_GeneralСharacteristic.Size = new System.Drawing.Size(274, 124);
-            this.gb_GeneralСharacteristic.TabIndex = 17;
+            this.gb_GeneralСharacteristic.TabIndex = 3;
             this.gb_GeneralСharacteristic.TabStop = false;
             this.gb_GeneralСharacteristic.Text = "General";
             // 
@@ -178,7 +182,7 @@
             this.dtp_Date.MaxDate = new System.DateTime(2018, 6, 3, 20, 28, 27, 0);
             this.dtp_Date.Name = "dtp_Date";
             this.dtp_Date.Size = new System.Drawing.Size(125, 20);
-            this.dtp_Date.TabIndex = 15;
+            this.dtp_Date.TabIndex = 6;
             this.dtp_Date.Value = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
             // tb_Cost
@@ -186,7 +190,7 @@
             this.tb_Cost.Location = new System.Drawing.Point(115, 71);
             this.tb_Cost.Name = "tb_Cost";
             this.tb_Cost.Size = new System.Drawing.Size(125, 20);
-            this.tb_Cost.TabIndex = 16;
+            this.tb_Cost.TabIndex = 5;
             this.tb_Cost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Cost_KeyPress);
             // 
             // l_Cost
@@ -212,7 +216,7 @@
             this.tb_SerialNumber.Location = new System.Drawing.Point(115, 45);
             this.tb_SerialNumber.Name = "tb_SerialNumber";
             this.tb_SerialNumber.Size = new System.Drawing.Size(125, 20);
-            this.tb_SerialNumber.TabIndex = 14;
+            this.tb_SerialNumber.TabIndex = 4;
             this.tb_SerialNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_SerialNumber_KeyPress);
             this.tb_SerialNumber.Leave += new System.EventHandler(this.tb_SerialNumber_Leave);
             // 
@@ -221,7 +225,7 @@
             this.tb_Name.Location = new System.Drawing.Point(115, 19);
             this.tb_Name.Name = "tb_Name";
             this.tb_Name.Size = new System.Drawing.Size(125, 20);
-            this.tb_Name.TabIndex = 9;
+            this.tb_Name.TabIndex = 3;
             this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Name_KeyPress);
             // 
             // gb_TypeVehicle
@@ -232,7 +236,7 @@
             this.gb_TypeVehicle.Location = new System.Drawing.Point(6, 16);
             this.gb_TypeVehicle.Name = "gb_TypeVehicle";
             this.gb_TypeVehicle.Size = new System.Drawing.Size(190, 51);
-            this.gb_TypeVehicle.TabIndex = 12;
+            this.gb_TypeVehicle.TabIndex = 0;
             this.gb_TypeVehicle.TabStop = false;
             this.gb_TypeVehicle.Text = "Type Vehicle";
             // 
@@ -242,7 +246,7 @@
             this.rbtn_Car.Location = new System.Drawing.Point(6, 19);
             this.rbtn_Car.Name = "rbtn_Car";
             this.rbtn_Car.Size = new System.Drawing.Size(41, 17);
-            this.rbtn_Car.TabIndex = 2;
+            this.rbtn_Car.TabIndex = 0;
             this.rbtn_Car.TabStop = true;
             this.rbtn_Car.Text = "Car";
             this.rbtn_Car.UseVisualStyleBackColor = true;
@@ -254,7 +258,7 @@
             this.rbtn_Boat.Location = new System.Drawing.Point(51, 19);
             this.rbtn_Boat.Name = "rbtn_Boat";
             this.rbtn_Boat.Size = new System.Drawing.Size(47, 17);
-            this.rbtn_Boat.TabIndex = 3;
+            this.rbtn_Boat.TabIndex = 1;
             this.rbtn_Boat.TabStop = true;
             this.rbtn_Boat.Text = "Boat";
             this.rbtn_Boat.UseVisualStyleBackColor = true;
@@ -266,7 +270,7 @@
             this.rbtn_Helicopter.Location = new System.Drawing.Point(103, 19);
             this.rbtn_Helicopter.Name = "rbtn_Helicopter";
             this.rbtn_Helicopter.Size = new System.Drawing.Size(73, 17);
-            this.rbtn_Helicopter.TabIndex = 4;
+            this.rbtn_Helicopter.TabIndex = 2;
             this.rbtn_Helicopter.TabStop = true;
             this.rbtn_Helicopter.Text = "Helicopter";
             this.rbtn_Helicopter.UseVisualStyleBackColor = true;
@@ -274,28 +278,44 @@
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.Location = new System.Drawing.Point(89, 340);
+            this.btn_Cancel.Location = new System.Drawing.Point(88, 313);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(76, 30);
-            this.btn_Cancel.TabIndex = 1;
+            this.btn_Cancel.TabIndex = 11;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
             // btn_OK
             // 
-            this.btn_OK.Location = new System.Drawing.Point(7, 340);
+            this.btn_OK.Location = new System.Drawing.Point(6, 313);
             this.btn_OK.Name = "btn_OK";
             this.btn_OK.Size = new System.Drawing.Size(76, 30);
-            this.btn_OK.TabIndex = 0;
+            this.btn_OK.TabIndex = 10;
             this.btn_OK.Text = "OK";
             this.btn_OK.UseVisualStyleBackColor = true;
             this.btn_OK.Click += new System.EventHandler(this.btn_OK_Click);
+            // 
+            // cb_FirstPersonal
+            // 
+            this.cb_FirstPersonal.FormattingEnabled = true;
+            this.cb_FirstPersonal.Items.AddRange(new object[] {
+            "Mini",
+            "Sub",
+            "Compact",
+            "MidSize",
+            "Large",
+            "NULL"});
+            this.cb_FirstPersonal.Location = new System.Drawing.Point(246, 19);
+            this.cb_FirstPersonal.Name = "cb_FirstPersonal";
+            this.cb_FirstPersonal.Size = new System.Drawing.Size(24, 21);
+            this.cb_FirstPersonal.TabIndex = 7;
             // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(347, 411);
+            this.ClientSize = new System.Drawing.Size(352, 383);
             this.ControlBox = false;
             this.Controls.Add(this.gb_AddForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -337,5 +357,6 @@
         private System.Windows.Forms.TextBox tb_ThirdPersonal;
         private System.Windows.Forms.TextBox tb_SecondPersonal;
         private System.Windows.Forms.TextBox tb_FirstPersonal;
+        private System.Windows.Forms.ComboBox cb_FirstPersonal;
     }
 }

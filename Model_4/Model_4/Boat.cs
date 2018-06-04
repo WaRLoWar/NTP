@@ -27,7 +27,7 @@ namespace Model
         /// <summary>
         /// Maximum speed value
         /// </summary>
-        private const short _MaxSpeed = 80;
+        private const double _MaxSpeed = 80;
 
         /// <summary>
         /// Boat draft (Max 80 cm )
@@ -37,17 +37,17 @@ namespace Model
         /// <summary>
         /// Maximum boat draft value
         /// </summary>
-        private const short _MaxDraft = 80;
+        private const double _MaxDraft = 80;
 
         /// <summary>
         /// The capacity of the boat
         /// </summary>
-        private short _boatCapacity = 0;
+        private int _boatCapacity = 0;
 
         /// <summary>
         /// Maximum boat capacity value
         /// </summary>
-        private const short _MaxBoatCapacity = 18;
+        private const int _MaxBoatCapacity = 18;
 
         #endregion Private
 
@@ -108,7 +108,7 @@ namespace Model
         /// <summary>
         /// The capacity of the boat
         /// </summary>
-        public short BoatCapacity
+        public int BoatCapacity
         {
             get
             {

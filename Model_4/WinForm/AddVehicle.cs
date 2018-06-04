@@ -8,10 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace WinForm
 {
     public partial class AddForm : Form
     {
+        #region Private Value
+
         private TextBox _name;
         private TextBox _serialNumber;
         private DateTimePicker _manufacturesYear;
@@ -19,6 +22,11 @@ namespace WinForm
         private TextBox _firstPersonal;
         private TextBox _secondPersonal;
         private TextBox _thirdPersonal;
+        private char _typeVehicle;
+
+        #endregion Private Value
+ 
+        #region Enter Value
 
         public string EnterName
         {
@@ -59,7 +67,33 @@ namespace WinForm
             set { _thirdPersonal.Text = value; }
         }
 
+        public char EnterTypeVehicle
+        {
+            get { return _typeVehicle; }
+            set { _typeVehicle = value; }
+        }
 
+        private void EnterAllValue()
+        {
+            EnterName = tb_Name.Text;
+            EnterCost = tb_Cost.Text;
+            EnterDateTime = dtp_Date.Value;
+            EnterSerialNumber = tb_SerialNumber.Text;
+            if (rbtn_Car.Checked)
+            {
+                EnterFirstPersonal = cb_FirstPersonal.Text;
+            }
+            else
+            {
+                EnterFirstPersonal = tb_FirstPersonal.Text;
+            }
+            EnterSecondPersonal = tb_SecondPersonal.Text;
+            EnterThirdPersonal = tb_ThirdPersonal.Text;
+        }
+
+        #endregion Enter Value
+
+        #region Initial Setting 
 
         public AddForm()
         {
@@ -71,32 +105,57 @@ namespace WinForm
         {
             rbtn_Car.Checked = true;
             tb_Name.MaxLength = 25;
-            dtp_Date.MaxDate = DateTime.Now;        
-            tb_Cost.MaxLength = 12;            
+            dtp_Date.MaxDate = DateTime.Now;
+            tb_Cost.MaxLength = 12;
+            cb_FirstPersonal.Text = "NULL";
+            cb_FirstPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cb_FirstPersonal.Size = tb_FirstPersonal.Size;
+            cb_FirstPersonal.Location = tb_FirstPersonal.Location;
         }
+
+        #endregion Initial Setting 
+
+        #region Button
+
         private void btn_OK_Click(object sender, EventArgs e)
-        {                     
+        {
+            this.DialogResult = DialogResult.OK;
+            EnterAllValue();
             this.Close();
         }
 
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        #endregion Button
 
         #region RadioButton
 
-
         private void rbtn_CheckedChange(object sender, EventArgs e)
-        {          
-            RadioButton radioButton = (RadioButton) sender;
+        {
+            RadioButton radioButton = (RadioButton)sender;
             if (rbtn_Car.Checked)
             {
+                EnterTypeVehicle = 'C';
+                tb_FirstPersonal.Visible = false;
+                cb_FirstPersonal.Visible = true;
+
                 tb_SerialNumber.MaxLength = 17;
-                l_FirstPersonal.Text = "Car interior ";               
+                l_FirstPersonal.Text = "Car interior ";
                 l_SecondPersonal.Text = "Car power";
                 tb_SecondPersonal.MaxLength = 3;
                 l_ThirdPersonal.Text = "Fuel consumption";
-                tb_ThirdPersonal.MaxLength = 2;                
+                tb_ThirdPersonal.MaxLength = 2;
             }
             else if (rbtn_Boat.Checked)
             {
+                EnterTypeVehicle = 'B';
+                cb_FirstPersonal.Visible = false;
+                tb_FirstPersonal.Visible = true;
+
                 tb_SerialNumber.MaxLength = 12;
                 l_FirstPersonal.Text = "Boat speed ";
                 tb_FirstPersonal.MaxLength = 2;
@@ -107,6 +166,10 @@ namespace WinForm
             }
             else if (rbtn_Helicopter.Checked)
             {
+                EnterTypeVehicle = 'H';
+                cb_FirstPersonal.Visible = false;
+                tb_FirstPersonal.Visible = true;
+
                 tb_SerialNumber.MaxLength = 10;
                 l_FirstPersonal.Text = "Practical range ";
                 tb_FirstPersonal.MaxLength = 4;
@@ -115,7 +178,7 @@ namespace WinForm
                 l_ThirdPersonal.Text = "Helicopter speed";
                 tb_ThirdPersonal.MaxLength = 3;
             }
-        }            
+        }
 
         #endregion RadioButton
 
@@ -123,14 +186,26 @@ namespace WinForm
 
         private void tb_Name_KeyPress(object sender, KeyPressEventArgs e)
         {
-            KeyPress_EnglishAndNumberSymbol(e);
+            if (e.KeyChar == '.' || e.KeyChar == ',')
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                KeyPress_EnglishAndNumberSymbol(e);
+            }
+
         }
-     
+
         private void tb_SerialNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == '.' || e.KeyChar == ',')
+            {
+                e.Handled = true;
+            }
             if (rbtn_Car.Checked)
             {
-                KeyPress_EnglishAndNumberSymbol(e); 
+                KeyPress_EnglishAndNumberSymbol(e);
             }
             else if (rbtn_Boat.Checked)
             {
@@ -145,51 +220,47 @@ namespace WinForm
                 }
                 else
                 {
-                    KeyPress_OnlyNumberSymbol(e);                    
-                }              
+                    KeyPress_OnlyNumberSymbol(e);
+                }
             }
         }
 
         private void tb_SerialNumber_Leave(object sender, EventArgs e)
         {
-            int lengthText = tb_SerialNumber.TextLength;
-            if (rbtn_Car.Checked)
+            if (tb_SerialNumber.Text != "")
             {
-                if (lengthText != 17)
+                int lengthText = tb_SerialNumber.TextLength;
+                if (rbtn_Car.Checked)
                 {
-                    MessageBox.Show("The length of the serial number must be 17 characters !");
+                    if (lengthText != 17)
+                    {
+                        MessageBox.Show("The length of the serial number must be 17 characters !");
+                    }
+                }
+                else if (rbtn_Boat.Checked)
+                {
+                    if (lengthText != 8 || lengthText != 12)
+                    {
+                        MessageBox.Show("The length of the serial number must be 8 or 12 characters !");
+                    }
+                }
+                else if (rbtn_Helicopter.Checked)
+                {
+                    if (lengthText != 10)
+                    {
+                        MessageBox.Show("The length of the serial number must be 10 characters !");
+                    }
                 }
             }
-            else if (rbtn_Boat.Checked)
-            {
-                if (lengthText != 8 || lengthText != 12)
-                {
-                    MessageBox.Show("The length of the serial number must be 8 or 12 characters !");
-                }
-            }
-            else if (rbtn_Helicopter.Checked)
-            {
-                if (lengthText != 10)
-                {
-                    MessageBox.Show("The length of the serial number must be 10 characters !");
-                }
-            }
-           
+
         }
 
         private void tb_Cost_KeyPress(object sender, KeyPressEventArgs e)
-        {            
-            char[] text = tb_Cost.Text.ToCharArray();
-            for (int i = 0; i < text.Length; i++)
+        {
+            if (!IsCorrectLine(sender, e))
             {
-                if (text[i] == '.')
-                {
-                    if (e.KeyChar == ',' || e.KeyChar == '.' || (text.Length - i) > 2)
-                    {
-                        e.Handled = true;
-                    }
-                }
-            }            
+                e.Handled = true;
+            }
             if (tb_Cost.Text == "" && (e.KeyChar == ',' || e.KeyChar == '.'))
             {
                 e.Handled = true;
@@ -204,17 +275,65 @@ namespace WinForm
             }
         }
 
-        private void tb_SecondPersonal_KeyPress(object sender, KeyPressEventArgs e)
+       
+        private void tb_FirstPersonal_KeyPress(object sender, KeyPressEventArgs e)
         {
-            KeyPress_OnlyNumberSymbol(e);
+            if (e.KeyChar == ',' || e.KeyChar == '.')
+            {
+                e.Handled = true;
+
+            }
+            else
+            {
+                KeyPress_OnlyNumberSymbol(e);
+            }
+
         }
 
+        private void tb_FirstPersonal_Leave(object sender, EventArgs e)
+        {
+            if (tb_FirstPersonal.Text != "")
+            {
+                double number;
+                number = Convert.ToDouble(tb_FirstPersonal.Text);                
+                if (rbtn_Boat.Checked)
+                {
+                    if (number > 80)
+                    {
+                        MessageBox.Show("Entered speed greater than maximum speed !( 80 km/h )");
+                        tb_FirstPersonal.Text = "";
+                    }
+                }
+                else if (rbtn_Helicopter.Checked)
+                {
+                    if (number > 1200)
+                    {
+                        MessageBox.Show("The entered value is greater than the maximum value (1200 km) !");
+                        tb_FirstPersonal.Text = "";
+                    }
+                }
+            }
+        }
+        private void tb_SecondPersonal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == ',' || e.KeyChar == '.')
+            {
+                e.Handled = true;
+
+            }
+            else
+            {
+                KeyPress_OnlyNumberSymbol(e);
+            }
+        }
+
+        
         private void tb_SecondPersonal_Leave(object sender, EventArgs e)
         {            
             if (tb_SecondPersonal.Text != "")
             {
-                int number;
-                number = Convert.ToInt32(tb_SecondPersonal.Text);
+                double number;
+                number = Convert.ToDouble(tb_SecondPersonal.Text);
                 if (rbtn_Car.Checked)
                 {
                     if (number > 600)
@@ -244,15 +363,22 @@ namespace WinForm
 
         private void tb_ThirdPersonal_KeyPress(object sender, KeyPressEventArgs e)
         {
-            KeyPress_OnlyNumberSymbol(e);
+            if (e.KeyChar == ',' || e.KeyChar == '.')
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                KeyPress_OnlyNumberSymbol(e);
+            }
         }
 
         private void tb_ThirdPersonal_Leave(object sender, EventArgs e)
         {
             if (tb_ThirdPersonal.Text != "")
             {
-                int number;
-                number = Convert.ToInt32(tb_ThirdPersonal.Text);
+                double number;
+                number = Convert.ToDouble(tb_ThirdPersonal.Text);
                 if (rbtn_Car.Checked)
                 {
                     if (number > 20)
@@ -309,7 +435,6 @@ namespace WinForm
 
         #endregion GeneralKeyPress
 
-
         #region CheckKeyPress
 
         private bool IsNumberSymbol(KeyPressEventArgs e)
@@ -326,7 +451,22 @@ namespace WinForm
             return ((e.KeyChar != (char)Keys.Back) && (e.KeyChar != (char)Keys.Delete)) ? false : true;
         }
 
+        private bool IsCorrectLine(object semder, KeyPressEventArgs e)
+        {
+            char[] text = tb_Cost.Text.ToCharArray();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '.')
+                {
+                    if (e.KeyChar == ',' || e.KeyChar == '.' || (text.Length - i) > 2)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         #endregion CheckKeyPress
-        
+
     }
 }
