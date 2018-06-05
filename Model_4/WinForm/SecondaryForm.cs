@@ -11,17 +11,17 @@ using System.Windows.Forms;
 
 namespace WinForm
 {
-    public partial class AddForm : Form
+    public partial class SecondaryForm : Form
     {
         #region Private Value
 
-        private TextBox _name;
-        private TextBox _serialNumber;
-        private DateTimePicker _manufacturesYear;
-        private MaskedTextBox _cost;
-        private TextBox _firstPersonal;
-        private TextBox _secondPersonal;
-        private TextBox _thirdPersonal;
+        private string _name;
+        private string _serialNumber;
+        private DateTime _manufacturesYear;
+        private string _cost;
+        private string _firstPersonal;
+        private string _secondPersonal;
+        private string _thirdPersonal;
         private char _typeVehicle;
 
         #endregion Private Value
@@ -30,41 +30,41 @@ namespace WinForm
 
         public string EnterName
         {
-            get { return _name.Text; }
-            set { _name.Text = value; }
+            get { return _name; }
+            set { _name = value; }
         }
         public string EnterSerialNumber
         {
-            get { return _serialNumber.Text; }
-            set { _serialNumber.Text = value; }
+            get { return _serialNumber; }
+            set { _serialNumber = value; }
         }
         public string EnterCost
         {
-            get { return _cost.Text; }
-            set { _cost.Text = value; }
+            get { return _cost; }
+            set { _cost = value; }
         }
         public DateTime EnterDateTime
         {
-            get { return Convert.ToDateTime(_manufacturesYear.Value); }
-            set { _manufacturesYear.Value = Convert.ToDateTime(value); }
+            get { return Convert.ToDateTime(_manufacturesYear.Date); }
+            set { _manufacturesYear = Convert.ToDateTime(value); }
         }
 
         public string EnterFirstPersonal
         {
-            get { return _firstPersonal.Text; }
-            set { _firstPersonal.Text = value; }
+            get { return _firstPersonal; }
+            set { _firstPersonal = value; }
         }
 
         public string EnterSecondPersonal
         {
-            get { return _secondPersonal.Text; }
-            set { _secondPersonal.Text = value; }
+            get { return _secondPersonal; }
+            set { _secondPersonal = value; }
         }
 
         public string EnterThirdPersonal
         {
-            get { return _thirdPersonal.Text; }
-            set { _thirdPersonal.Text = value; }
+            get { return _thirdPersonal; }
+            set { _thirdPersonal = value; }
         }
 
         public char EnterTypeVehicle
@@ -95,17 +95,17 @@ namespace WinForm
 
         #region Initial Setting 
 
-        public AddForm()
+        public SecondaryForm()
         {
             InitializeComponent();
-            DefaultSetting();
+            DefaultSetting();            
         }
 
         private void DefaultSetting()
         {
             rbtn_Car.Checked = true;
             tb_Name.MaxLength = 25;
-            dtp_Date.MaxDate = DateTime.Now;
+            dtp_Date.MaxDate = DateTime.Today;
             tb_Cost.MaxLength = 12;
             cb_FirstPersonal.Text = "NULL";
             cb_FirstPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -118,9 +118,18 @@ namespace WinForm
         #region Button
 
         private void btn_OK_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
+        {            
             EnterAllValue();
+            if (isBlankSheet())
+            {
+                this.DialogResult = DialogResult.Cancel;
+                MessageBox.Show("Blank Sheet !");
+            }
+            else
+            {
+
+            }
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
@@ -465,6 +474,15 @@ namespace WinForm
                 }
             }
             return true;
+        }
+
+        private bool isBlankSheet()
+        {
+            return (String.IsNullOrWhiteSpace(EnterName) || String.IsNullOrWhiteSpace(EnterCost) ||
+                    String.IsNullOrEmpty(EnterFirstPersonal) || String.IsNullOrWhiteSpace(EnterSecondPersonal) ||
+                    String.IsNullOrWhiteSpace(EnterThirdPersonal))
+                ? true
+                : false;
         }
         #endregion CheckKeyPress
 

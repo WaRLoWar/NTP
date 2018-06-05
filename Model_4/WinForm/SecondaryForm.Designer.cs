@@ -1,6 +1,6 @@
 ﻿namespace WinForm
 {
-    partial class AddForm
+    partial class SecondaryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,6 +30,7 @@
         {
             this.gb_AddForm = new System.Windows.Forms.GroupBox();
             this.gb_DistinctiveCharacteristic = new System.Windows.Forms.GroupBox();
+            this.cb_FirstPersonal = new System.Windows.Forms.ComboBox();
             this.tb_ThirdPersonal = new System.Windows.Forms.TextBox();
             this.tb_SecondPersonal = new System.Windows.Forms.TextBox();
             this.tb_FirstPersonal = new System.Windows.Forms.TextBox();
@@ -51,7 +52,6 @@
             this.rbtn_Helicopter = new System.Windows.Forms.RadioButton();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_OK = new System.Windows.Forms.Button();
-            this.cb_FirstPersonal = new System.Windows.Forms.ComboBox();
             this.gb_AddForm.SuspendLayout();
             this.gb_DistinctiveCharacteristic.SuspendLayout();
             this.gb_GeneralСharacteristic.SuspendLayout();
@@ -86,6 +86,21 @@
             this.gb_DistinctiveCharacteristic.TabIndex = 7;
             this.gb_DistinctiveCharacteristic.TabStop = false;
             this.gb_DistinctiveCharacteristic.Text = "Distinctive Characteristic";
+            // 
+            // cb_FirstPersonal
+            // 
+            this.cb_FirstPersonal.FormattingEnabled = true;
+            this.cb_FirstPersonal.Items.AddRange(new object[] {
+            "Mini",
+            "Sub",
+            "Compact",
+            "MidSize",
+            "Large",
+            "NULL"});
+            this.cb_FirstPersonal.Location = new System.Drawing.Point(246, 19);
+            this.cb_FirstPersonal.Name = "cb_FirstPersonal";
+            this.cb_FirstPersonal.Size = new System.Drawing.Size(24, 21);
+            this.cb_FirstPersonal.TabIndex = 7;
             // 
             // tb_ThirdPersonal
             // 
@@ -178,6 +193,7 @@
             // 
             // dtp_Date
             // 
+            this.dtp_Date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_Date.Location = new System.Drawing.Point(115, 97);
             this.dtp_Date.MaxDate = new System.DateTime(2018, 6, 3, 20, 28, 27, 0);
             this.dtp_Date.Name = "dtp_Date";
@@ -296,22 +312,7 @@
             this.btn_OK.UseVisualStyleBackColor = true;
             this.btn_OK.Click += new System.EventHandler(this.btn_OK_Click);
             // 
-            // cb_FirstPersonal
-            // 
-            this.cb_FirstPersonal.FormattingEnabled = true;
-            this.cb_FirstPersonal.Items.AddRange(new object[] {
-            "Mini",
-            "Sub",
-            "Compact",
-            "MidSize",
-            "Large",
-            "NULL"});
-            this.cb_FirstPersonal.Location = new System.Drawing.Point(246, 19);
-            this.cb_FirstPersonal.Name = "cb_FirstPersonal";
-            this.cb_FirstPersonal.Size = new System.Drawing.Size(24, 21);
-            this.cb_FirstPersonal.TabIndex = 7;
-            // 
-            // AddForm
+            // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -319,7 +320,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.gb_AddForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Name = "AddForm";
+            this.Name = "SecondaryForm";
             this.Text = "Add Vehicle";
             this.gb_AddForm.ResumeLayout(false);
             this.gb_DistinctiveCharacteristic.ResumeLayout(false);

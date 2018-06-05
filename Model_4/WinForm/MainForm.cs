@@ -15,39 +15,56 @@ using System.IO;
 namespace WinForm
 {
     public partial class MainForm : Form
-    {
-        private EditForm editForm;
-        private AddForm addForm;
+    {        
+        private SecondaryForm secondaryForm;
         private DialogResult dialogResult;
         FileStream fstream = null;
-        List<IVehicle> list;
+        private List<IVehicle> _vehicles;        
 
         public MainForm()
         {               
             InitializeComponent();
-            list = new List<IVehicle>();
-            Car newCar = new Car();
-            newCar.Name = "AAA";
-            newCar.SerialNumber = "12345678901234567";
-            newCar.Consumption = 18;
-            newCar.Power = 23;
-            newCar.Type = 2;
-            newCar.Cost = 2321;
-            newCar.ManufacturesYear = new DateTime(2018, 02, 12);
-            list.Add(newCar);
-            bindingSource1.DataSource = list;
-            dgv_Main.DataSource = bindingSource1;            
-        }   
+            _vehicles = new List<IVehicle>();
+            bs_Main.DataSource = _vehicles;
+            dgv_Main.DataSource = bs_Main;            
+
+            //Car newCar = new Car();
+            //newCar.Name = "AAA";
+            //newCar.SerialNumber = "12345678901234567";
+            //newCar.Consumption = 18;
+            //newCar.Power = 23;
+            //newCar.Type = "NULL";
+            //newCar.Cost = 2321;
+            //newCar.ManufacturesYear = new DateTime(2018, 02, 12);            
+            //_vehicles.Add(newCar);
+            //bs_Main.DataSource= _vehicles;
+            //dgv_Main.DataSource = bs_Main;            
+            ////dgv_Main.DataSource = bs_Main;
+
+            //Car car = new Car();
+            //car.Name = "BBB";
+            //car.SerialNumber = "12345678901234567";
+            //car.Consumption = 18;
+            //car.Power = 23;
+            //car.Type = "NULL";
+            //car.Cost = 2321;
+            //car.ManufacturesYear = DateTime.Today;
+            //_vehicles.Add(car);
+            //dgv_Main.DataSource = _vehicles;
+            //bs_Main.DataSource = _vehicles;
+            //dgv_Main.DataSource = bs_Main;
+
+        }
 
         private void SaveData()
         {
-            if (!(list.Any()))
+            if (!(_vehicles.Any()))
             {
                 MessageBox.Show("List is empty. Nothing to save");
             }
             else
             {
-                string serialized = JsonConvert.SerializeObject(list);
+                string serialized = JsonConvert.SerializeObject(_vehicles);
                 MessageBox.Show(serialized);
 
                 DirectoryInfo dirInfo = CreateDirectory();
@@ -99,41 +116,46 @@ namespace WinForm
             //if (JsonConvert.DeserializeObject<IVehicle>  
         }
 
+        #region Add New Vehicle
+
         private Car AddCar(Car newVehicle)
         {
-            newVehicle.Name = addForm.EnterName;
-            newVehicle.SerialNumber = addForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToDouble(addForm.EnterCost);
-            newVehicle.ManufacturesYear = addForm.EnterDateTime;
-            newVehicle.Type = Convert.ToInt32(addForm.EnterFirstPersonal);
-            newVehicle.Power = Convert.ToDouble(addForm.EnterSecondPersonal);
-            newVehicle.Consumption = Convert.ToDouble(addForm.EnterThirdPersonal);
+            newVehicle.Name = secondaryForm.EnterName;
+            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
+            newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
+            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
+            newVehicle.Type = Convert.ToString(secondaryForm.EnterFirstPersonal);
+            newVehicle.Power = Convert.ToDouble(secondaryForm.EnterSecondPersonal);
+            newVehicle.Consumption = Convert.ToDouble(secondaryForm.EnterThirdPersonal);
             return newVehicle;
         }
 
         private Boat AddBoat(Boat newVehicle)
         {
-            newVehicle.Name = addForm.EnterName;
-            newVehicle.SerialNumber = addForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToDouble(addForm.EnterCost);
-            newVehicle.ManufacturesYear = addForm.EnterDateTime;
-            newVehicle.Speed = Convert.ToDouble(addForm.EnterFirstPersonal);
-            newVehicle.Draft = Convert.ToDouble(addForm.EnterSecondPersonal);
-            newVehicle.BoatCapacity= Convert.ToInt32(addForm.EnterThirdPersonal);
+            newVehicle.Name = secondaryForm.EnterName;
+            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
+            newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
+            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
+            newVehicle.Speed = Convert.ToDouble(secondaryForm.EnterFirstPersonal);
+            newVehicle.Draft = Convert.ToDouble(secondaryForm.EnterSecondPersonal);
+            newVehicle.BoatCapacity = Convert.ToInt32(secondaryForm.EnterThirdPersonal);
             return newVehicle;
         }
 
         private Helicopter AddHelicopter(Helicopter newVehicle)
         {
-            newVehicle.Name = addForm.EnterName;
-            newVehicle.SerialNumber = addForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToInt32(addForm.EnterCost);
-            newVehicle.ManufacturesYear = addForm.EnterDateTime;
-            newVehicle.Range = Convert.ToInt32(addForm.EnterFirstPersonal);
-            newVehicle.Capacity = Convert.ToInt32(addForm.EnterSecondPersonal);
-            newVehicle.Speed = Convert.ToDouble(addForm.EnterThirdPersonal);
+            newVehicle.Name = secondaryForm.EnterName;
+            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
+            newVehicle.Cost = Convert.ToInt32(secondaryForm.EnterCost);
+            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
+            newVehicle.Range = Convert.ToInt32(secondaryForm.EnterFirstPersonal);
+            newVehicle.Capacity = Convert.ToInt32(secondaryForm.EnterSecondPersonal);
+            newVehicle.Speed = Convert.ToDouble(secondaryForm.EnterThirdPersonal);
             return newVehicle;
         }
+
+        #endregion Add New Vehicle
+
         #region Buttons
 
 
@@ -141,36 +163,51 @@ namespace WinForm
         /// Button to add data
         /// </summary>        
         private void btn_Add_Click(object sender, EventArgs e)
-        {
-            addForm = new AddForm();
-            dialogResult = addForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
-            {
-                IVehicle newVehicle=null;
-                switch (addForm.EnterTypeVehicle)
-                {
-                    case 'C':
-                    {
-                        newVehicle = AddCar(new Car());
-                        break;
-                    }
-                    case 'B':
-                    {
-                        newVehicle = AddBoat(new Boat());
-                        break;
-                    }
-                    case 'H':
-                    {
-                        newVehicle = AddHelicopter(new Helicopter());
-                        break;
-                    }
-                };
-                list.Add(newVehicle);
-                
-            }
-            MessageBox.Show(Convert.ToString(dialogResult));
+        {           
+            Car newCar= new Car();
+            newCar.Name = "CCC";
+            newCar.SerialNumber = "12345678901234567";
+            newCar.Consumption = 18;
+            newCar.Power = 23;
+            newCar.Type = "NULL";
+            newCar.Cost = 11;            
+            newCar.ManufacturesYear = DateTime.Today;            
+            //_vehicles.Add(newCar);
+            bs_Main.Add(newCar);
 
-        }        
+            Boat newBoat = new Boat();
+            newBoat.Name = "EEE";
+            newBoat.SerialNumber = "12345678";
+            newBoat.ManufacturesYear = DateTime.Today;
+            bs_Main.Add(newBoat);
+            //addForm = new AddForm();
+            //dialogResult = addForm.ShowDialog();
+            //if (dialogResult == DialogResult.OK)
+            //{
+            //    IVehicle newVehicle = null;
+            //    switch (addForm.EnterTypeVehicle)
+            //    {
+            //        case 'C':
+            //            {
+            //                newVehicle = AddCar(new Car());
+            //                break;
+            //            }
+            //        case 'B':
+            //            {
+            //                newVehicle = AddBoat(new Boat());
+            //                break;
+            //            }
+            //        case 'H':
+            //            {
+            //                newVehicle = AddHelicopter(new Helicopter());
+            //                break;
+            //            }
+            //    };
+            //    _vehicles.Add(newVehicle);
+            //    dgv_Main.DataSource = _vehicles;
+            //}
+
+        }
 
         private void btn_CreateRandomData_Click(object sender, EventArgs e)
         {
@@ -179,13 +216,19 @@ namespace WinForm
 
         private void btn_EditData_Click(object sender, EventArgs e)
         {
-            EditForm fEdit = new EditForm(list);
-            fEdit.ShowDialog();
+            secondaryForm = new SecondaryForm();
+            secondaryForm.ShowDialog();
 
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+            int rowToDelete = dgv_Main.Rows.GetFirstRow(
+                DataGridViewElementStates.Selected);
+            if (rowToDelete > -1)
+            {                
+                bs_Main.RemoveAt(rowToDelete);
+            }
 
         }
 
@@ -207,7 +250,7 @@ namespace WinForm
                 e.KeyChar = char.ToUpper(e.KeyChar);
             }
             var founded = new List<IVehicle>();
-            foreach (var vehicle in list)
+            foreach (var vehicle in _vehicles)
             {
                 if (vehicle.Name.Contains(tb_Search.Text) || vehicle.SerialNumber.Contains(tb_Search.Text))
                 {
@@ -249,6 +292,6 @@ namespace WinForm
 
 
         #endregion DataGrivView Menu
-        
+     
     }
 }

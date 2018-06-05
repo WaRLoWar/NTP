@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gb_BoxMain = new System.Windows.Forms.GroupBox();
+            this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Delete = new System.Windows.Forms.Button();
             this.gb_BoxSubMain1 = new System.Windows.Forms.GroupBox();
             this.tb_Search = new System.Windows.Forms.TextBox();
             this.btn_Search = new System.Windows.Forms.Button();
             this.btn_EditData = new System.Windows.Forms.Button();
             this.btn_CreateRandomData = new System.Windows.Forms.Button();
-            this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Add = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,30 +45,44 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
             this.gb_BoxMain.SuspendLayout();
-            this.gb_BoxSubMain1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
+            this.gb_BoxSubMain1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).BeginInit();
             this.SuspendLayout();
             // 
             // gb_BoxMain
             // 
             this.gb_BoxMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gb_BoxMain.Controls.Add(this.dgv_Main);
             this.gb_BoxMain.Controls.Add(this.btn_Delete);
             this.gb_BoxMain.Controls.Add(this.gb_BoxSubMain1);
             this.gb_BoxMain.Controls.Add(this.btn_EditData);
             this.gb_BoxMain.Controls.Add(this.btn_CreateRandomData);
-            this.gb_BoxMain.Controls.Add(this.dgv_Main);
             this.gb_BoxMain.Controls.Add(this.btn_Add);
             this.gb_BoxMain.Location = new System.Drawing.Point(12, 27);
             this.gb_BoxMain.Name = "gb_BoxMain";
-            this.gb_BoxMain.Size = new System.Drawing.Size(734, 339);
+            this.gb_BoxMain.Size = new System.Drawing.Size(611, 278);
             this.gb_BoxMain.TabIndex = 0;
             this.gb_BoxMain.TabStop = false;
             this.gb_BoxMain.Text = "Main";
+            // 
+            // dgv_Main
+            // 
+            this.dgv_Main.AllowUserToAddRows = false;
+            this.dgv_Main.AllowUserToDeleteRows = false;
+            this.dgv_Main.AllowUserToResizeColumns = false;
+            this.dgv_Main.AllowUserToResizeRows = false;
+            this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Main.Location = new System.Drawing.Point(6, 19);
+            this.dgv_Main.Name = "dgv_Main";
+            this.dgv_Main.ReadOnly = true;
+            this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Main.Size = new System.Drawing.Size(445, 217);
+            this.dgv_Main.TabIndex = 11;
             // 
             // btn_Delete
             // 
@@ -84,7 +98,7 @@
             // 
             this.gb_BoxSubMain1.Controls.Add(this.tb_Search);
             this.gb_BoxSubMain1.Controls.Add(this.btn_Search);
-            this.gb_BoxSubMain1.Location = new System.Drawing.Point(572, 19);
+            this.gb_BoxSubMain1.Location = new System.Drawing.Point(457, 19);
             this.gb_BoxSubMain1.Name = "gb_BoxSubMain1";
             this.gb_BoxSubMain1.Size = new System.Drawing.Size(143, 82);
             this.gb_BoxSubMain1.TabIndex = 9;
@@ -128,21 +142,6 @@
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
             this.btn_CreateRandomData.Click += new System.EventHandler(this.btn_CreateRandomData_Click);
             // 
-            // dgv_Main
-            // 
-            this.dgv_Main.AllowUserToAddRows = false;
-            this.dgv_Main.AllowUserToDeleteRows = false;
-            this.dgv_Main.AllowUserToResizeColumns = false;
-            this.dgv_Main.AllowUserToResizeRows = false;
-            this.dgv_Main.BackgroundColor = System.Drawing.SystemColors.ControlDark;
-            this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Main.Location = new System.Drawing.Point(6, 19);
-            this.dgv_Main.Name = "dgv_Main";
-            this.dgv_Main.ReadOnly = true;
-            this.dgv_Main.Size = new System.Drawing.Size(560, 217);
-            this.dgv_Main.StandardTab = true;
-            this.dgv_Main.TabIndex = 2;
-            // 
             // btn_Add
             // 
             this.btn_Add.Location = new System.Drawing.Point(6, 242);
@@ -159,7 +158,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(767, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(663, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -205,7 +204,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 402);
+            this.ClientSize = new System.Drawing.Size(663, 313);
             this.Controls.Add(this.gb_BoxMain);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -216,12 +215,12 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.gb_BoxMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.gb_BoxSubMain1.ResumeLayout(false);
             this.gb_BoxSubMain1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,7 +230,6 @@
 
         private System.Windows.Forms.GroupBox gb_BoxMain;
         private System.Windows.Forms.Button btn_Add;
-        private System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.Button btn_CreateRandomData;
         private System.Windows.Forms.Button btn_EditData;
@@ -241,11 +239,12 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.Button btn_Delete;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.BindingSource bs_Main;
+        private System.Windows.Forms.DataGridView dgv_Main;
     }
 }
 

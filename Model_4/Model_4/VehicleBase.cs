@@ -92,6 +92,7 @@ namespace Model
             }
             set
             {
+                value = value.ToUpper();
                 if (!(IsName(value)))
                 {
                     throw new FormatException("Name entered incorrectly !");
@@ -145,7 +146,7 @@ namespace Model
             {
                 try
                 {
-                    if (DateTime.UtcNow < value)
+                    if (DateTime.Now < value)
                     {
                         throw new Exception("Incorrect date entered");
                     }

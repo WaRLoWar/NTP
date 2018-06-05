@@ -12,7 +12,7 @@ namespace Model
         {
 
         }
-        public Car(string name, string serialNumber, double cost, DateTime data, double power, double consumption, int type) 
+        public Car(string name, string serialNumber, double cost, DateTime data, double power, double consumption, string type) 
             : base(name, cost, data)
         {
             
@@ -113,18 +113,34 @@ namespace Model
         /// Type of car interior
         /// { Mini = 0, Sub = 1, Compact = 2, MidSize = 3, Large = 4, NULL = 5 }
         /// </summary>
-        public int Type
+        //public int Type
+        //{
+        //    set
+        //    {               
+        //        if (Convert.ToInt32(value) < 0 || Convert.ToInt32(value) > 4)
+        //        {
+        //            throw new FormatException("Input error");
+        //        }
+        //        _type = (InteriorTypes)Convert.ToInt32(value);                
+        //    }
+        //}
+
+        public string Type
         {
             set
             {
-                if (Convert.ToInt32(value) < 0 || Convert.ToInt32(value) > 4)
+                InteriorTypes c=InteriorTypes.Mini;
+                for (int i = 0; i < 6; i++)
                 {
-                    throw new FormatException("Input error");
+                    if (value == Convert.ToString(c))
+                    {
+                        _type = c;
+                        break;
+                    }
+                    c++;
                 }
-                _type = (InteriorTypes)Convert.ToInt32(value);                
             }
         }
-
         /// <summary>
         /// Features of transport
         /// </summary>
@@ -199,7 +215,7 @@ namespace Model
                     }
                 case 'T':
                     {
-                        Type = Convert.ToInt32(value);
+                        Type = Convert.ToString(value);
                         break;
                     }
                 default:

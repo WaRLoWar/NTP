@@ -198,7 +198,7 @@ namespace Model
         protected override bool IsSerialNumber(string source)
         {
             source = source.Trim();
-            if ((source.Length != 8) || (source.Length != 12) || (string.IsNullOrWhiteSpace(source)))
+            if ((source.Length != 8) && (source.Length != 12) || (string.IsNullOrWhiteSpace(source)))
             {
                 return false;
             }
