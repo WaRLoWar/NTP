@@ -32,21 +32,22 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gb_BoxMain = new System.Windows.Forms.GroupBox();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
-            this.btn_Delete = new System.Windows.Forms.Button();
+            this.btn_Remove = new System.Windows.Forms.Button();
             this.gb_BoxSubMain1 = new System.Windows.Forms.GroupBox();
             this.tb_Search = new System.Windows.Forms.TextBox();
-            this.btn_Search = new System.Windows.Forms.Button();
             this.btn_EditData = new System.Windows.Forms.Button();
             this.btn_CreateRandomData = new System.Windows.Forms.Button();
             this.btn_Add = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ms_SaveTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.ms_SaveAsTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.ms_OpenTool = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
+            this.ofd_Main = new System.Windows.Forms.OpenFileDialog();
+            this.sfd_Main = new System.Windows.Forms.SaveFileDialog();
             this.gb_BoxMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.gb_BoxSubMain1.SuspendLayout();
@@ -58,14 +59,14 @@
             // 
             this.gb_BoxMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.gb_BoxMain.Controls.Add(this.dgv_Main);
-            this.gb_BoxMain.Controls.Add(this.btn_Delete);
+            this.gb_BoxMain.Controls.Add(this.btn_Remove);
             this.gb_BoxMain.Controls.Add(this.gb_BoxSubMain1);
             this.gb_BoxMain.Controls.Add(this.btn_EditData);
             this.gb_BoxMain.Controls.Add(this.btn_CreateRandomData);
             this.gb_BoxMain.Controls.Add(this.btn_Add);
             this.gb_BoxMain.Location = new System.Drawing.Point(12, 27);
             this.gb_BoxMain.Name = "gb_BoxMain";
-            this.gb_BoxMain.Size = new System.Drawing.Size(611, 278);
+            this.gb_BoxMain.Size = new System.Drawing.Size(649, 278);
             this.gb_BoxMain.TabIndex = 0;
             this.gb_BoxMain.TabStop = false;
             this.gb_BoxMain.Text = "Main";
@@ -81,26 +82,26 @@
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.ReadOnly = true;
             this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Main.Size = new System.Drawing.Size(445, 217);
+            this.dgv_Main.Size = new System.Drawing.Size(485, 217);
             this.dgv_Main.TabIndex = 11;
+            this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
             // 
-            // btn_Delete
+            // btn_Remove
             // 
-            this.btn_Delete.Location = new System.Drawing.Point(194, 242);
-            this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(88, 26);
-            this.btn_Delete.TabIndex = 10;
-            this.btn_Delete.Text = "Delete";
-            this.btn_Delete.UseVisualStyleBackColor = true;
-            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
+            this.btn_Remove.Location = new System.Drawing.Point(194, 242);
+            this.btn_Remove.Name = "btn_Remove";
+            this.btn_Remove.Size = new System.Drawing.Size(88, 26);
+            this.btn_Remove.TabIndex = 10;
+            this.btn_Remove.Text = "Remove";
+            this.btn_Remove.UseVisualStyleBackColor = true;
+            this.btn_Remove.Click += new System.EventHandler(this.btn_Remove_Click);
             // 
             // gb_BoxSubMain1
             // 
             this.gb_BoxSubMain1.Controls.Add(this.tb_Search);
-            this.gb_BoxSubMain1.Controls.Add(this.btn_Search);
-            this.gb_BoxSubMain1.Location = new System.Drawing.Point(457, 19);
+            this.gb_BoxSubMain1.Location = new System.Drawing.Point(497, 19);
             this.gb_BoxSubMain1.Name = "gb_BoxSubMain1";
-            this.gb_BoxSubMain1.Size = new System.Drawing.Size(143, 82);
+            this.gb_BoxSubMain1.Size = new System.Drawing.Size(143, 48);
             this.gb_BoxSubMain1.TabIndex = 9;
             this.gb_BoxSubMain1.TabStop = false;
             this.gb_BoxSubMain1.Text = "Search";
@@ -109,18 +110,10 @@
             // 
             this.tb_Search.Location = new System.Drawing.Point(6, 19);
             this.tb_Search.Name = "tb_Search";
-            this.tb_Search.Size = new System.Drawing.Size(121, 20);
+            this.tb_Search.Size = new System.Drawing.Size(131, 20);
             this.tb_Search.TabIndex = 7;
             this.tb_Search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Search_KeyPress);
-            // 
-            // btn_Search
-            // 
-            this.btn_Search.Location = new System.Drawing.Point(6, 45);
-            this.btn_Search.Name = "btn_Search";
-            this.btn_Search.Size = new System.Drawing.Size(121, 24);
-            this.btn_Search.TabIndex = 5;
-            this.btn_Search.Text = "Search";
-            this.btn_Search.UseVisualStyleBackColor = true;
+            this.tb_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tb_Search_KeyUp);
             // 
             // btn_EditData
             // 
@@ -136,7 +129,7 @@
             // 
             this.btn_CreateRandomData.Location = new System.Drawing.Point(288, 242);
             this.btn_CreateRandomData.Name = "btn_CreateRandomData";
-            this.btn_CreateRandomData.Size = new System.Drawing.Size(143, 26);
+            this.btn_CreateRandomData.Size = new System.Drawing.Size(128, 26);
             this.btn_CreateRandomData.TabIndex = 4;
             this.btn_CreateRandomData.Text = "Create Random Data";
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
@@ -158,53 +151,58 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(663, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(669, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.loadToolStripMenuItem,
+            this.ms_SaveTool,
+            this.ms_SaveAsTool,
+            this.ms_OpenTool,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // saveToolStripMenuItem
+            // ms_SaveTool
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.ms_SaveTools_Click);
+            this.ms_SaveTool.Name = "ms_SaveTool";
+            this.ms_SaveTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_SaveTool.Text = "Save";
+            this.ms_SaveTool.Click += new System.EventHandler(this.ms_SaveTools_Click);
             // 
-            // saveAsToolStripMenuItem
+            // ms_SaveAsTool
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.saveAsToolStripMenuItem.Text = "Save as";
+            this.ms_SaveAsTool.Name = "ms_SaveAsTool";
+            this.ms_SaveAsTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_SaveAsTool.Text = "Save as";
+            this.ms_SaveAsTool.Click += new System.EventHandler(this.ms_SaveAsTool_Click);
             // 
-            // loadToolStripMenuItem
+            // ms_OpenTool
             // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.loadToolStripMenuItem.Text = "Load";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.ms_LoadTools_Click);
+            this.ms_OpenTool.Name = "ms_OpenTool";
+            this.ms_OpenTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_OpenTool.Text = "Open";
+            this.ms_OpenTool.Click += new System.EventHandler(this.ms_LoadTools_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ms_ExitTools_Click);
+            // 
+            // ofd_Main
+            // 
+            this.ofd_Main.FileName = "openFileDialog1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 313);
+            this.ClientSize = new System.Drawing.Size(669, 309);
             this.Controls.Add(this.gb_BoxMain);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -212,8 +210,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "ModelLoader";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.gb_BoxMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.gb_BoxSubMain1.ResumeLayout(false);
@@ -230,21 +227,22 @@
 
         private System.Windows.Forms.GroupBox gb_BoxMain;
         private System.Windows.Forms.Button btn_Add;
-        private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.Button btn_CreateRandomData;
         private System.Windows.Forms.Button btn_EditData;
         private System.Windows.Forms.TextBox tb_Search;
         private System.Windows.Forms.GroupBox gb_BoxSubMain1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ms_SaveTool;
+        private System.Windows.Forms.ToolStripMenuItem ms_OpenTool;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.Button btn_Delete;
+        private System.Windows.Forms.ToolStripMenuItem ms_SaveAsTool;
+        private System.Windows.Forms.Button btn_Remove;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.BindingSource bs_Main;
         private System.Windows.Forms.DataGridView dgv_Main;
+        private System.Windows.Forms.OpenFileDialog ofd_Main;
+        private System.Windows.Forms.SaveFileDialog sfd_Main;
     }
 }
 

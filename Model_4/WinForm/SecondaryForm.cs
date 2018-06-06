@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Model;
 
 namespace WinForm
 {
@@ -35,7 +35,7 @@ namespace WinForm
         }
         public string EnterSerialNumber
         {
-            get { return _serialNumber; }
+            get { return _serialNumber;}
             set { _serialNumber = value; }
         }
         public string EnterCost
@@ -74,7 +74,7 @@ namespace WinForm
         }
 
         private void EnterAllValue()
-        {
+        {            
             EnterName = tb_Name.Text;
             EnterCost = tb_Cost.Text;
             EnterDateTime = dtp_Date.Value;
@@ -93,6 +93,49 @@ namespace WinForm
 
         #endregion Enter Value
 
+        #region Set Value    
+
+        public void SetCarValue(Car data)
+        {
+            EnterTypeVehicle = 'C';
+            rbtn_Car.Checked = true;
+            tb_Name.Text = data.Name;
+            tb_SerialNumber.Text = data.SerialNumber;
+            tb_Cost.Text = Convert.ToString(data.Cost);
+            dtp_Date.Value = data.ManufacturesYear;
+            cb_FirstPersonal.Text = data.Type;
+            tb_SecondPersonal.Text = Convert.ToString(data.Power);
+            tb_ThirdPersonal.Text = Convert.ToString(data.Consumption);
+        }
+
+        public void SetBoatValue(Boat data)
+        {
+            EnterTypeVehicle = 'B';
+            rbtn_Boat.Checked = true;
+            tb_Name.Text = data.Name;
+            tb_SerialNumber.Text = data.SerialNumber;
+            tb_Cost.Text = Convert.ToString(data.Cost);
+            dtp_Date.Value = data.ManufacturesYear;
+            tb_FirstPersonal.Text = Convert.ToString(data.Speed);
+            tb_SecondPersonal.Text = Convert.ToString(data.Draft);
+            tb_ThirdPersonal.Text = Convert.ToString(data.BoatCapacity);
+        }
+
+        public void SetHelicopterValue(Helicopter data)
+        {
+            EnterTypeVehicle = 'H';
+            rbtn_Helicopter.Checked = true;
+            tb_Name.Text = data.Name;
+            tb_SerialNumber.Text = data.SerialNumber;
+            tb_Cost.Text = Convert.ToString(data.Cost);
+            dtp_Date.Value = data.ManufacturesYear;
+            tb_FirstPersonal.Text = Convert.ToString(data.Range);
+            tb_SecondPersonal.Text = Convert.ToString(data.Capacity);
+            tb_ThirdPersonal.Text = Convert.ToString(data.Speed);
+        }
+
+        #endregion Set Value
+
         #region Initial Setting 
 
         public SecondaryForm()
@@ -106,6 +149,7 @@ namespace WinForm
             rbtn_Car.Checked = true;
             tb_Name.MaxLength = 25;
             dtp_Date.MaxDate = DateTime.Today;
+            dtp_Date.Value = DateTime.Today;
             tb_Cost.MaxLength = 12;
             cb_FirstPersonal.Text = "NULL";
             cb_FirstPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -127,9 +171,8 @@ namespace WinForm
             }
             else
             {
-
-            }
-            this.DialogResult = DialogResult.OK;
+                this.DialogResult = DialogResult.OK;
+            }            
             this.Close();
         }
 
@@ -248,7 +291,7 @@ namespace WinForm
                 }
                 else if (rbtn_Boat.Checked)
                 {
-                    if (lengthText != 8 || lengthText != 12)
+                    if (lengthText != 8 && lengthText != 12)
                     {
                         MessageBox.Show("The length of the serial number must be 8 or 12 characters !");
                     }

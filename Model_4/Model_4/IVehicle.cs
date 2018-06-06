@@ -11,6 +11,11 @@ namespace Model
     public interface IVehicle
     {
         /// <summary>
+        /// Type of vehicle
+        /// </summary>
+        char TypeVehicle { get; set; }
+
+        /// <summary>
         /// The name of the transport
         /// </summary>
         string Name { get; set; }

@@ -9,8 +9,8 @@ namespace Model
     sealed public class Boat: VehicleBase
     {
         public Boat() { }
-        public Boat(string name, string serialNumber, double cost, DateTime data, double speed, double draft, short capacity)
-            : base(name, cost, data)
+        public Boat(char typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double draft, short capacity)
+            : base(typeVehicle, name, cost, data)
         {
             this.Speed = speed;
             this.Draft = draft;

@@ -12,8 +12,9 @@ namespace Model
     {
 
         protected VehicleBase() { }
-        protected VehicleBase(string name, double cost, DateTime data)
+        protected VehicleBase(char typeVehicle, string name, double cost, DateTime data)
         {
+            this.TypeVehicle = typeVehicle;
             this.Name = name;            
             this.Cost = cost;
             this.ManufacturesYear = data;
@@ -50,6 +51,11 @@ namespace Model
             }
             return true;
         }
+
+        /// <summary>
+        /// Type of Vehicle
+        /// </summary>
+        private char _typeVehicle = '0';
 
         #endregion Private
         // ------------ Public / Protected fields and methods  ------------ //
@@ -159,6 +165,23 @@ namespace Model
                 }
             }
         }
+
+        public char TypeVehicle
+        {
+            get
+            {
+                return _typeVehicle;
+            }
+            set
+            {
+                if (value != 'C' && value != 'B' && value != 'H')
+                {
+                    throw new FormatException("Invalid character");
+                }
+                _typeVehicle = value;
+            }
+        }
+
 
         /// <summary>
         /// Features of transport

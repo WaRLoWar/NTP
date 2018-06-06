@@ -12,8 +12,8 @@ namespace Model
         {
 
         }
-        public Car(string name, string serialNumber, double cost, DateTime data, double power, double consumption, string type) 
-            : base(name, cost, data)
+        public Car(char typeVehicle,string name, string serialNumber, double cost, DateTime data, double power, double consumption, string type) 
+            : base(typeVehicle, name, cost, data)
         {
             
             this.Power = power;
@@ -127,6 +127,10 @@ namespace Model
 
         public string Type
         {
+            get
+            {
+                return Convert.ToString(_type);
+            }
             set
             {
                 InteriorTypes c=InteriorTypes.Mini;
@@ -146,7 +150,7 @@ namespace Model
         /// </summary>
         public override string PrintTransportsFeatures()
         {
-            return Convert.ToString(Power + " " + Consumption + " " + _type);
+            return Convert.ToString(Power + " " + Consumption + " " + Type);
         }
 
         /// <summary>

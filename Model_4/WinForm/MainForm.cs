@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Model;
 using Newtonsoft.Json;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 
 namespace WinForm
@@ -18,60 +19,61 @@ namespace WinForm
     {        
         private SecondaryForm secondaryForm;
         private DialogResult dialogResult;
-        FileStream fstream = null;
-        private List<IVehicle> _vehicles;        
+        private bool isNeedSave = false;
+        private List<IVehicle> _vehicles;
+
 
         public MainForm()
         {               
             InitializeComponent();
-            _vehicles = new List<IVehicle>();
-            bs_Main.DataSource = _vehicles;
-            dgv_Main.DataSource = bs_Main;            
-
-            //Car newCar = new Car();
-            //newCar.Name = "AAA";
-            //newCar.SerialNumber = "12345678901234567";
-            //newCar.Consumption = 18;
-            //newCar.Power = 23;
-            //newCar.Type = "NULL";
-            //newCar.Cost = 2321;
-            //newCar.ManufacturesYear = new DateTime(2018, 02, 12);            
-            //_vehicles.Add(newCar);
-            //bs_Main.DataSource= _vehicles;
-            //dgv_Main.DataSource = bs_Main;            
-            ////dgv_Main.DataSource = bs_Main;
-
-            //Car car = new Car();
-            //car.Name = "BBB";
-            //car.SerialNumber = "12345678901234567";
-            //car.Consumption = 18;
-            //car.Power = 23;
-            //car.Type = "NULL";
-            //car.Cost = 2321;
-            //car.ManufacturesYear = DateTime.Today;
-            //_vehicles.Add(car);
-            //dgv_Main.DataSource = _vehicles;
-            //bs_Main.DataSource = _vehicles;
-            //dgv_Main.DataSource = bs_Main;
-
+            DefaultSetting();
+           
         }
 
+        private void DefaultSetting()
+        {
+            _vehicles = new List<IVehicle>();
+            bs_Main.DataSource = _vehicles;
+            dgv_Main.DataSource = bs_Main;
+            dgv_Main.RowHeadersVisible = false;
+            dgv_Main.Columns[0].Width = 80;
+            dgv_Main.MultiSelect = false;
+            tb_Search.MaxLength = 20;
+            ms_SaveTool.ShortcutKeys = Keys.Control | Keys.S;
+            ms_SaveAsTool.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+            ms_OpenTool.ShortcutKeys = Keys.Control | Keys.O;            
+        }
         private void SaveData()
         {
-            if (!(_vehicles.Any()))
+            if (!IsNeedSaveData())
             {
                 MessageBox.Show("List is empty. Nothing to save");
             }
             else
             {
-                string serialized = JsonConvert.SerializeObject(_vehicles);
-                MessageBox.Show(serialized);
-
-                DirectoryInfo dirInfo = CreateDirectory();
-                fstream = CreateFile(dirInfo, serialized);
-                FileInfo fileInfo = CreateFile(dirInfo);
-
+                isNeedSave = false;
+                sfd_Main.AddExtension = true;
+                sfd_Main.Filter = "Vehicle|*.vehicle";
+                DialogResult result = sfd_Main.ShowDialog();
+                if (result == DialogResult.OK)
+                {                  
+                    string json = JsonConvert.SerializeObject(_vehicles);
+                    File.WriteAllText(sfd_Main.FileName, json);                    
+                }
             }
+            //if (!(_vehicles.Any()))
+            //{
+            //    MessageBox.Show("List is empty. Nothing to save");
+            //}
+            //else
+            //{
+            //    string serialized = JsonConvert.SerializeObject(_vehicles);
+            //    MessageBox.Show(serialized);
+
+            //    DirectoryInfo dirInfo = CreateDirectory();
+            //    fstream = CreateFile(dirInfo, serialized);
+            //    FileInfo fileInfo = CreateFile(dirInfo);
+            //}
         }
 
         private DirectoryInfo CreateDirectory()
@@ -89,7 +91,7 @@ namespace WinForm
 
         private FileInfo CreateFile(DirectoryInfo dir)
         {
-            FileInfo fileInfo = new FileInfo(dir.FullName + "text.json");
+            FileInfo fileInfo = new FileInfo(@"C:\Users\WarLo\Documents\TestLab\text.json");
             if (!fileInfo.Exists)
             {
                 fileInfo.Create();
@@ -105,21 +107,15 @@ namespace WinForm
             return fstream;
         }
 
-               
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            ClosingForm();
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            //if (JsonConvert.DeserializeObject<IVehicle>  
-        }
-
         #region Add New Vehicle
 
         private Car AddCar(Car newVehicle)
         {
+            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
             newVehicle.Name = secondaryForm.EnterName;
             newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
             newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
@@ -132,6 +128,7 @@ namespace WinForm
 
         private Boat AddBoat(Boat newVehicle)
         {
+            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
             newVehicle.Name = secondaryForm.EnterName;
             newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
             newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
@@ -144,6 +141,7 @@ namespace WinForm
 
         private Helicopter AddHelicopter(Helicopter newVehicle)
         {
+            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
             newVehicle.Name = secondaryForm.EnterName;
             newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
             newVehicle.Cost = Convert.ToInt32(secondaryForm.EnterCost);
@@ -163,71 +161,55 @@ namespace WinForm
         /// Button to add data
         /// </summary>        
         private void btn_Add_Click(object sender, EventArgs e)
-        {           
-            Car newCar= new Car();
+        {
+            Car newCar = new Car();
+            newCar.TypeVehicle = 'C';
             newCar.Name = "CCC";
             newCar.SerialNumber = "12345678901234567";
             newCar.Consumption = 18;
             newCar.Power = 23;
             newCar.Type = "NULL";
-            newCar.Cost = 11;            
-            newCar.ManufacturesYear = DateTime.Today;            
-            //_vehicles.Add(newCar);
+            newCar.Cost = 11;
+            newCar.ManufacturesYear = DateTime.Today;
             bs_Main.Add(newCar);
 
             Boat newBoat = new Boat();
+            newBoat.TypeVehicle = 'B';
             newBoat.Name = "EEE";
             newBoat.SerialNumber = "12345678";
             newBoat.ManufacturesYear = DateTime.Today;
+            isNeedSave = true;
             bs_Main.Add(newBoat);
-            //addForm = new AddForm();
-            //dialogResult = addForm.ShowDialog();
-            //if (dialogResult == DialogResult.OK)
-            //{
-            //    IVehicle newVehicle = null;
-            //    switch (addForm.EnterTypeVehicle)
-            //    {
-            //        case 'C':
-            //            {
-            //                newVehicle = AddCar(new Car());
-            //                break;
-            //            }
-            //        case 'B':
-            //            {
-            //                newVehicle = AddBoat(new Boat());
-            //                break;
-            //            }
-            //        case 'H':
-            //            {
-            //                newVehicle = AddHelicopter(new Helicopter());
-            //                break;
-            //            }
-            //    };
-            //    _vehicles.Add(newVehicle);
-            //    dgv_Main.DataSource = _vehicles;
-            //}
 
-        }
+            secondaryForm = new SecondaryForm();
+            dialogResult = secondaryForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                IVehicle newVehicle = GetNewVehicle();                                
+                bs_Main.Add(newVehicle);
+            }
+
+        }        
 
         private void btn_CreateRandomData_Click(object sender, EventArgs e)
         {
-
+           
         }
 
+       
         private void btn_EditData_Click(object sender, EventArgs e)
-        {
-            secondaryForm = new SecondaryForm();
-            secondaryForm.ShowDialog();
-
+        {            
+           EditData();
         }
 
-        private void btn_Delete_Click(object sender, EventArgs e)
+        private void btn_Remove_Click(object sender, EventArgs e)
         {
             int rowToDelete = dgv_Main.Rows.GetFirstRow(
                 DataGridViewElementStates.Selected);
             if (rowToDelete > -1)
-            {                
-                bs_Main.RemoveAt(rowToDelete);
+            {
+                isNeedSave = true;
+                bs_Main.RemoveAt(rowToDelete);                
             }
 
         }
@@ -249,6 +231,10 @@ namespace WinForm
             {
                 e.KeyChar = char.ToUpper(e.KeyChar);
             }
+           
+        }
+        private void tb_Search_KeyUp(object sender, KeyEventArgs e)
+        {
             var founded = new List<IVehicle>();
             foreach (var vehicle in _vehicles)
             {
@@ -259,7 +245,6 @@ namespace WinForm
             }
             dgv_Main.DataSource = founded;
         }
-
         #endregion TextBox
 
         #region MenuStrip
@@ -277,6 +262,34 @@ namespace WinForm
         /// </summary>   
         private void ms_LoadTools_Click(object sender, EventArgs e)
         {
+            ofd_Main.AddExtension = true;
+            ofd_Main.Filter = "Vehicle|*.vehicle";
+            DialogResult result = ofd_Main.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //FileStream fileStream = new FileStream(ofd_Main.FileName, FileMode.OpenOrCreate);
+                
+
+                //List<IVehicle> deserialize = JsonConvert.DeserializeObject<IVehicle>(json);
+                //fileStream.Dispose();
+
+                //bs_Main.Clear();
+                
+                bs_Main.Clear();                
+                //string deserialize = File.ReadAllText(ofd_Main.FileName, Encoding.GetEncoding(1251));
+                List<IVehicle> list = JsonConvert.DeserializeObject<List<IVehicle>>(File.ReadAllText(ofd_Main.FileName));
+                //IVehicle list = JsonConvert.DeserializeObject<IVehicle>(json);
+                bs_Main.Add(_vehicles);
+
+                //foreach (IVehicle vehicle in list)
+                //{
+                //    bs_Main.Add(vehicle);
+                //}
+            }
+        }
+
+        private void ms_SaveAsTool_Click(object sender, EventArgs e)
+        {
 
         }
 
@@ -285,13 +298,83 @@ namespace WinForm
             this.Close();
         }
 
-
         #endregion MenuStrip        
 
-        #region  DataGrivView Menu
+        private void EditData()
+        {
+            secondaryForm = new SecondaryForm();
+            if (bs_Main.Current is Car)
+            {
+                secondaryForm.SetCarValue((Car)bs_Main.Current);
+            }
+            else if (bs_Main.Current is Boat)
+            {
+                secondaryForm.SetBoatValue((Boat)bs_Main.Current);
+            }
+            else if (bs_Main.Current is Helicopter)
+            {
+                secondaryForm.SetHelicopterValue((Helicopter)bs_Main.Current);
+            }
+            dialogResult = secondaryForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                IVehicle newVehicle = GetNewVehicle();
+                int index = bs_Main.CurrencyManager.Position;
+                bs_Main.RemoveAt(index);
+                bs_Main.Insert(index, newVehicle);
+                isNeedSave = true;
+            }
+        }
 
+        private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            EditData();
+        }
+        private IVehicle GetNewVehicle()
+        {
+            IVehicle newVehicle = null;
+            switch (secondaryForm.EnterTypeVehicle)
+            {
+                case 'C':
+                {
+                    newVehicle = AddCar(new Car());
+                    break;
+                }
+                case 'B':
+                {
+                    newVehicle = AddBoat(new Boat());
+                    break;
+                }
+                case 'H':
+                {
+                    newVehicle = AddHelicopter(new Helicopter());
+                    break;
+                }
+            };
+            return newVehicle;
+        }
 
-        #endregion DataGrivView Menu
-     
+        private bool IsNeedSaveData()
+        {
+            return (_vehicles.Any() || isNeedSave) ? true : false;
+
+        }
+
+        private void ClosingForm()
+        {
+            if (IsNeedSaveData())
+            {               
+                DialogResult result = MessageBox.Show("Данные не сохранены ! Сохранить ?", "Внимание", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    SaveData();
+                }                
+            }
+            isNeedSave = false;
+            
+        }
+
+       
     }
 }

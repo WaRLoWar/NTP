@@ -196,6 +196,7 @@
             this.dtp_Date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_Date.Location = new System.Drawing.Point(115, 97);
             this.dtp_Date.MaxDate = new System.DateTime(2018, 6, 3, 20, 28, 27, 0);
+            this.dtp_Date.MinDate = new System.DateTime(1753, 1, 3, 0, 0, 0, 0);
             this.dtp_Date.Name = "dtp_Date";
             this.dtp_Date.Size = new System.Drawing.Size(125, 20);
             this.dtp_Date.TabIndex = 6;

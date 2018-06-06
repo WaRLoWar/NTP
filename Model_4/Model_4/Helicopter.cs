@@ -10,8 +10,8 @@ namespace Model
     {        
         
         public Helicopter() { }
-        public Helicopter(string name, string serialNumber, double cost, DateTime data, double speed, double range, short capacity)
-            : base(name, cost, data)
+        public Helicopter(char typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double range, short capacity)
+            : base(typeVehicle, name, cost, data)
         {
             this.Speed = speed;
             this.Range = range;
