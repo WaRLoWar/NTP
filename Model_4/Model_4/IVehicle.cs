@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Model
         /// <summary>
         /// Type of vehicle
         /// </summary>
-        char TypeVehicle { get; set; }
+        string TypeVehicle { get; set; }
 
         /// <summary>
         /// The name of the transport
@@ -34,22 +35,7 @@ namespace Model
         /// Year of manufacture
         /// </summary>       
         DateTime ManufacturesYear { get; set; }
-
-        /// <summary>
-        /// Features of transport
-        /// </summary>
-        string PrintTransportsFeatures();
-
-        /// <summary>
-        /// Print General data
-        /// </summary>        
-        string PrintGeneralData();
-
-        /// <summary>
-        /// Changing personal characteristics 
-        /// | S - Speed, R - Range, C- Capacity / Consumption, D - Draft, P - Power, T - Type, B - BoatCapacity |
-        /// </summary>
-        void ChangePersonCharacteristics(string value, char symbol);
+        
     }
 
 }

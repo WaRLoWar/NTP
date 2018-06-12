@@ -12,138 +12,20 @@ using Model;
 namespace WinForm
 {
     public partial class SecondaryForm : Form
-    {
-        #region Private Value
-
-        private string _name;
-        private string _serialNumber;
-        private DateTime _manufacturesYear;
-        private string _cost;
-        private string _firstPersonal;
-        private string _secondPersonal;
-        private string _thirdPersonal;
-        private char _typeVehicle;
-
-        #endregion Private Value
- 
-        #region Enter Value
-
-        public string EnterName
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        public string EnterSerialNumber
-        {
-            get { return _serialNumber;}
-            set { _serialNumber = value; }
-        }
-        public string EnterCost
-        {
-            get { return _cost; }
-            set { _cost = value; }
-        }
-        public DateTime EnterDateTime
-        {
-            get { return Convert.ToDateTime(_manufacturesYear.Date); }
-            set { _manufacturesYear = Convert.ToDateTime(value); }
-        }
-
-        public string EnterFirstPersonal
-        {
-            get { return _firstPersonal; }
-            set { _firstPersonal = value; }
-        }
-
-        public string EnterSecondPersonal
-        {
-            get { return _secondPersonal; }
-            set { _secondPersonal = value; }
-        }
-
-        public string EnterThirdPersonal
-        {
-            get { return _thirdPersonal; }
-            set { _thirdPersonal = value; }
-        }
-
-        public char EnterTypeVehicle
-        {
-            get { return _typeVehicle; }
-            set { _typeVehicle = value; }
-        }
-
-        private void EnterAllValue()
-        {            
-            EnterName = tb_Name.Text;
-            EnterCost = tb_Cost.Text;
-            EnterDateTime = dtp_Date.Value;
-            EnterSerialNumber = tb_SerialNumber.Text;
-            if (rbtn_Car.Checked)
-            {
-                EnterFirstPersonal = cb_FirstPersonal.Text;
-            }
-            else
-            {
-                EnterFirstPersonal = tb_FirstPersonal.Text;
-            }
-            EnterSecondPersonal = tb_SecondPersonal.Text;
-            EnterThirdPersonal = tb_ThirdPersonal.Text;
-        }
-
-        #endregion Enter Value
-
-        #region Set Value    
-
-        public void SetCarValue(Car data)
-        {
-            EnterTypeVehicle = 'C';
-            rbtn_Car.Checked = true;
-            tb_Name.Text = data.Name;
-            tb_SerialNumber.Text = data.SerialNumber;
-            tb_Cost.Text = Convert.ToString(data.Cost);
-            dtp_Date.Value = data.ManufacturesYear;
-            cb_FirstPersonal.Text = data.Type;
-            tb_SecondPersonal.Text = Convert.ToString(data.Power);
-            tb_ThirdPersonal.Text = Convert.ToString(data.Consumption);
-        }
-
-        public void SetBoatValue(Boat data)
-        {
-            EnterTypeVehicle = 'B';
-            rbtn_Boat.Checked = true;
-            tb_Name.Text = data.Name;
-            tb_SerialNumber.Text = data.SerialNumber;
-            tb_Cost.Text = Convert.ToString(data.Cost);
-            dtp_Date.Value = data.ManufacturesYear;
-            tb_FirstPersonal.Text = Convert.ToString(data.Speed);
-            tb_SecondPersonal.Text = Convert.ToString(data.Draft);
-            tb_ThirdPersonal.Text = Convert.ToString(data.BoatCapacity);
-        }
-
-        public void SetHelicopterValue(Helicopter data)
-        {
-            EnterTypeVehicle = 'H';
-            rbtn_Helicopter.Checked = true;
-            tb_Name.Text = data.Name;
-            tb_SerialNumber.Text = data.SerialNumber;
-            tb_Cost.Text = Convert.ToString(data.Cost);
-            dtp_Date.Value = data.ManufacturesYear;
-            tb_FirstPersonal.Text = Convert.ToString(data.Range);
-            tb_SecondPersonal.Text = Convert.ToString(data.Capacity);
-            tb_ThirdPersonal.Text = Convert.ToString(data.Speed);
-        }
-
-        #endregion Set Value
-
+    {       
         #region Initial Setting 
 
+        /// <summary>
+        /// Сonstructor
+        /// </summary>
         public SecondaryForm()
         {
             InitializeComponent();
-            DefaultSetting();            
+            DefaultSetting();
         }
-
+        /// <summary>
+        /// Default Setting
+        /// </summary>
         private void DefaultSetting()
         {
             rbtn_Car.Checked = true;
@@ -151,7 +33,7 @@ namespace WinForm
             dtp_Date.MaxDate = DateTime.Today;
             dtp_Date.Value = DateTime.Today;
             tb_Cost.MaxLength = 12;
-            cb_FirstPersonal.Text = "NULL";
+            cb_FirstPersonal.Text = "Null";
             cb_FirstPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cb_FirstPersonal.Size = tb_FirstPersonal.Size;
             cb_FirstPersonal.Location = tb_FirstPersonal.Location;
@@ -159,42 +41,131 @@ namespace WinForm
 
         #endregion Initial Setting 
 
+        #region Get and Set Value  
+
+        /// <summary>
+        /// Combining fields under one interface
+        /// </summary>
+        /// <returns></returns>
+        public IVehicle GetVehicle()
+        {
+            IVehicle newVehicle = null;            
+            if (rbtn_Car.Checked)
+            {
+                Car newCar = new Car();                
+                newCar.Type = cb_FirstPersonal.Text;
+                newCar.Power = Convert.ToDouble(tb_SecondPersonal.Text);
+                newCar.Consumption = Convert.ToDouble(tb_ThirdPersonal.Text);
+                newVehicle = newCar;
+                newVehicle.TypeVehicle = "Car";
+            }
+            else if (rbtn_Boat.Checked)
+            {
+                Boat newBoat = new Boat();               
+                newBoat.Speed= Convert.ToDouble(tb_FirstPersonal.Text);
+                newBoat.Draft = Convert.ToDouble(tb_SecondPersonal.Text);
+                newBoat.BoatCapacity = Convert.ToUInt32(tb_ThirdPersonal.Text);
+                newVehicle = newBoat;
+                newVehicle.TypeVehicle = "Boat";
+            }
+            else
+            {
+                Helicopter newHelicopter = new Helicopter();                
+                newHelicopter.Range= Convert.ToUInt32(tb_FirstPersonal.Text);
+                newHelicopter.Capacity = Convert.ToUInt32(tb_SecondPersonal.Text);
+                newHelicopter.Speed = Convert.ToDouble(tb_ThirdPersonal.Text);
+                newVehicle = newHelicopter;
+                newVehicle.TypeVehicle = "Helicopter";
+            }
+            newVehicle.Name = tb_Name.Text;
+            newVehicle.Cost = Convert.ToDouble(tb_Cost.Text);
+            newVehicle.ManufacturesYear = dtp_Date.Value;
+            newVehicle.SerialNumber = tb_SerialNumber.Text;    
+            return newVehicle;
+        }
+        /// <summary>
+        /// Adding a value to a field from outside
+        /// </summary>
+        /// <param name="data"></param>
+        public void SetVehicleData(IVehicle data)
+        {           
+            if (data is Car dataCar)
+            {
+                rbtn_Car.Checked = true;
+                cb_FirstPersonal.Text = dataCar.Type;
+                tb_SecondPersonal.Text = Convert.ToString(dataCar.Power);
+                tb_ThirdPersonal.Text = Convert.ToString(dataCar.Consumption);
+            }
+            else if (data is Boat dataBoat)
+            {
+                rbtn_Boat.Checked = true;
+                tb_FirstPersonal.Text = Convert.ToString(dataBoat.Speed);
+                tb_SecondPersonal.Text = Convert.ToString(dataBoat.Draft);
+                tb_ThirdPersonal.Text = Convert.ToString(dataBoat.BoatCapacity);
+            }
+            else 
+            {
+                Helicopter dataHelicopter = (Helicopter) data;
+                rbtn_Helicopter.Checked = true;
+                tb_FirstPersonal.Text = Convert.ToString(dataHelicopter.Range);
+                tb_SecondPersonal.Text = Convert.ToString(dataHelicopter.Capacity);
+                tb_ThirdPersonal.Text = Convert.ToString(dataHelicopter.Speed);
+            }
+            tb_Name.Text = data.Name;
+            tb_Cost.Text = Convert.ToString(data.Cost);
+            tb_SerialNumber.Text = data.SerialNumber;
+            dtp_Date.Value = data.ManufacturesYear;
+        }
+        #endregion Get and Set Value
+
         #region Button
 
-        private void btn_OK_Click(object sender, EventArgs e)
-        {            
-            EnterAllValue();
-            if (isBlankSheet())
+        /// <summary>
+        /// OK button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_OK_Click(object sender, EventArgs e)
+        {                        
+            if (IsBlankSheet())
             {
                 this.DialogResult = DialogResult.Cancel;
                 MessageBox.Show("Blank Sheet !");
             }
             else
-            {
+            {           
                 this.DialogResult = DialogResult.OK;
             }            
             this.Close();
         }
-
-        private void btn_Cancel_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Cancel button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_Cancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        
         #endregion Button
 
         #region RadioButton
-
-        private void rbtn_CheckedChange(object sender, EventArgs e)
+        /// <summary>
+        /// The current type of transport
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Rbtn_CheckedChange(object sender, EventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
             if (rbtn_Car.Checked)
-            {
-                EnterTypeVehicle = 'C';
+            {   
+                ClearFields();
                 tb_FirstPersonal.Visible = false;
                 cb_FirstPersonal.Visible = true;
-
                 tb_SerialNumber.MaxLength = 17;
                 l_FirstPersonal.Text = "Car interior ";
                 l_SecondPersonal.Text = "Car power";
@@ -204,10 +175,9 @@ namespace WinForm
             }
             else if (rbtn_Boat.Checked)
             {
-                EnterTypeVehicle = 'B';
+                ClearFields();
                 cb_FirstPersonal.Visible = false;
                 tb_FirstPersonal.Visible = true;
-
                 tb_SerialNumber.MaxLength = 12;
                 l_FirstPersonal.Text = "Boat speed ";
                 tb_FirstPersonal.MaxLength = 2;
@@ -218,10 +188,9 @@ namespace WinForm
             }
             else if (rbtn_Helicopter.Checked)
             {
-                EnterTypeVehicle = 'H';
+                ClearFields();
                 cb_FirstPersonal.Visible = false;
                 tb_FirstPersonal.Visible = true;
-
                 tb_SerialNumber.MaxLength = 10;
                 l_FirstPersonal.Text = "Practical range ";
                 tb_FirstPersonal.MaxLength = 4;
@@ -231,37 +200,24 @@ namespace WinForm
                 tb_ThirdPersonal.MaxLength = 3;
             }
         }
-
         #endregion RadioButton
 
         #region TextBox
 
-        private void tb_Name_KeyPress(object sender, KeyPressEventArgs e)
+        /// <summary>
+        /// Action by pressing a key in the field 'SerialNumber'
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_SerialNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '.' || e.KeyChar == ',')
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                KeyPress_EnglishAndNumberSymbol(e);
-            }
-
-        }
-
-        private void tb_SerialNumber_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == '.' || e.KeyChar == ',')
-            {
-                e.Handled = true;
-            }
             if (rbtn_Car.Checked)
             {
-                KeyPress_EnglishAndNumberSymbol(e);
+                KeyPress_EnglishAndNumberSymbol(sender, e);
             }
             else if (rbtn_Boat.Checked)
             {
-                KeyPress_OnlyNumberSymbol(e);
+                KeyPress_OnlyNumberSymbol(sender, e);
             }
             else if (rbtn_Helicopter.Checked)
             {
@@ -272,48 +228,60 @@ namespace WinForm
                 }
                 else
                 {
-                    KeyPress_OnlyNumberSymbol(e);
+                    KeyPress_OnlyNumberSymbol(sender, e);
                 }
             }
         }
-
-        private void tb_SerialNumber_Leave(object sender, EventArgs e)
+        /// <summary>
+        /// Action on leaving the field 'SerialNumber'
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_SerialNumber_Leave(object sender, EventArgs e)
         {
             if (tb_SerialNumber.Text != "")
-            {
+            {                
                 int lengthText = tb_SerialNumber.TextLength;
                 if (rbtn_Car.Checked)
                 {
-                    if (lengthText != 17)
+                    const int constLength=17;
+                    if (lengthText != constLength)
                     {
                         MessageBox.Show("The length of the serial number must be 17 characters !");
                     }
                 }
                 else if (rbtn_Boat.Checked)
                 {
-                    if (lengthText != 8 && lengthText != 12)
+                    const int maxConstLength = 12;
+                    const int minConstLength = 8;
+                    if (lengthText != minConstLength && lengthText != maxConstLength)
                     {
                         MessageBox.Show("The length of the serial number must be 8 or 12 characters !");
                     }
                 }
                 else if (rbtn_Helicopter.Checked)
                 {
-                    if (lengthText != 10)
+                    const int constLength = 10;
+                    if (lengthText != constLength)
                     {
                         MessageBox.Show("The length of the serial number must be 10 characters !");
                     }
                 }
             }
-
         }
 
-        private void tb_Cost_KeyPress(object sender, KeyPressEventArgs e)
+        /// <summary>
+        /// Action by pressing a key in the field 'Cost'
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_Cost_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!IsCorrectLine(sender, e))
             {
                 e.Handled = true;
             }
-            if (tb_Cost.Text == "" && (e.KeyChar == ',' || e.KeyChar == '.'))
+            if (tb_Cost.Text == "" && (e.KeyChar == ',' || e.KeyChar == '.') || !IsNumberSymbol(e) && !IsSpecialSymbols(e))
             {
                 e.Handled = true;
             }
@@ -321,28 +289,15 @@ namespace WinForm
             {                
                 e.KeyChar = '.';
             }
-            else if (!IsNumberSymbol(e) && !IsSpecialSymbols(e))
-            {
-                e.Handled = true;
-            }
-        }
+        }            
 
-       
-        private void tb_FirstPersonal_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == ',' || e.KeyChar == '.')
-            {
-                e.Handled = true;
-
-            }
-            else
-            {
-                KeyPress_OnlyNumberSymbol(e);
-            }
-
-        }
-
-        private void tb_FirstPersonal_Leave(object sender, EventArgs e)
+        /// <summary>
+        /// Action on leaving the field 'FirstPersonal' 
+        /// (Boat - Speed / Helicopter - Range )
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_FirstPersonal_Leave(object sender, EventArgs e)
         {
             if (tb_FirstPersonal.Text != "")
             {
@@ -350,7 +305,8 @@ namespace WinForm
                 number = Convert.ToDouble(tb_FirstPersonal.Text);                
                 if (rbtn_Boat.Checked)
                 {
-                    if (number > 80)
+                    const uint maxValue = 80;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("Entered speed greater than maximum speed !( 80 km/h )");
                         tb_FirstPersonal.Text = "";
@@ -358,7 +314,8 @@ namespace WinForm
                 }
                 else if (rbtn_Helicopter.Checked)
                 {
-                    if (number > 1200)
+                    const uint maxValue = 1200;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("The entered value is greater than the maximum value (1200 km) !");
                         tb_FirstPersonal.Text = "";
@@ -366,21 +323,14 @@ namespace WinForm
                 }
             }
         }
-        private void tb_SecondPersonal_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == ',' || e.KeyChar == '.')
-            {
-                e.Handled = true;
 
-            }
-            else
-            {
-                KeyPress_OnlyNumberSymbol(e);
-            }
-        }
-
-        
-        private void tb_SecondPersonal_Leave(object sender, EventArgs e)
+        /// <summary>
+        ///  Action on leaving the field 'SecondPersonal'
+        /// ( Car - Power / Boat - Draft / Helicopter - Capacity)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_SecondPersonal_Leave(object sender, EventArgs e)
         {            
             if (tb_SecondPersonal.Text != "")
             {
@@ -388,7 +338,8 @@ namespace WinForm
                 number = Convert.ToDouble(tb_SecondPersonal.Text);
                 if (rbtn_Car.Checked)
                 {
-                    if (number > 600)
+                    const uint maxValue = 600;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("Engine power must be less than 600 !");
                         tb_SecondPersonal.Text = "";
@@ -396,7 +347,8 @@ namespace WinForm
                 }
                 else if (rbtn_Boat.Checked)
                 {
-                    if (number > 80) 
+                    const uint maxValue = 80;
+                    if (number > maxValue) 
                     {
                         MessageBox.Show("The entered value of the boat draught is greater than the maximum value ! ( 80 cm )");
                         tb_SecondPersonal.Text = "";
@@ -404,7 +356,8 @@ namespace WinForm
                 }
                 else if (rbtn_Helicopter.Checked)
                 {
-                    if (number > 8000) 
+                    const uint maxValue = 8000;
+                    if (number > maxValue) 
                     {
                         MessageBox.Show("The entered value is greater than the maximum value(8000 kg) !");
                         tb_SecondPersonal.Text = "";
@@ -413,19 +366,13 @@ namespace WinForm
             }
         }
 
-        private void tb_ThirdPersonal_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == ',' || e.KeyChar == '.')
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                KeyPress_OnlyNumberSymbol(e);
-            }
-        }
-
-        private void tb_ThirdPersonal_Leave(object sender, EventArgs e)
+        /// <summary>
+        /// Action on leaving the field 'ThirdPersonal'
+        /// ( Car - Consumption / Boat - Capacity / Helicopter - Speed )
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_ThirdPersonal_Leave(object sender, EventArgs e)
         {
             if (tb_ThirdPersonal.Text != "")
             {
@@ -433,7 +380,8 @@ namespace WinForm
                 number = Convert.ToDouble(tb_ThirdPersonal.Text);
                 if (rbtn_Car.Checked)
                 {
-                    if (number > 20)
+                    const uint maxValue = 20;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("Fuel consumption more than 20 (liters / 100 km) !");
                         tb_ThirdPersonal.Text = "";
@@ -441,7 +389,8 @@ namespace WinForm
                 }
                 else if (rbtn_Boat.Checked)
                 {
-                    if (number > 18)
+                    const uint maxValue=18;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("The entered boat capacity value is greater than the maximum value ! ( 18 )");
                         tb_ThirdPersonal.Text = "";
@@ -449,7 +398,8 @@ namespace WinForm
                 }
                 else if (rbtn_Helicopter.Checked)
                 {
-                    if (number > 200)
+                    const uint maxValue = 200;
+                    if (number > maxValue)
                     {
                         MessageBox.Show("The entered value is greater than the maximum value (200 km / h ) !");
                         tb_ThirdPersonal.Text = "";
@@ -461,48 +411,107 @@ namespace WinForm
 
         #region GeneralKeyPress
 
-        private void KeyPress_EnglishAndNumberSymbol(KeyPressEventArgs e)
+        /// <summary>
+        /// Function that allows you to enter only numbers and symbols of the English alphabet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KeyPress_EnglishAndNumberSymbol(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = char.ToUpper(e.KeyChar);
-            if (!IsEnglishSymbol(e) && !IsNumberSymbol(e) && !IsSpecialSymbols(e))
+            if (!IsEnglishSymbol(e) && !IsNumberSymbol(e) && !IsSpecialSymbols(e) || (e.KeyChar == ',' || e.KeyChar == '.'))
             {
                 e.Handled = true;
             }
         }
-        private void KeyPress_OnlyNumberSymbol(KeyPressEventArgs e)
+        /// <summary>
+        /// Function that allows you to enter only numbers 
+        /// </summary>
+        /// <param name="senderr"></param>
+        /// <param name="e"></param>
+        private void KeyPress_OnlyNumberSymbol(object senderr, KeyPressEventArgs e)
         {
-            if (!IsNumberSymbol(e) && !IsSpecialSymbols(e))
+            if (!IsNumberSymbol(e) && !IsSpecialSymbols(e) || (e.KeyChar == ',' || e.KeyChar == '.'))
             {
                 e.Handled = true;
             }
         }
+        /// <summary>
+        /// Function that allows you to enter only symbols of the English alphabet
+        /// </summary>
+        /// <param name="e"></param>
         private void KeyPress_OnlyEnglishSymbol(KeyPressEventArgs e)
         {
             e.KeyChar = char.ToUpper(e.KeyChar);
-            if (!IsEnglishSymbol(e) && !IsSpecialSymbols(e))
+            if (!IsEnglishSymbol(e) && !IsSpecialSymbols(e) && (e.KeyChar == '.' || e.KeyChar == ','))
             {
                 e.Handled = true;
             }
+        }
+
+        /// <summary>
+        /// Checking for at least one blank field
+        /// </summary>
+        /// <returns></returns>
+        private bool IsBlankSheet()
+        {
+            return (String.IsNullOrWhiteSpace(tb_Name.Text) || String.IsNullOrWhiteSpace(tb_Cost.Text) ||
+                    String.IsNullOrWhiteSpace(tb_SerialNumber.Text) ||
+                    String.IsNullOrWhiteSpace(tb_SecondPersonal.Text) ||
+                    String.IsNullOrWhiteSpace(tb_ThirdPersonal.Text));
+        }
+        /// <summary>
+        /// Clearing fields
+        /// </summary>
+        private void ClearFields()
+        {
+            tb_Name.Text = "";
+            tb_SerialNumber.Text = "";
+            tb_Cost.Text = "";
+            dtp_Date.Value = dtp_Date.MaxDate;
+            tb_FirstPersonal.Text = "";
+            tb_SecondPersonal.Text = "";
+            tb_ThirdPersonal.Text = "";
         }
 
         #endregion GeneralKeyPress
 
         #region CheckKeyPress
 
+        /// <summary>
+        /// Checking whether the symbol is a decimal digit
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         private bool IsNumberSymbol(KeyPressEventArgs e)
         {            
-            return (Char.IsDigit((e.KeyChar))) ? true : false;
+            return (char.IsDigit((e.KeyChar)));
         }
 
+        /// <summary>
+        /// Checking whether a character is an English alphabet character
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         private bool IsEnglishSymbol(KeyPressEventArgs e)
-        {
-            return (e.KeyChar >= 'A' && e.KeyChar <= 'Z') ? true : false;
+        {            
+            return (e.KeyChar >= 'A' && e.KeyChar <= 'Z');
         }
+        /// <summary>
+        /// Check whether the key pressed is a Backspace or Delete button
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         private bool IsSpecialSymbols(KeyPressEventArgs e)
-        {
-            return ((e.KeyChar != (char)Keys.Back) && (e.KeyChar != (char)Keys.Delete)) ? false : true;
+        {           
+            return ((e.KeyChar == (char)Keys.Back) || (e.KeyChar == (char)Keys.Delete));
         }
-
+        /// <summary>
+        /// Checks the string for more than one comma in the field 'Cost'
+        /// </summary>
+        /// <param name="semder"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
         private bool IsCorrectLine(object semder, KeyPressEventArgs e)
         {
             char[] text = tb_Cost.Text.ToCharArray();
@@ -519,15 +528,6 @@ namespace WinForm
             return true;
         }
 
-        private bool isBlankSheet()
-        {
-            return (String.IsNullOrWhiteSpace(EnterName) || String.IsNullOrWhiteSpace(EnterCost) ||
-                    String.IsNullOrEmpty(EnterFirstPersonal) || String.IsNullOrWhiteSpace(EnterSecondPersonal) ||
-                    String.IsNullOrWhiteSpace(EnterThirdPersonal))
-                ? true
-                : false;
-        }
         #endregion CheckKeyPress
-
     }
 }

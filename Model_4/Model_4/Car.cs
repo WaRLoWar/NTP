@@ -1,27 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model
 {
-    sealed public class Car : VehicleBase
+    public sealed class Car : VehicleBase
     {
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public Car()
         {
 
         }
-        public Car(char typeVehicle,string name, string serialNumber, double cost, DateTime data, double power, double consumption, string type) 
+
+        /// <summary>
+        /// Constructor with parameters
+        /// </summary>
+        /// <param name="typeVehicle"></param>
+        /// <param name="name"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="cost"></param>
+        /// <param name="data"></param>
+        /// <param name="power"></param>
+        /// <param name="consumption"></param>
+        /// <param name="type"></param>
+        public Car(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double power,
+            double consumption, string type)
             : base(typeVehicle, name, cost, data)
         {
-            
             this.Power = power;
             this.Consumption = consumption;
             this.Type = type;
             this.SerialNumber = serialNumber;
         }
-        #region Private
+
+        #region Field
 
         /// <summary>
         /// Types of car interior
@@ -33,14 +51,14 @@ namespace Model
             Compact,
             MidSize,
             Large,
-            NULL
+            Null
         }
 
         /// <summary>
         /// Type of car interior
         /// </summary>
-        private InteriorTypes _type = InteriorTypes.NULL;
-        
+        private InteriorTypes _type = InteriorTypes.Null;
+
         /// <summary>
         /// The engine power of the car (up to 600 hp)
         /// </summary>
@@ -51,106 +69,70 @@ namespace Model
         /// </summary>
         private double _consumption = 0;
 
-        #endregion Private
+        #endregion Field
 
-        #region Public and Protected
+        #region Method
 
         /// <summary>
         /// The engine power of the car (up to 600 hp)
         /// </summary>
         public double Power
         {
-            get
-            {
-                return _power;
-            }
+            get => _power;
             set
             {
-                try
+                // The maximum power of the car
+                const uint maxValue = 600;
+                _power = value;
+                if (value > maxValue)
                 {
-                    _power = Convert.ToDouble(value);
-                    if (Convert.ToDouble(value) > 600)
-                    {
-                        throw new Exception("Engine power must be less than 600 !");
-                    }
-                   
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException("Incorrect power value of the car was entered !");
+                    throw new ArgumentException("Engine power must be less than 600 !");
                 }
             }
         }
-        
+
         /// <summary>
         /// The fuel consumption of a vehicle per 100 km (up to 20 L/ 100 km)
         /// </summary>
         public double Consumption
         {
-            get
-            {
-                return _consumption;
-            }
+            get => _consumption;
             set
             {
-                try
+                const uint maxValue = 20;
+                _consumption = value;
+                if (value > maxValue)
                 {
-                    _consumption = Convert.ToDouble(value);
-                    if (Convert.ToDouble(value) > 20)
-                    {
-                        throw new FormatException("Fuel consumption more than 20 (liters / 100 km) !");
-                    }
+                    throw new ArgumentException("Fuel consumption more than 20 (liters / 100 km) !");                    
                 }
-                catch (FormatException)
-                {
-                    throw new FormatException("Format Exception");
-                }
-                
             }
         }
 
         /// <summary>
-        /// Type of car interior
-        /// { Mini = 0, Sub = 1, Compact = 2, MidSize = 3, Large = 4, NULL = 5 }
+        /// Type of car
         /// </summary>
-        //public int Type
-        //{
-        //    set
-        //    {               
-        //        if (Convert.ToInt32(value) < 0 || Convert.ToInt32(value) > 4)
-        //        {
-        //            throw new FormatException("Input error");
-        //        }
-        //        _type = (InteriorTypes)Convert.ToInt32(value);                
-        //    }
-        //}
-
         public string Type
         {
-            get
-            {
-                return Convert.ToString(_type);
-            }
+            get => Convert.ToString(_type);
             set
             {
-                InteriorTypes c=InteriorTypes.Mini;
-                for (int i = 0; i < 6; i++)
+                bool isCurrectionValue = false;
+                InteriorTypes current;
+                for (current = InteriorTypes.Mini; current != InteriorTypes.Null+1; current++)
                 {
-                    if (value == Convert.ToString(c))
+                    if (value == Convert.ToString(current))
                     {
-                        _type = c;
+                        _type = current;
+                        isCurrectionValue = true;
                         break;
                     }
-                    c++;
+                }
+
+                if (!isCurrectionValue)
+                {
+                    throw new ArgumentException("Type - Invalid character");
                 }
             }
-        }
-        /// <summary>
-        /// Features of transport
-        /// </summary>
-        public override string PrintTransportsFeatures()
-        {
-            return Convert.ToString(Power + " " + Consumption + " " + Type);
         }
 
         /// <summary>
@@ -158,10 +140,7 @@ namespace Model
         /// </summary>
         public override string SerialNumber
         {
-            get
-            {
-                return _serialNumber;
-            }
+            get => _serialNumber;
             set
             {
                 if (!(IsSerialNumber(value.ToUpper())))
@@ -187,49 +166,11 @@ namespace Model
                 return false;
             }
             else
-            {               
-                for (int i = 0; i < source.Length; i++)
-                {
-                    if (!(IsEnglisLetter(source[i])) && !(IsNumber(source[i])))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Changing personal characteristics 
-        /// | C - Consumption, P - Power, T - Type |
-        /// </summary>
-        public override void ChangePersonCharacteristics(string value, char symbol)
-        {
-            switch (symbol)
             {
-                case 'P':
-                    {
-                        Power = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'C':
-                    {
-                        Consumption = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'T':
-                    {
-                        Type = Convert.ToString(value);
-                        break;
-                    }
-                default:
-                    {
-                        throw new FormatException("You entered an incorrect character");                       
-                    }
+                return source.All(t => IsEnglisLetter(t) || IsNumber(t));
             }
         }
-
-        #endregion Public and Protected
+        #endregion Method
     }
 
 }

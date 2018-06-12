@@ -96,7 +96,7 @@
             "Compact",
             "MidSize",
             "Large",
-            "NULL"});
+            "Null"});
             this.cb_FirstPersonal.Location = new System.Drawing.Point(246, 19);
             this.cb_FirstPersonal.Name = "cb_FirstPersonal";
             this.cb_FirstPersonal.Size = new System.Drawing.Size(24, 21);
@@ -108,8 +108,8 @@
             this.tb_ThirdPersonal.Name = "tb_ThirdPersonal";
             this.tb_ThirdPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_ThirdPersonal.TabIndex = 9;
-            this.tb_ThirdPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_ThirdPersonal_KeyPress);
-            this.tb_ThirdPersonal.Leave += new System.EventHandler(this.tb_ThirdPersonal_Leave);
+            this.tb_ThirdPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_ThirdPersonal.Leave += new System.EventHandler(this.Tb_ThirdPersonal_Leave);
             // 
             // tb_SecondPersonal
             // 
@@ -117,8 +117,8 @@
             this.tb_SecondPersonal.Name = "tb_SecondPersonal";
             this.tb_SecondPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_SecondPersonal.TabIndex = 8;
-            this.tb_SecondPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_SecondPersonal_KeyPress);
-            this.tb_SecondPersonal.Leave += new System.EventHandler(this.tb_SecondPersonal_Leave);
+            this.tb_SecondPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_SecondPersonal.Leave += new System.EventHandler(this.Tb_SecondPersonal_Leave);
             // 
             // tb_FirstPersonal
             // 
@@ -126,8 +126,8 @@
             this.tb_FirstPersonal.Name = "tb_FirstPersonal";
             this.tb_FirstPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_FirstPersonal.TabIndex = 7;
-            this.tb_FirstPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_FirstPersonal_KeyPress);
-            this.tb_FirstPersonal.Leave += new System.EventHandler(this.tb_FirstPersonal_Leave);
+            this.tb_FirstPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_FirstPersonal.Leave += new System.EventHandler(this.Tb_FirstPersonal_Leave);
             // 
             // l_ThirdPersonal
             // 
@@ -208,7 +208,7 @@
             this.tb_Cost.Name = "tb_Cost";
             this.tb_Cost.Size = new System.Drawing.Size(125, 20);
             this.tb_Cost.TabIndex = 5;
-            this.tb_Cost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Cost_KeyPress);
+            this.tb_Cost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Cost_KeyPress);
             // 
             // l_Cost
             // 
@@ -234,8 +234,8 @@
             this.tb_SerialNumber.Name = "tb_SerialNumber";
             this.tb_SerialNumber.Size = new System.Drawing.Size(125, 20);
             this.tb_SerialNumber.TabIndex = 4;
-            this.tb_SerialNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_SerialNumber_KeyPress);
-            this.tb_SerialNumber.Leave += new System.EventHandler(this.tb_SerialNumber_Leave);
+            this.tb_SerialNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_SerialNumber_KeyPress);
+            this.tb_SerialNumber.Leave += new System.EventHandler(this.Tb_SerialNumber_Leave);
             // 
             // tb_Name
             // 
@@ -243,7 +243,7 @@
             this.tb_Name.Name = "tb_Name";
             this.tb_Name.Size = new System.Drawing.Size(125, 20);
             this.tb_Name.TabIndex = 3;
-            this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Name_KeyPress);
+            this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_EnglishAndNumberSymbol);
             // 
             // gb_TypeVehicle
             // 
@@ -267,7 +267,7 @@
             this.rbtn_Car.TabStop = true;
             this.rbtn_Car.Text = "Car";
             this.rbtn_Car.UseVisualStyleBackColor = true;
-            this.rbtn_Car.CheckedChanged += new System.EventHandler(this.rbtn_CheckedChange);
+            this.rbtn_Car.CheckedChanged += new System.EventHandler(this.Rbtn_CheckedChange);
             // 
             // rbtn_Boat
             // 
@@ -279,7 +279,7 @@
             this.rbtn_Boat.TabStop = true;
             this.rbtn_Boat.Text = "Boat";
             this.rbtn_Boat.UseVisualStyleBackColor = true;
-            this.rbtn_Boat.CheckedChanged += new System.EventHandler(this.rbtn_CheckedChange);
+            this.rbtn_Boat.CheckedChanged += new System.EventHandler(this.Rbtn_CheckedChange);
             // 
             // rbtn_Helicopter
             // 
@@ -291,7 +291,7 @@
             this.rbtn_Helicopter.TabStop = true;
             this.rbtn_Helicopter.Text = "Helicopter";
             this.rbtn_Helicopter.UseVisualStyleBackColor = true;
-            this.rbtn_Helicopter.CheckedChanged += new System.EventHandler(this.rbtn_CheckedChange);
+            this.rbtn_Helicopter.CheckedChanged += new System.EventHandler(this.Rbtn_CheckedChange);
             // 
             // btn_Cancel
             // 
@@ -301,7 +301,7 @@
             this.btn_Cancel.TabIndex = 11;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
-            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
+            this.btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
             // 
             // btn_OK
             // 
@@ -311,7 +311,7 @@
             this.btn_OK.TabIndex = 10;
             this.btn_OK.Text = "OK";
             this.btn_OK.UseVisualStyleBackColor = true;
-            this.btn_OK.Click += new System.EventHandler(this.btn_OK_Click);
+            this.btn_OK.Click += new System.EventHandler(this.Btn_OK_Click);
             // 
             // SecondaryForm
             // 

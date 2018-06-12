@@ -2,36 +2,54 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model;
-using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 
 namespace WinForm
 {
     public partial class MainForm : Form
-    {        
-        private SecondaryForm secondaryForm;
-        private DialogResult dialogResult;
-        private bool isNeedSave = false;
+    {
+        #region Private Fields
+        private SecondaryForm _secondaryForm;
+        private DialogResult _dialogResult;
+        private bool _isNeedSave = false;
+        private bool _isFileCreated = false;
         private List<IVehicle> _vehicles;
+        private DataContractJsonSerializer _serialized;
+        private RandomVehicle _randomVehicle;
+        #endregion Private Fields   
 
-
+        #region Default Setting
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainForm()
-        {               
+        {
             InitializeComponent();
             DefaultSetting();
-           
+            List<Type> typeList = new List<Type>
+            {
+                typeof(Car),
+                typeof(Boat),
+                typeof(Helicopter)
+            };           
+            _serialized = new DataContractJsonSerializer(typeof(List<IVehicle>),typeList);
         }
-
+        /// <summary>
+        /// Default Setting
+        /// </summary>
         private void DefaultSetting()
         {
+            btn_CreateRandomData.Visible = System.Diagnostics.Debugger.IsAttached;
             _vehicles = new List<IVehicle>();
             bs_Main.DataSource = _vehicles;
             dgv_Main.DataSource = bs_Main;
@@ -41,187 +59,125 @@ namespace WinForm
             tb_Search.MaxLength = 20;
             ms_SaveTool.ShortcutKeys = Keys.Control | Keys.S;
             ms_SaveAsTool.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-            ms_OpenTool.ShortcutKeys = Keys.Control | Keys.O;            
+            ms_OpenTool.ShortcutKeys = Keys.Control | Keys.O;
+            ms_NewFileTool.ShortcutKeys = Keys.Control | Keys.N;
         }
-        private void SaveData()
-        {
-            if (!IsNeedSaveData())
-            {
-                MessageBox.Show("List is empty. Nothing to save");
-            }
-            else
-            {
-                isNeedSave = false;
-                sfd_Main.AddExtension = true;
-                sfd_Main.Filter = "Vehicle|*.vehicle";
-                DialogResult result = sfd_Main.ShowDialog();
-                if (result == DialogResult.OK)
-                {                  
-                    string json = JsonConvert.SerializeObject(_vehicles);
-                    File.WriteAllText(sfd_Main.FileName, json);                    
-                }
-            }
-            //if (!(_vehicles.Any()))
-            //{
-            //    MessageBox.Show("List is empty. Nothing to save");
-            //}
-            //else
-            //{
-            //    string serialized = JsonConvert.SerializeObject(_vehicles);
-            //    MessageBox.Show(serialized);
+        #endregion Default Setting
 
-            //    DirectoryInfo dirInfo = CreateDirectory();
-            //    fstream = CreateFile(dirInfo, serialized);
-            //    FileInfo fileInfo = CreateFile(dirInfo);
-            //}
-        }
+        #region Action with Form Main and DataGridView
 
-        private DirectoryInfo CreateDirectory()
-        {
-            string path = @"C:\Users\WarLo\Documents\TestLab";
-            string subpath = @"SaveInfo";
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
-            if (!dirInfo.Exists)
-            {
-                dirInfo.Create();
-            }
-            dirInfo.CreateSubdirectory(subpath);
-            return dirInfo;
-        }
-
-        private FileInfo CreateFile(DirectoryInfo dir)
-        {
-            FileInfo fileInfo = new FileInfo(@"C:\Users\WarLo\Documents\TestLab\text.json");
-            if (!fileInfo.Exists)
-            {
-                fileInfo.Create();
-            }
-            return fileInfo;
-        }
-        private FileStream CreateFile(DirectoryInfo dir,string text)
-        {
-            FileStream fstream = new FileStream((dir.FullName + "note.json"),FileMode.Append);
-            byte[] array = System.Text.Encoding.Default.GetBytes(text);
-            fstream.Write(array, 0, array.Length);
-            MessageBox.Show("Text saved");
-            return fstream;
-        }
-
+        /// <summary>
+        /// Action on closing the main form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             ClosingForm();
         }
-        #region Add New Vehicle
-
-        private Car AddCar(Car newVehicle)
+        /// <summary>
+        /// Checking if you need to save data when closing the program
+        /// </summary>
+        private void ClosingForm()
         {
-            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
-            newVehicle.Name = secondaryForm.EnterName;
-            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
-            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
-            newVehicle.Type = Convert.ToString(secondaryForm.EnterFirstPersonal);
-            newVehicle.Power = Convert.ToDouble(secondaryForm.EnterSecondPersonal);
-            newVehicle.Consumption = Convert.ToDouble(secondaryForm.EnterThirdPersonal);
-            return newVehicle;
+            if (IsNeedSaveData())
+            {
+                DialogResult result = MessageBox.Show("Data not saved ! Save it?", "Attention", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    SaveAsData();
+                }
+                _isNeedSave = false;
+            }
         }
 
-        private Boat AddBoat(Boat newVehicle)
+        /// <summary>
+        /// Call the change function when you double-click the selected row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
-            newVehicle.Name = secondaryForm.EnterName;
-            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToDouble(secondaryForm.EnterCost);
-            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
-            newVehicle.Speed = Convert.ToDouble(secondaryForm.EnterFirstPersonal);
-            newVehicle.Draft = Convert.ToDouble(secondaryForm.EnterSecondPersonal);
-            newVehicle.BoatCapacity = Convert.ToInt32(secondaryForm.EnterThirdPersonal);
-            return newVehicle;
+            EditData();
         }
-
-        private Helicopter AddHelicopter(Helicopter newVehicle)
-        {
-            newVehicle.TypeVehicle = secondaryForm.EnterTypeVehicle;
-            newVehicle.Name = secondaryForm.EnterName;
-            newVehicle.SerialNumber = secondaryForm.EnterSerialNumber;
-            newVehicle.Cost = Convert.ToInt32(secondaryForm.EnterCost);
-            newVehicle.ManufacturesYear = secondaryForm.EnterDateTime;
-            newVehicle.Range = Convert.ToInt32(secondaryForm.EnterFirstPersonal);
-            newVehicle.Capacity = Convert.ToInt32(secondaryForm.EnterSecondPersonal);
-            newVehicle.Speed = Convert.ToDouble(secondaryForm.EnterThirdPersonal);
-            return newVehicle;
-        }
-
-        #endregion Add New Vehicle
-
+        #endregion Action with Form Main and DataGridView
+    
         #region Buttons
-
 
         /// <summary>
         /// Button to add data
         /// </summary>        
-        private void btn_Add_Click(object sender, EventArgs e)
+        private void Btn_Add_Click(object sender, EventArgs e)
         {
-            Car newCar = new Car();
-            newCar.TypeVehicle = 'C';
-            newCar.Name = "CCC";
-            newCar.SerialNumber = "12345678901234567";
-            newCar.Consumption = 18;
-            newCar.Power = 23;
-            newCar.Type = "NULL";
-            newCar.Cost = 11;
-            newCar.ManufacturesYear = DateTime.Today;
-            bs_Main.Add(newCar);
-
-            Boat newBoat = new Boat();
-            newBoat.TypeVehicle = 'B';
-            newBoat.Name = "EEE";
-            newBoat.SerialNumber = "12345678";
-            newBoat.ManufacturesYear = DateTime.Today;
-            isNeedSave = true;
-            bs_Main.Add(newBoat);
-
-            secondaryForm = new SecondaryForm();
-            dialogResult = secondaryForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            _secondaryForm = new SecondaryForm();
+            _dialogResult = _secondaryForm.ShowDialog();
+            if (_dialogResult == DialogResult.OK)
             {
-                IVehicle newVehicle = GetNewVehicle();                                
-                bs_Main.Add(newVehicle);
+                _isNeedSave = true;
+                try
+                {
+                    IVehicle newVehicle = _secondaryForm.GetVehicle();
+                    bs_Main.Add(newVehicle);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Warning Error " + ex.Message);
+                }                
             }
+        }
 
-        }        
-
-        private void btn_CreateRandomData_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Adding rows with random values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_CreateRandomData_Click(object sender, EventArgs e)
         {
-           
+            _randomVehicle= new RandomVehicle();
+            IVehicle newVehicle = _randomVehicle.GetRandomVehicle();
+            bs_Main.Add(newVehicle);
+            _isNeedSave = true;
         }
 
-       
-        private void btn_EditData_Click(object sender, EventArgs e)
-        {            
-           EditData();
+        /// <summary>
+        /// Call function edit row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_EditData_Click(object sender, EventArgs e)
+        {
+            if (!_vehicles.Any())
+            {
+                return;
+            }
+            EditData();
         }
 
-        private void btn_Remove_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Delete the selected row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_Remove_Click(object sender, EventArgs e)
         {
             int rowToDelete = dgv_Main.Rows.GetFirstRow(
                 DataGridViewElementStates.Selected);
             if (rowToDelete > -1)
             {
-                isNeedSave = true;
+                _isNeedSave = true;
                 bs_Main.RemoveAt(rowToDelete);                
             }
-
         }
 
         #endregion Buttons
 
-        #region TextBox
+        #region Search
 
         /// <summary>
         /// Checking the entered character
         /// </summary>        
-        private void tb_Search_KeyPress(object sender, KeyPressEventArgs e)
+        private void Tb_Search_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == ' ' || (char.ToUpper(e.KeyChar) >= 'А' && char.ToUpper(e.KeyChar) <= 'Я'))
             {
@@ -231,150 +187,154 @@ namespace WinForm
             {
                 e.KeyChar = char.ToUpper(e.KeyChar);
             }
-           
+
         }
-        private void tb_Search_KeyUp(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Checking the entered string for a match in the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Tb_Search_KeyUp(object sender, KeyEventArgs e)
         {
-            var founded = new List<IVehicle>();
-            foreach (var vehicle in _vehicles)
+            if (tb_Search.Text!="")
             {
-                if (vehicle.Name.Contains(tb_Search.Text) || vehicle.SerialNumber.Contains(tb_Search.Text))
+                var founded = new List<IVehicle>();
+                foreach (var vehicle in _vehicles)
                 {
-                    founded.Add(vehicle);
+                    if (vehicle.Name.Contains(tb_Search.Text) || vehicle.SerialNumber.Contains(tb_Search.Text))
+                    {
+                        founded.Add(vehicle);
+                    }
                 }
+                bs_Main.DataSource = founded;                  
             }
-            dgv_Main.DataSource = founded;
+            else
+            {
+                bs_Main.DataSource = _vehicles;
+            }
         }
-        #endregion TextBox
+
+        #endregion Search
 
         #region MenuStrip
-
         /// <summary>
-        /// Save data
+        /// Saving data
         /// </summary>        
-        private void ms_SaveTools_Click(object sender, EventArgs e)
+        private void Ms_SaveTools_Click(object sender, EventArgs e)
         {
-            SaveData();
+            if (_isFileCreated)
+            { 
+                FileStream fStream = new FileStream(sfd_Main.FileName, FileMode.OpenOrCreate);
+                _serialized.WriteObject(fStream, _vehicles);
+                fStream.Dispose();                
+                _isNeedSave = false;
+            }
+            else
+            {
+                SaveAsData();               
+            }
         }
-
         /// <summary>
         /// To upload the data
         /// </summary>   
-        private void ms_LoadTools_Click(object sender, EventArgs e)
+        private void Ms_LoadTools_Click(object sender, EventArgs e)
         {
             ofd_Main.AddExtension = true;
             ofd_Main.Filter = "Vehicle|*.vehicle";
             DialogResult result = ofd_Main.ShowDialog();
             if (result == DialogResult.OK)
             {
-                //FileStream fileStream = new FileStream(ofd_Main.FileName, FileMode.OpenOrCreate);
-                
-
-                //List<IVehicle> deserialize = JsonConvert.DeserializeObject<IVehicle>(json);
-                //fileStream.Dispose();
-
-                //bs_Main.Clear();
-                
-                bs_Main.Clear();                
-                //string deserialize = File.ReadAllText(ofd_Main.FileName, Encoding.GetEncoding(1251));
-                List<IVehicle> list = JsonConvert.DeserializeObject<List<IVehicle>>(File.ReadAllText(ofd_Main.FileName));
-                //IVehicle list = JsonConvert.DeserializeObject<IVehicle>(json);
-                bs_Main.Add(_vehicles);
-
-                //foreach (IVehicle vehicle in list)
-                //{
-                //    bs_Main.Add(vehicle);
-                //}
+                bs_Main.Clear();
+                FileStream fStream= new FileStream(ofd_Main.FileName, FileMode.OpenOrCreate);
+                List<IVehicle> deserialized = (List<IVehicle>)_serialized.ReadObject(fStream);
+                fStream.Dispose();
+                foreach (IVehicle vehicle in deserialized)
+                {
+                    bs_Main.Add(vehicle);
+                }                
+                _isNeedSave = false;
             }
         }
-
-        private void ms_SaveAsTool_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Saving 'as' data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ms_SaveAsTool_Click(object sender, EventArgs e)
         {
-
+            SaveAsData();
         }
-
-        private void ms_ExitTools_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Saving 'as' file
+        /// </summary>
+        private void SaveAsData()
+        {
+            if (!IsNeedSaveData())
+            {
+                MessageBox.Show("List is empty. Nothing to save");
+            }
+            else
+            {
+                sfd_Main.AddExtension = true;
+                sfd_Main.Filter = "Vehicle|*.vehicle";
+                DialogResult result = sfd_Main.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    FileStream fStream = new FileStream(sfd_Main.FileName, FileMode.OpenOrCreate);
+                    _serialized.WriteObject(fStream, _vehicles);
+                    fStream.Dispose();
+                    _isNeedSave = false;
+                    _isFileCreated = true;
+                }
+            }
+        }
+        /// <summary>
+        /// Close the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ms_ExitTools_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        #endregion MenuStrip        
+        /// <summary>
+        /// Creating an empty table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ms_NewFileTool_Click(object sender, EventArgs e)
+        {
+            bs_Main.Clear();
+            _isNeedSave = true;
+        }            
 
+        /// <summary>
+        /// Row editing function
+        /// </summary>
         private void EditData()
         {
-            secondaryForm = new SecondaryForm();
-            if (bs_Main.Current is Car)
+            _secondaryForm = new SecondaryForm();
+            IVehicle current = (IVehicle)bs_Main.Current;
+            _secondaryForm.SetVehicleData(current);
+            _dialogResult = _secondaryForm.ShowDialog();
+            if (_dialogResult == DialogResult.OK)
             {
-                secondaryForm.SetCarValue((Car)bs_Main.Current);
-            }
-            else if (bs_Main.Current is Boat)
-            {
-                secondaryForm.SetBoatValue((Boat)bs_Main.Current);
-            }
-            else if (bs_Main.Current is Helicopter)
-            {
-                secondaryForm.SetHelicopterValue((Helicopter)bs_Main.Current);
-            }
-            dialogResult = secondaryForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
-            {
-                IVehicle newVehicle = GetNewVehicle();
+                IVehicle newVehicle = _secondaryForm.GetVehicle();
                 int index = bs_Main.CurrencyManager.Position;
                 bs_Main.RemoveAt(index);
                 bs_Main.Insert(index, newVehicle);
-                isNeedSave = true;
+                _isNeedSave = true;
             }
         }
-
-        private void dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            EditData();
-        }
-        private IVehicle GetNewVehicle()
-        {
-            IVehicle newVehicle = null;
-            switch (secondaryForm.EnterTypeVehicle)
-            {
-                case 'C':
-                {
-                    newVehicle = AddCar(new Car());
-                    break;
-                }
-                case 'B':
-                {
-                    newVehicle = AddBoat(new Boat());
-                    break;
-                }
-                case 'H':
-                {
-                    newVehicle = AddHelicopter(new Helicopter());
-                    break;
-                }
-            };
-            return newVehicle;
-        }
-
+        /// <summary>
+        /// Condition for saving data
+        /// </summary>
+        /// <returns></returns>
         private bool IsNeedSaveData()
         {
-            return (_vehicles.Any() || isNeedSave) ? true : false;
-
+            return (_vehicles.Any() && _isNeedSave);
         }
-
-        private void ClosingForm()
-        {
-            if (IsNeedSaveData())
-            {               
-                DialogResult result = MessageBox.Show("Данные не сохранены ! Сохранить ?", "Внимание", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-                if (result == DialogResult.Yes)
-                {
-                    SaveData();
-                }                
-            }
-            isNeedSave = false;
-            
-        }
-
-       
+        #endregion MenuStrip        
     }
 }

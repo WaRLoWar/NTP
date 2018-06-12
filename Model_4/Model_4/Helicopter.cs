@@ -6,11 +6,25 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    sealed public class Helicopter: VehicleBase
-    {        
-        
+    public sealed class Helicopter: VehicleBase
+    {
+
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public Helicopter() { }
-        public Helicopter(char typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double range, short capacity)
+        /// <summary>
+        /// Constructor with parameters
+        /// </summary>
+        /// <param name="typeVehicle"></param>
+        /// <param name="name"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="cost"></param>
+        /// <param name="data"></param>
+        /// <param name="speed"></param>
+        /// <param name="range"></param>
+        /// <param name="capacity"></param>
+        public Helicopter(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, uint range, uint capacity)
             : base(typeVehicle, name, cost, data)
         {
             this.Speed = speed;
@@ -19,62 +33,40 @@ namespace Model
             this.SerialNumber = serialNumber;
         }
 
-        #region Private
+        #region Field
 
         /// <summary>
         /// The practical range (Max. 1200 km)
         /// </summary>
-        private int _range = 0;
-
-        /// <summary>
-        /// Maximum practical range value
-        /// </summary>
-        private const int _MaxRange = 1200;
+        private uint _range = 0;        
 
         /// <summary>
         /// Helicopter capacity (up to 8000 kg)
         /// </summary>
-        private int _capacity = 0;
-
-        /// <summary>
-        /// Maximum helicopter`s capacity value
-        /// </summary>
-        private const int _MaxHelicopterCapacity = 8000;
+        private uint _capacity = 0;         
 
         /// <summary>
         /// Helicopter speed ( up to 200 km/h )
         /// </summary>
-        private double _speed = 0;
-        /// <summary>
-        /// Maximum speed of the helicopter
-        /// </summary>
-        private const double _MaxSpeed = 200;
+        private double _speed = 0;       
 
-        #endregion Private
+        #endregion Field
 
-        #region Public and Protected
+        #region Method
+
         /// <summary>
         /// The practical range (Max. 1200 km)
         /// </summary>
-        public double Range
+        public uint Range
         {
-            get
-            {
-                return _range;
-            }
+            get => _range;
             set
             {
-                try
+                const int maxRange = 1200;
+                _range = value;
+                if (value > maxRange)
                 {
-                    _range = Convert.ToInt16(value);
-                    if (Convert.ToInt16(value) > _MaxRange)
-                    {
-                        throw new Exception("The entered value is greater than the maximum value (1200 km) !");
-                    }
-                }
-                catch(FormatException)
-                {
-                    throw new FormatException("Format Exception !");
+                    throw new ArgumentException("The entered value is greater than the maximum value (1200 km) !");
                 }
             }
         }
@@ -82,25 +74,16 @@ namespace Model
         /// <summary>
         /// Helicopter capacity (up to 8000 kg)
         /// </summary>
-        public int Capacity
+        public uint Capacity
         {
-            get
-            {
-                return _capacity;
-            }
+            get => _capacity;
             set
             {
-                try
+                const int maxCapacity = 8000;
+                _capacity = value;
+                if (value > maxCapacity)
                 {
-                    _capacity = Convert.ToInt16(value);
-                    if (Convert.ToInt16(value) > _MaxHelicopterCapacity)
-                    {
-                        throw new Exception("The entered value is greater than the maximum value(8000 kg) !");
-                    }
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException("Format Exception");
+                    throw new ArgumentException("The entered value is greater than the maximum value(8000 kg) !");
                 }
             }
         }
@@ -110,23 +93,14 @@ namespace Model
         /// </summary>
         public double Speed
         {
-            get
-            {
-                return _speed;
-            }
+            get => _speed;
             set
             {
-                try
+                const double maxSpeed = 200;
+                _speed = value;
+                if (value > maxSpeed) 
                 {
-                    _speed = Convert.ToDouble(value);
-                    if(Convert.ToDouble(value)>_MaxSpeed)
-                    {
-                        throw new Exception("The entered value is greater than the maximum value (200 km / h ) !");
-                    }
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException("Format Exception");
+                    throw new ArgumentException("The entered value is greater than the maximum value (200 km / h ) !");
                 }
             }
         }
@@ -136,59 +110,15 @@ namespace Model
         /// </summary>
         public override string SerialNumber
         {
-            get
-            {
-                return _serialNumber;
-            }
+            get => _serialNumber;
             set
             {
                 if (!(IsSerialNumber(value)))
                 {
                     throw new FormatException("Serial code entered incorrectly");
                 }
-                else
-                {
-                    value = value.Trim();
-                    _serialNumber = value.ToUpper();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Features of transport
-        /// </summary>
-        public override string PrintTransportsFeatures()
-        {
-            return Convert.ToString(Speed + " " + Range + " " + Capacity);
-        }
-
-        /// <summary>
-        /// Changing personal characteristics 
-        /// | S - Speed, R - Range, C- Capacity |
-        /// </summary>
-        public override void ChangePersonCharacteristics(string value, char symbol)
-        {
-            switch (symbol)
-            {
-                case 'S':
-                    {
-                        Speed = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'R':
-                    {
-                        Range = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'C':
-                    {
-                        Capacity = Convert.ToInt16(value);
-                        break;
-                    }
-                default:
-                    {
-                        throw new FormatException("You entered an incorrect character");
-                    }
+                value = value.Trim();
+                _serialNumber = value.ToUpper();
             }
         }
 
@@ -201,30 +131,26 @@ namespace Model
             if ((source.Length != 10) || (string.IsNullOrWhiteSpace(source)))
             {
                 return false;
-            }
-            else
+            }           
+            for (int i = 0; i < source.Length; i++)
             {
-                for (int i = 0; i < source.Length; i++)
+                if (i < 4)
                 {
-                    if (i < 4)
+                    if (!(IsEnglisLetter(source[i])))
                     {
-                        if (!(IsEnglisLetter(source[i])))
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        if ((!IsNumber(source[i])))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
-            }
+                else
+                {
+                    if ((!IsNumber(source[i])))
+                    {
+                        return false;
+                    }
+                }
+            }    
             return true;
         }
-        
-        #endregion Public and Protected
+        #endregion Method
     }
 }

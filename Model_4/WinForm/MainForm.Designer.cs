@@ -48,6 +48,7 @@
             this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
             this.ofd_Main = new System.Windows.Forms.OpenFileDialog();
             this.sfd_Main = new System.Windows.Forms.SaveFileDialog();
+            this.ms_NewFileTool = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_BoxMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.gb_BoxSubMain1.SuspendLayout();
@@ -84,7 +85,7 @@
             this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_Main.Size = new System.Drawing.Size(485, 217);
             this.dgv_Main.TabIndex = 11;
-            this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Main_CellDoubleClick);
+            this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Main_CellDoubleClick);
             // 
             // btn_Remove
             // 
@@ -94,7 +95,7 @@
             this.btn_Remove.TabIndex = 10;
             this.btn_Remove.Text = "Remove";
             this.btn_Remove.UseVisualStyleBackColor = true;
-            this.btn_Remove.Click += new System.EventHandler(this.btn_Remove_Click);
+            this.btn_Remove.Click += new System.EventHandler(this.Btn_Remove_Click);
             // 
             // gb_BoxSubMain1
             // 
@@ -112,8 +113,8 @@
             this.tb_Search.Name = "tb_Search";
             this.tb_Search.Size = new System.Drawing.Size(131, 20);
             this.tb_Search.TabIndex = 7;
-            this.tb_Search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Search_KeyPress);
-            this.tb_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tb_Search_KeyUp);
+            this.tb_Search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Search_KeyPress);
+            this.tb_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Tb_Search_KeyUp);
             // 
             // btn_EditData
             // 
@@ -123,7 +124,7 @@
             this.btn_EditData.TabIndex = 6;
             this.btn_EditData.Text = "Edit";
             this.btn_EditData.UseVisualStyleBackColor = true;
-            this.btn_EditData.Click += new System.EventHandler(this.btn_EditData_Click);
+            this.btn_EditData.Click += new System.EventHandler(this.Btn_EditData_Click);
             // 
             // btn_CreateRandomData
             // 
@@ -133,7 +134,7 @@
             this.btn_CreateRandomData.TabIndex = 4;
             this.btn_CreateRandomData.Text = "Create Random Data";
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
-            this.btn_CreateRandomData.Click += new System.EventHandler(this.btn_CreateRandomData_Click);
+            this.btn_CreateRandomData.Click += new System.EventHandler(this.Btn_CreateRandomData_Click);
             // 
             // btn_Add
             // 
@@ -143,7 +144,7 @@
             this.btn_Add.TabIndex = 1;
             this.btn_Add.Text = "Add Vehicle";
             this.btn_Add.UseVisualStyleBackColor = true;
-            this.btn_Add.Click += new System.EventHandler(this.btn_Add_Click);
+            this.btn_Add.Click += new System.EventHandler(this.Btn_Add_Click);
             // 
             // menuStrip1
             // 
@@ -158,6 +159,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ms_NewFileTool,
             this.ms_SaveTool,
             this.ms_SaveAsTool,
             this.ms_OpenTool,
@@ -171,32 +173,39 @@
             this.ms_SaveTool.Name = "ms_SaveTool";
             this.ms_SaveTool.Size = new System.Drawing.Size(152, 22);
             this.ms_SaveTool.Text = "Save";
-            this.ms_SaveTool.Click += new System.EventHandler(this.ms_SaveTools_Click);
+            this.ms_SaveTool.Click += new System.EventHandler(this.Ms_SaveTools_Click);
             // 
             // ms_SaveAsTool
             // 
             this.ms_SaveAsTool.Name = "ms_SaveAsTool";
             this.ms_SaveAsTool.Size = new System.Drawing.Size(152, 22);
             this.ms_SaveAsTool.Text = "Save as";
-            this.ms_SaveAsTool.Click += new System.EventHandler(this.ms_SaveAsTool_Click);
+            this.ms_SaveAsTool.Click += new System.EventHandler(this.Ms_SaveAsTool_Click);
             // 
             // ms_OpenTool
             // 
             this.ms_OpenTool.Name = "ms_OpenTool";
             this.ms_OpenTool.Size = new System.Drawing.Size(152, 22);
             this.ms_OpenTool.Text = "Open";
-            this.ms_OpenTool.Click += new System.EventHandler(this.ms_LoadTools_Click);
+            this.ms_OpenTool.Click += new System.EventHandler(this.Ms_LoadTools_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ms_ExitTools_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.Ms_ExitTools_Click);
             // 
             // ofd_Main
             // 
             this.ofd_Main.FileName = "openFileDialog1";
+            // 
+            // ms_NewFileTool
+            // 
+            this.ms_NewFileTool.Name = "ms_NewFileTool";
+            this.ms_NewFileTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_NewFileTool.Text = "New";
+            this.ms_NewFileTool.Click += new System.EventHandler(this.Ms_NewFileTool_Click);
             // 
             // MainForm
             // 
@@ -243,6 +252,7 @@
         private System.Windows.Forms.DataGridView dgv_Main;
         private System.Windows.Forms.OpenFileDialog ofd_Main;
         private System.Windows.Forms.SaveFileDialog sfd_Main;
+        private System.Windows.Forms.ToolStripMenuItem ms_NewFileTool;
     }
 }
 

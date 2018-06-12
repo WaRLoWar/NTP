@@ -6,10 +6,25 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    sealed public class Boat: VehicleBase
+    public sealed class Boat: VehicleBase
     {
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public Boat() { }
-        public Boat(char typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double draft, short capacity)
+
+        /// <summary>
+        /// Constructor with parameters
+        /// </summary>
+        /// <param name="typeVehicle"></param>
+        /// <param name="name"></param>
+        /// <param name="serialNumber"></param>
+        /// <param name="cost"></param>
+        /// <param name="data"></param>
+        /// <param name="speed"></param>
+        /// <param name="draft"></param>
+        /// <param name="capacity"></param>
+        public Boat(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double draft, uint capacity)
             : base(typeVehicle, name, cost, data)
         {
             this.Speed = speed;
@@ -17,17 +32,12 @@ namespace Model
             this.BoatCapacity = capacity;
             this.SerialNumber = serialNumber;
         }
-        #region Private
+        #region Field
 
         /// <summary>
         /// The maximum speed of the boat (Max. 80 (km/h) )
         /// </summary>
-        private double _speed = 0;
-
-        /// <summary>
-        /// Maximum speed value
-        /// </summary>
-        private const double _MaxSpeed = 80;
+        private double _speed = 0;  
 
         /// <summary>
         /// Boat draft (Max 80 cm )
@@ -35,46 +45,27 @@ namespace Model
         private double _draft = 0;
 
         /// <summary>
-        /// Maximum boat draft value
+        /// The capacity of the boat (Max. 18)
         /// </summary>
-        private const double _MaxDraft = 80;
+        private uint _boatCapacity = 0;
+
+        #endregion Field
+
+        #region Method
 
         /// <summary>
-        /// The capacity of the boat
-        /// </summary>
-        private int _boatCapacity = 0;
-
-        /// <summary>
-        /// Maximum boat capacity value
-        /// </summary>
-        private const int _MaxBoatCapacity = 18;
-
-        #endregion Private
-
-        #region Public and Protected
-
-        /// <summary>
-        /// The maximum speed of the boat
+        /// The maximum speed of the boat (Max. 80 (km/h) )
         /// </summary>
         public double Speed
         {
-            get
-            {
-                return _speed;
-            }
+            get => _speed;
             set
-            {
-                try
+            {                
+                const double maxSpeed = 80;
+                _speed = value;
+                if (value > maxSpeed)
                 {
-                    _speed = Convert.ToDouble(value);
-                    if (Convert.ToDouble(value) > _MaxSpeed)
-                    {
-                        throw new Exception("Entered speed greater than maximum speed !( 80 km/h )");
-                    }
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException("Format Exception ! ");
+                    throw new ArgumentException("Entered speed greater than maximum speed !( 80 km/h )");
                 }
             }
         }
@@ -84,49 +75,32 @@ namespace Model
         /// </summary>
         public double Draft
         {
-            get
-            {
-                return _draft;
-            }
+            get => _draft;
             set
             {
-                try
+                const double maxDraft = 80;
+                _draft = value;
+                if(value > maxDraft)
                 {
-                    _draft = Convert.ToDouble(value);
-                    if(Convert.ToDouble(value) > _MaxDraft)
-                    {
-                        throw new Exception("The entered value of the boat draught is greater than the maximum value ! ( 80 cm )");
-                    }
+                    throw new ArgumentException("The entered value of the boat draught is greater than the maximum value ! ( 80 cm )");
                 }
-                catch(FormatException)
-                {
-                    throw new FormatException("Format Exception");
-                }
+
             }
         }
 
         /// <summary>
-        /// The capacity of the boat
+        /// The capacity of the boat (Max. 18)
         /// </summary>
-        public int BoatCapacity
+        public uint BoatCapacity
         {
-            get
-            {
-                return _boatCapacity;
-            }
+            get => _boatCapacity;
             set
             {
-                try
+                const int maxBoatCapacity = 18;
+                _boatCapacity = value;
+                if (value > maxBoatCapacity)
                 {
-                    _boatCapacity = Convert.ToInt16(value);
-                    if (Convert.ToInt16(value) > _MaxBoatCapacity)
-                    {
-                        throw new Exception("The entered boat capacity value is greater than the maximum value ! ( 18 )");
-                    }
-                }
-                catch (FormatException)
-                {
-                    throw new FormatException("Format Exception !");
+                    throw new ArgumentException("The entered boat capacity value is greater than the maximum value ! ( 18 )");
                 }
             }
         }
@@ -136,59 +110,15 @@ namespace Model
         /// </summary>
         public override string SerialNumber
         {
-            get
-            {
-                return _serialNumber;
-            }
+            get => _serialNumber;
             set
             {
                 if (!(IsSerialNumber(value)))
                 {
                     throw new FormatException("Serial code entered incorrectly");
                 }
-                else
-                {
-                    value = value.Trim();
-                    _serialNumber = value.ToUpper();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Features of transport
-        /// </summary>
-        public override string PrintTransportsFeatures()
-        {
-            return Convert.ToString(Speed + " " + Draft + " " + BoatCapacity);
-        }
-
-        /// <summary>
-        /// Changing personal characteristics 
-        /// | S - Speed, D - Draft, B - BoatCapacity |
-        /// </summary>
-        public override void ChangePersonCharacteristics(string value, char symbol)
-        {
-            switch (symbol)
-            {
-                case 'S':
-                    {
-                        Speed = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'D':
-                    {
-                        Draft = Convert.ToDouble(value);
-                        break;
-                    }
-                case 'B':
-                    {
-                        BoatCapacity = Convert.ToInt16(value);
-                        break;
-                    }
-                default:
-                    {
-                        throw new FormatException("You entered an incorrect character");
-                    }
+                value = value.Trim();
+                _serialNumber = value.ToUpper();
             }
         }
 
@@ -198,23 +128,19 @@ namespace Model
         protected override bool IsSerialNumber(string source)
         {
             source = source.Trim();
-            if ((source.Length != 8) && (source.Length != 12) || (string.IsNullOrWhiteSpace(source)))
+            const uint minValue = 8;
+            const uint maxValue = 12;
+            if ((source.Length != minValue) && (source.Length != maxValue) || (string.IsNullOrWhiteSpace(source)))
             {
                 return false;
             }
             else
             {
-                for (int i = 0; i < source.Length; i++)
-                {
-                    if (!IsNumber(source[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
+                return source.All(IsNumber);
+            }         
         }
 
-        #endregion Public and Protected
+      
+        #endregion Method
     }
 }
