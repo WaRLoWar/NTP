@@ -11,8 +11,6 @@ using System.Windows.Forms;
 using Model;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace WinForm
 {
@@ -305,8 +303,14 @@ namespace WinForm
         /// <param name="e"></param>
         private void Ms_NewFileTool_Click(object sender, EventArgs e)
         {
-            bs_Main.Clear();
-            _isNeedSave = true;
+            DialogResult result = MessageBox.Show("Create a new table ! Are you sure ?", "Attention", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            if (result == DialogResult.Yes)
+            {
+                ClosingForm();
+                bs_Main.Clear();
+                _isNeedSave = true;
+            }            
         }            
 
         /// <summary>

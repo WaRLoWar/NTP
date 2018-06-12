@@ -13,25 +13,6 @@ namespace Model
         /// </summary>
         public Boat() { }
 
-        /// <summary>
-        /// Constructor with parameters
-        /// </summary>
-        /// <param name="typeVehicle"></param>
-        /// <param name="name"></param>
-        /// <param name="serialNumber"></param>
-        /// <param name="cost"></param>
-        /// <param name="data"></param>
-        /// <param name="speed"></param>
-        /// <param name="draft"></param>
-        /// <param name="capacity"></param>
-        public Boat(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, double draft, uint capacity)
-            : base(typeVehicle, name, cost, data)
-        {
-            this.Speed = speed;
-            this.Draft = draft;
-            this.BoatCapacity = capacity;
-            this.SerialNumber = serialNumber;
-        }
         #region Field
 
         /// <summary>
@@ -61,9 +42,10 @@ namespace Model
             get => _speed;
             set
             {                
-                const double maxSpeed = 80;
+                const double maxSpeed = 80.0;
+                const double minSpeed = 0.0;
                 _speed = value;
-                if (value > maxSpeed)
+                if (value > maxSpeed || value < minSpeed)
                 {
                     throw new ArgumentException("Entered speed greater than maximum speed !( 80 km/h )");
                 }
@@ -78,9 +60,10 @@ namespace Model
             get => _draft;
             set
             {
-                const double maxDraft = 80;
+                const double maxDraft = 80.0;
+                const double minDraft = 0.0;
                 _draft = value;
-                if(value > maxDraft)
+                if(value > maxDraft || value < minDraft)
                 {
                     throw new ArgumentException("The entered value of the boat draught is greater than the maximum value ! ( 80 cm )");
                 }
@@ -96,7 +79,7 @@ namespace Model
             get => _boatCapacity;
             set
             {
-                const int maxBoatCapacity = 18;
+                const uint maxBoatCapacity = 18;
                 _boatCapacity = value;
                 if (value > maxBoatCapacity)
                 {
@@ -104,9 +87,10 @@ namespace Model
                 }
             }
         }
-        
+
         /// <summary>
-        /// The serial number of the transport    
+        /// The serial number of the transport.
+        /// The length of the string 8 or 12 and composed of numbers only
         /// </summary>
         public override string SerialNumber
         {
@@ -128,16 +112,13 @@ namespace Model
         protected override bool IsSerialNumber(string source)
         {
             source = source.Trim();
-            const uint minValue = 8;
-            const uint maxValue = 12;
-            if ((source.Length != minValue) && (source.Length != maxValue) || (string.IsNullOrWhiteSpace(source)))
+            const uint firstConstLength = 8;
+            const uint secondConstLength = 12;
+            if ((source.Length != firstConstLength) && (source.Length != secondConstLength) || (string.IsNullOrWhiteSpace(source)))
             {
                 return false;
             }
-            else
-            {
-                return source.All(IsNumber);
-            }         
+            return source.All(IsNumber);
         }
 
       

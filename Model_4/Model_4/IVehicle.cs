@@ -13,6 +13,7 @@ namespace Model
     {
         /// <summary>
         /// Type of vehicle
+        /// [ Car / Boat / Helicopter ]
         /// </summary>
         string TypeVehicle { get; set; }
 

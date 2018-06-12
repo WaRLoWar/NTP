@@ -13,25 +13,6 @@ namespace Model
         /// Empty constructor
         /// </summary>
         public Helicopter() { }
-        /// <summary>
-        /// Constructor with parameters
-        /// </summary>
-        /// <param name="typeVehicle"></param>
-        /// <param name="name"></param>
-        /// <param name="serialNumber"></param>
-        /// <param name="cost"></param>
-        /// <param name="data"></param>
-        /// <param name="speed"></param>
-        /// <param name="range"></param>
-        /// <param name="capacity"></param>
-        public Helicopter(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double speed, uint range, uint capacity)
-            : base(typeVehicle, name, cost, data)
-        {
-            this.Speed = speed;
-            this.Range = range;
-            this.Capacity = capacity;
-            this.SerialNumber = serialNumber;
-        }
 
         #region Field
 
@@ -62,12 +43,12 @@ namespace Model
             get => _range;
             set
             {
-                const int maxRange = 1200;
-                _range = value;
+                const uint maxRange = 1200;
                 if (value > maxRange)
                 {
                     throw new ArgumentException("The entered value is greater than the maximum value (1200 km) !");
                 }
+                _range = value;                
             }
         }
 
@@ -79,12 +60,12 @@ namespace Model
             get => _capacity;
             set
             {
-                const int maxCapacity = 8000;
-                _capacity = value;
+                const uint maxCapacity = 8000;
                 if (value > maxCapacity)
                 {
                     throw new ArgumentException("The entered value is greater than the maximum value(8000 kg) !");
                 }
+                _capacity = value;                
             }
         }
 
@@ -97,16 +78,19 @@ namespace Model
             set
             {
                 const double maxSpeed = 200;
-                _speed = value;
-                if (value > maxSpeed) 
+                const double minSpeed = 0;
+                if (value > maxSpeed || value < minSpeed)
                 {
                     throw new ArgumentException("The entered value is greater than the maximum value (200 km / h ) !");
                 }
+                _speed = value;                
             }
         }
 
         /// <summary>
-        /// The serial number of the transport    
+        /// The serial number of the transport.
+        /// The number consists of 10 characters,
+        /// the first 4 of which are letters of the English alphabet, and the other 6 are numbers. 
         /// </summary>
         public override string SerialNumber
         {
@@ -123,7 +107,7 @@ namespace Model
         }
 
         /// <summary>
-        /// Checking the serial number
+        /// Checking the serial number.     
         /// </summary>   
         protected override bool IsSerialNumber(string source)
         {

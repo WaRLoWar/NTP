@@ -18,27 +18,6 @@ namespace Model
 
         }
 
-        /// <summary>
-        /// Constructor with parameters
-        /// </summary>
-        /// <param name="typeVehicle"></param>
-        /// <param name="name"></param>
-        /// <param name="serialNumber"></param>
-        /// <param name="cost"></param>
-        /// <param name="data"></param>
-        /// <param name="power"></param>
-        /// <param name="consumption"></param>
-        /// <param name="type"></param>
-        public Car(string typeVehicle, string name, string serialNumber, double cost, DateTime data, double power,
-            double consumption, string type)
-            : base(typeVehicle, name, cost, data)
-        {
-            this.Power = power;
-            this.Consumption = consumption;
-            this.Type = type;
-            this.SerialNumber = serialNumber;
-        }
-
         #region Field
 
         /// <summary>
@@ -62,7 +41,7 @@ namespace Model
         /// <summary>
         /// The engine power of the car (up to 600 hp)
         /// </summary>
-        private double _power = 0;
+        private double _power = 0.0;
 
         /// <summary>
         /// The fuel consumption of a vehicle per 100 km (up to 20 L/ 100 km)
@@ -82,12 +61,14 @@ namespace Model
             set
             {
                 // The maximum power of the car
-                const uint maxValue = 600;
-                _power = value;
-                if (value > maxValue)
+                const double maxValue = 600.0;
+                const double minValue = 0.0;
+                if (value > maxValue || value < minValue)
                 {
                     throw new ArgumentException("Engine power must be less than 600 !");
                 }
+                _power = value;
+                
             }
         }
 
@@ -99,9 +80,10 @@ namespace Model
             get => _consumption;
             set
             {
-                const uint maxValue = 20;
+                const double maxValue = 20.0;
+                const double minValue = 0.0;
                 _consumption = value;
-                if (value > maxValue)
+                if (value > maxValue || value < minValue)
                 {
                     throw new ArgumentException("Fuel consumption more than 20 (liters / 100 km) !");                    
                 }
@@ -110,6 +92,7 @@ namespace Model
 
         /// <summary>
         /// Type of car
+        /// [ Mini / Sub / Compact / MidSize / Large / Null ]
         /// </summary>
         public string Type
         {
@@ -136,7 +119,8 @@ namespace Model
         }
 
         /// <summary>
-        /// The serial number of the transport    
+        /// The serial number of the transport.
+        /// The number consists of 17 digits and symbols of the English alphabet
         /// </summary>
         public override string SerialNumber
         {

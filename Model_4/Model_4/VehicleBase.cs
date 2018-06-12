@@ -10,26 +10,10 @@ namespace Model
 {
     public abstract class VehicleBase: IVehicle
     {
-
         /// <summary>
         /// Empty constructor
         /// </summary>
         protected VehicleBase() { }
-
-        /// <summary>
-        /// Constructor with parameters
-        /// </summary>
-        /// <param name="typeVehicle"></param>
-        /// <param name="name"></param>
-        /// <param name="cost"></param>
-        /// <param name="data"></param>
-        protected VehicleBase(string typeVehicle, string name, double cost, DateTime data)
-        {
-            this.TypeVehicle = typeVehicle;
-            this.Name = name;            
-            this.Cost = cost;
-            this.ManufacturesYear = data;
-        }
 
         #region Field
         /// <summary>
@@ -72,7 +56,8 @@ namespace Model
         #region Method
 
         /// <summary>
-        /// Type of Vehicle
+        /// Type of Vehicle.
+        /// [ Car / Boat / Helicopter ]
         /// </summary>
         public string TypeVehicle
         {
@@ -123,9 +108,10 @@ namespace Model
             get => _cost;
             set
             {
-                if (value < 0)
+                const double minCost = 0;
+                if (value < minCost)
                 {
-                    throw new Exception("You entered a negative number");
+                    throw new ArgumentException("You entered a negative number");
                 }
                 _cost = value;
             }
@@ -141,9 +127,9 @@ namespace Model
             {
                 if (DateTime.Now < value)
                 {
-                    throw new Exception("Incorrect date entered");
+                    throw new ArgumentException("Incorrect date entered");
                 }
-                _manufacturesYear = Convert.ToDateTime(value);
+                _manufacturesYear = value;
             }
         }
 
@@ -157,7 +143,7 @@ namespace Model
         /// </summary>
         protected bool IsEnglisLetter(char symbol)
         {                   
-            return (symbol >= 'A' || symbol <= 'Z');
+            return (symbol >= 'A' && symbol <= 'Z');
         }
 
         /// <summary>
