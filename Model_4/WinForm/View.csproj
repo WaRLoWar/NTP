@@ -49,6 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\BoatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\BoatControl.Designer.cs">
+      <DependentUpon>BoatControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Control\CarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\CarControl.Designer.cs">
+      <DependentUpon>CarControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Control\HelicopterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\HelicopterControl.Designer.cs">
+      <DependentUpon>HelicopterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputValidation.cs" />
     <Compile Include="RandomVehicle.cs" />
     <Compile Include="SecondaryForm.cs">
       <SubType>Form</SubType>
@@ -64,6 +83,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Control\VehicleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\VehicleControl.Designer.cs">
+      <DependentUpon>VehicleControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Control\BoatControl.resx">
+      <DependentUpon>BoatControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Control\CarControl.resx">
+      <DependentUpon>CarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Control\HelicopterControl.resx">
+      <DependentUpon>HelicopterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SecondaryForm.resx">
       <DependentUpon>SecondaryForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,6 +113,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Control\VehicleControl.resx">
+      <DependentUpon>VehicleControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

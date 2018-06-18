@@ -13,10 +13,7 @@ namespace Model
         /// <summary>
         /// Empty constructor
         /// </summary>
-        public Car()
-        {
-
-        }
+        public Car() {}
 
         #region Field
 
@@ -67,8 +64,7 @@ namespace Model
                 {
                     throw new ArgumentException("Engine power must be less than 600 !");
                 }
-                _power = value;
-                
+                _power = value;              
             }
         }
 
@@ -110,7 +106,6 @@ namespace Model
                         break;
                     }
                 }
-
                 if (!isCurrectionValue)
                 {
                     throw new ArgumentException("Type - Invalid character");
@@ -127,15 +122,14 @@ namespace Model
             get => _serialNumber;
             set
             {
-                if (!(IsSerialNumber(value.ToUpper())))
+                value = value.Trim();
+                value = value.ToUpper();
+                if (!IsSerialNumber(value))
                 {
-                    throw new FormatException("Serial code entered incorrectly");
+                    throw new FormatException("Serial code 'Car' entered incorrectly");
                 }
-                else
-                {
-                    value = value.Trim();
-                    _serialNumber = value.ToUpper();
-                }
+
+                _serialNumber = value;
             }
         }
 
@@ -144,15 +138,15 @@ namespace Model
         /// </summary>   
         protected override bool IsSerialNumber(string source)
         {
-            source = source.Trim();
-            if (source.Length != 17 || (string.IsNullOrWhiteSpace(source)))
+            if (source.Length != 17 && !string.IsNullOrWhiteSpace(source))
             {
                 return false;
-            }
-            else
+            }            
+            if (source.Length == 17)
             {
                 return source.All(t => IsEnglisLetter(t) || IsNumber(t));
             }
+            return string.IsNullOrWhiteSpace(source);
         }
         #endregion Method
     }

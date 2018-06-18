@@ -13,6 +13,7 @@ namespace Model
         /// </summary>
         public Boat() { }
 
+
         #region Field
 
         /// <summary>
@@ -97,12 +98,13 @@ namespace Model
             get => _serialNumber;
             set
             {
+                value = value.Trim();
+                value = value.ToUpper();
                 if (!(IsSerialNumber(value)))
                 {
-                    throw new FormatException("Serial code entered incorrectly");
+                    throw new FormatException("Serial code 'Boat' entered incorrectly");
                 }
-                value = value.Trim();
-                _serialNumber = value.ToUpper();
+                _serialNumber = value;
             }
         }
 

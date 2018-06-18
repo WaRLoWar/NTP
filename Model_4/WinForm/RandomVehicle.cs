@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+
+
 namespace WinForm
 {
     class RandomVehicle
     {
         #region Random Vehicle
         private Random _rand = new Random();
-        private Random _getData = new Random();
         public IVehicle GetRandomVehicle()
         {
             Random rand = new Random();
@@ -44,7 +45,7 @@ namespace WinForm
             newCar.Name = RandomName(4);
             newCar.SerialNumber = RandomSerialNumber(newCar);
             newCar.Consumption = _rand.Next(20);
-            newCar.Power = _rand.NextDouble() * 600;
+            newCar.Power = Math.Round(_rand.NextDouble() * 600, 2);
             newCar.Type = "Null";
             newCar.Cost = _rand.Next(2000);
             newCar.ManufacturesYear = RandomDay();
@@ -59,8 +60,8 @@ namespace WinForm
             newBoat.SerialNumber = RandomSerialNumber(newBoat);
             newBoat.ManufacturesYear = RandomDay();
             newBoat.Cost = _rand.Next(2000);
-            newBoat.Draft = _rand.NextDouble() * 80;
-            newBoat.Speed = _rand.NextDouble() * 80;
+            newBoat.Draft = Math.Round(_rand.NextDouble() * 80, 2);
+            newBoat.Speed = Math.Round(_rand.NextDouble() * 80, 2);
             newBoat.BoatCapacity = Convert.ToUInt32(_rand.Next(1, 18));
             return newBoat;
         }
@@ -83,7 +84,7 @@ namespace WinForm
         {
             DateTime start = new DateTime(1950, 1, 1);
             int range = (DateTime.Today - start).Days;
-            return start.AddDays(_getData.Next(range));
+            return start.AddDays(_rand.Next(range));
         }
 
         private string RandomName(int length)

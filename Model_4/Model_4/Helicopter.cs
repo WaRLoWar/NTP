@@ -97,12 +97,13 @@ namespace Model
             get => _serialNumber;
             set
             {
+                value = value.Trim();
+                value = value.ToUpper();
                 if (!(IsSerialNumber(value)))
                 {
-                    throw new FormatException("Serial code entered incorrectly");
+                    throw new FormatException("Serial code 'Helicopter' entered incorrectly");
                 }
-                value = value.Trim();
-                _serialNumber = value.ToUpper();
+                _serialNumber = value;
             }
         }
 
@@ -110,8 +111,7 @@ namespace Model
         /// Checking the serial number.     
         /// </summary>   
         protected override bool IsSerialNumber(string source)
-        {
-            source = source.Trim();
+        {            
             if ((source.Length != 10) || (string.IsNullOrWhiteSpace(source)))
             {
                 return false;

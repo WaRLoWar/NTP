@@ -87,7 +87,7 @@ namespace WinForm
         /// Adding a value to a field from outside
         /// </summary>
         /// <param name="data"></param>
-        public void SetVehicleData(IVehicle data)
+        public void SetVehicle(IVehicle data)
         {           
             if (data is Car dataCar)
             {
@@ -211,24 +211,37 @@ namespace WinForm
         /// <param name="e"></param>
         private void Tb_SerialNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
+            e.KeyChar = char.ToUpper(e.KeyChar);
             if (rbtn_Car.Checked)
             {
-                KeyPress_EnglishAndNumberSymbol(sender, e);
+                if (!InputValidation.IsEnglishAndNumberSymbol(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
             }
             else if (rbtn_Boat.Checked)
             {
-                KeyPress_OnlyNumberSymbol(sender, e);
+                if (!InputValidation.IsOnlyNumberSymbol(e.KeyChar))
+                {
+                    e.Handled = true;
+                }    
             }
             else if (rbtn_Helicopter.Checked)
             {
                 int lengthText = tb_SerialNumber.TextLength;
                 if (lengthText < 4)
                 {
-                    KeyPress_OnlyEnglishSymbol(e);
+                    if (!InputValidation.IsOnlyEnglishSymbol(e.KeyChar)) 
+                    {
+                        e.Handled = true;
+                    }           
                 }
                 else
                 {
-                    KeyPress_OnlyNumberSymbol(sender, e);
+                    if (!InputValidation.IsOnlyNumberSymbol(e.KeyChar))
+                    {
+                        e.Handled = true;
+                    }
                 }
             }
         }
@@ -277,11 +290,11 @@ namespace WinForm
         /// <param name="e"></param>
         private void Tb_Cost_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!IsCorrectLine(sender, e))
+            if (!InputValidation.IsCorrectLine(e.KeyChar, tb_Cost.Text))
             {
                 e.Handled = true;
             }
-            if (tb_Cost.Text == "" && (e.KeyChar == ',' || e.KeyChar == '.') || !IsNumberSymbol(e) && !IsSpecialSymbols(e))
+            if (tb_Cost.Text == "" && (e.KeyChar == ',' || e.KeyChar == '.') || !InputValidation.IsNumberSymbol(e.KeyChar) && !InputValidation.IsSpecialSymbols(e.KeyChar))
             {
                 e.Handled = true;
             }
@@ -366,6 +379,36 @@ namespace WinForm
             }
         }
 
+        private void Tb_ThirdPersonal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!InputValidation.IsOnlyNumberSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Tb_SecondPersonal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!InputValidation.IsOnlyNumberSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private void Tb_FirstPersonal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!InputValidation.IsOnlyNumberSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Tb_Name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!InputValidation.IsEnglishAndNumberSymbol(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         /// <summary>
         /// Action on leaving the field 'ThirdPersonal'
         /// ( Car - Consumption / Boat - Capacity / Helicopter - Speed )
@@ -412,44 +455,6 @@ namespace WinForm
         #region GeneralKeyPress
 
         /// <summary>
-        /// Function that allows you to enter only numbers and symbols of the English alphabet
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void KeyPress_EnglishAndNumberSymbol(object sender, KeyPressEventArgs e)
-        {
-            e.KeyChar = char.ToUpper(e.KeyChar);
-            if (!IsEnglishSymbol(e) && !IsNumberSymbol(e) && !IsSpecialSymbols(e) || (e.KeyChar == ',' || e.KeyChar == '.'))
-            {
-                e.Handled = true;
-            }
-        }
-        /// <summary>
-        /// Function that allows you to enter only numbers 
-        /// </summary>
-        /// <param name="senderr"></param>
-        /// <param name="e"></param>
-        private void KeyPress_OnlyNumberSymbol(object senderr, KeyPressEventArgs e)
-        {
-            if (!IsNumberSymbol(e) && !IsSpecialSymbols(e) || (e.KeyChar == ',' || e.KeyChar == '.'))
-            {
-                e.Handled = true;
-            }
-        }
-        /// <summary>
-        /// Function that allows you to enter only symbols of the English alphabet
-        /// </summary>
-        /// <param name="e"></param>
-        private void KeyPress_OnlyEnglishSymbol(KeyPressEventArgs e)
-        {
-            e.KeyChar = char.ToUpper(e.KeyChar);
-            if (!IsEnglishSymbol(e) && !IsSpecialSymbols(e) && (e.KeyChar == '.' || e.KeyChar == ','))
-            {
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
         /// Checking for at least one blank field
         /// </summary>
         /// <returns></returns>
@@ -478,55 +483,55 @@ namespace WinForm
 
         #region CheckKeyPress
 
-        /// <summary>
-        /// Checking whether the symbol is a decimal digit
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool IsNumberSymbol(KeyPressEventArgs e)
-        {            
-            return (char.IsDigit((e.KeyChar)));
-        }
+        ///// <summary>
+        ///// Checking whether the symbol is a decimal digit
+        ///// </summary>
+        ///// <param name="e"></param>
+        ///// <returns></returns>
+        //private bool IsNumberSymbol(KeyPressEventArgs e)
+        //{            
+        //    return (char.IsDigit((e.KeyChar)));
+        //}
 
-        /// <summary>
-        /// Checking whether a character is an English alphabet character
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool IsEnglishSymbol(KeyPressEventArgs e)
-        {            
-            return (e.KeyChar >= 'A' && e.KeyChar <= 'Z');
-        }
-        /// <summary>
-        /// Check whether the key pressed is a Backspace or Delete button
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool IsSpecialSymbols(KeyPressEventArgs e)
-        {           
-            return ((e.KeyChar == (char)Keys.Back) || (e.KeyChar == (char)Keys.Delete));
-        }
-        /// <summary>
-        /// Checks the string for more than one comma in the field 'Cost'
-        /// </summary>
-        /// <param name="semder"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        private bool IsCorrectLine(object semder, KeyPressEventArgs e)
-        {
-            char[] text = tb_Cost.Text.ToCharArray();
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (text[i] == '.')
-                {
-                    if (e.KeyChar == ',' || e.KeyChar == '.' || (text.Length - i) > 2)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+        ///// <summary>
+        ///// Checking whether a character is an English alphabet character
+        ///// </summary>
+        ///// <param name="e"></param>
+        ///// <returns></returns>
+        //private bool IsEnglishSymbol(KeyPressEventArgs e)
+        //{            
+        //    return (e.KeyChar >= 'A' && e.KeyChar <= 'Z');
+        //}
+        ///// <summary>
+        ///// Check whether the key pressed is a Backspace or Delete button
+        ///// </summary>
+        ///// <param name="e"></param>
+        ///// <returns></returns>
+        //private bool IsSpecialSymbols(KeyPressEventArgs e)
+        //{           
+        //    return ((e.KeyChar == (char)Keys.Back) || (e.KeyChar == (char)Keys.Delete));
+        //}
+        ///// <summary>
+        ///// Checks the string for more than one comma in the field 'Cost'
+        ///// </summary>
+        ///// <param name="semder"></param>
+        ///// <param name="e"></param>
+        ///// <returns></returns>
+        //private bool IsCorrectLine(object semder, KeyPressEventArgs e)
+        //{
+        //    char[] text = tb_Cost.Text.ToCharArray();
+        //    for (int i = 0; i < text.Length; i++)
+        //    {
+        //        if (text[i] == '.')
+        //        {
+        //            if (e.KeyChar == ',' || e.KeyChar == '.' || (text.Length - i) > 2)
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //    return true;
+        //}
 
         #endregion CheckKeyPress
     }

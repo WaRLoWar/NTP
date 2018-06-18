@@ -35,8 +35,7 @@ namespace Model
         /// <summary>
         /// Year of manufacture
         /// </summary>       
-        DateTime ManufacturesYear { get; set; }
-        
+        DateTime ManufacturesYear { get; set; }        
     }
 
 }

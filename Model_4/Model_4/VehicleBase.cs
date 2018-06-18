@@ -34,7 +34,7 @@ namespace Model
         /// <summary>
         /// The serial number of the transport    
         /// </summary>
-        protected string _serialNumber = null;
+        protected string _serialNumber=null;
 
         /// <summary>
         /// The cost of transport       
@@ -44,7 +44,7 @@ namespace Model
         /// <summary>
         /// Year of manufacture
         /// </summary>   
-        private DateTime _manufacturesYear = new DateTime();
+        private DateTime _manufacturesYear = DateTime.Today;
 
         /// <summary>
         /// Type of Vehicle
@@ -124,7 +124,7 @@ namespace Model
         {
             get => _manufacturesYear;
             set
-            {
+            {               
                 if (DateTime.Now < value)
                 {
                     throw new ArgumentException("Incorrect date entered");

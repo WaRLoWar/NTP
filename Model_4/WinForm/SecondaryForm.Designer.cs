@@ -52,6 +52,7 @@
             this.rbtn_Helicopter = new System.Windows.Forms.RadioButton();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_OK = new System.Windows.Forms.Button();
+            this.vehicleControl1 = new WinForm.VehicleControl();
             this.gb_AddForm.SuspendLayout();
             this.gb_DistinctiveCharacteristic.SuspendLayout();
             this.gb_GeneralСharacteristic.SuspendLayout();
@@ -108,7 +109,7 @@
             this.tb_ThirdPersonal.Name = "tb_ThirdPersonal";
             this.tb_ThirdPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_ThirdPersonal.TabIndex = 9;
-            this.tb_ThirdPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_ThirdPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_ThirdPersonal_KeyPress);
             this.tb_ThirdPersonal.Leave += new System.EventHandler(this.Tb_ThirdPersonal_Leave);
             // 
             // tb_SecondPersonal
@@ -117,7 +118,7 @@
             this.tb_SecondPersonal.Name = "tb_SecondPersonal";
             this.tb_SecondPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_SecondPersonal.TabIndex = 8;
-            this.tb_SecondPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_SecondPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_SecondPersonal_KeyPress);
             this.tb_SecondPersonal.Leave += new System.EventHandler(this.Tb_SecondPersonal_Leave);
             // 
             // tb_FirstPersonal
@@ -126,7 +127,7 @@
             this.tb_FirstPersonal.Name = "tb_FirstPersonal";
             this.tb_FirstPersonal.Size = new System.Drawing.Size(125, 20);
             this.tb_FirstPersonal.TabIndex = 7;
-            this.tb_FirstPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_OnlyNumberSymbol);
+            this.tb_FirstPersonal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_FirstPersonal_KeyPress);
             this.tb_FirstPersonal.Leave += new System.EventHandler(this.Tb_FirstPersonal_Leave);
             // 
             // l_ThirdPersonal
@@ -243,7 +244,7 @@
             this.tb_Name.Name = "tb_Name";
             this.tb_Name.Size = new System.Drawing.Size(125, 20);
             this.tb_Name.TabIndex = 3;
-            this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_EnglishAndNumberSymbol);
+            this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Name_KeyPress);
             // 
             // gb_TypeVehicle
             // 
@@ -313,14 +314,24 @@
             this.btn_OK.UseVisualStyleBackColor = true;
             this.btn_OK.Click += new System.EventHandler(this.Btn_OK_Click);
             // 
+            // vehicleControl1
+            // 
+            this.vehicleControl1.Location = new System.Drawing.Point(344, 16);
+            this.vehicleControl1.Name = "vehicleControl1";
+            this.vehicleControl1.Size = new System.Drawing.Size(280, 350);
+            this.vehicleControl1.TabIndex = 11;
+            this.vehicleControl1.Vehicle = null;
+            // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 383);
+            this.ClientSize = new System.Drawing.Size(704, 409);
             this.ControlBox = false;
+            this.Controls.Add(this.vehicleControl1);
             this.Controls.Add(this.gb_AddForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "SecondaryForm";
             this.Text = "Add Vehicle";
             this.gb_AddForm.ResumeLayout(false);
@@ -360,5 +371,6 @@
         private System.Windows.Forms.TextBox tb_SecondPersonal;
         private System.Windows.Forms.TextBox tb_FirstPersonal;
         private System.Windows.Forms.ComboBox cb_FirstPersonal;
+        private VehicleControl vehicleControl1;
     }
 }

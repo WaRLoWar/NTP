@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gb_BoxMain = new System.Windows.Forms.GroupBox();
+            this.dgv_Information = new System.Windows.Forms.DataGridView();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.gb_BoxSubMain1 = new System.Windows.Forms.GroupBox();
@@ -40,6 +41,7 @@
             this.btn_Add = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ms_NewFileTool = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_SaveTool = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_SaveAsTool = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_OpenTool = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,17 +50,20 @@
             this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
             this.ofd_Main = new System.Windows.Forms.OpenFileDialog();
             this.sfd_Main = new System.Windows.Forms.SaveFileDialog();
-            this.ms_NewFileTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.bs_Information = new System.Windows.Forms.BindingSource(this.components);
             this.gb_BoxMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Information)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.gb_BoxSubMain1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Information)).BeginInit();
             this.SuspendLayout();
             // 
             // gb_BoxMain
             // 
             this.gb_BoxMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gb_BoxMain.Controls.Add(this.dgv_Information);
             this.gb_BoxMain.Controls.Add(this.dgv_Main);
             this.gb_BoxMain.Controls.Add(this.btn_Remove);
             this.gb_BoxMain.Controls.Add(this.gb_BoxSubMain1);
@@ -67,10 +72,26 @@
             this.gb_BoxMain.Controls.Add(this.btn_Add);
             this.gb_BoxMain.Location = new System.Drawing.Point(12, 27);
             this.gb_BoxMain.Name = "gb_BoxMain";
-            this.gb_BoxMain.Size = new System.Drawing.Size(649, 278);
+            this.gb_BoxMain.Size = new System.Drawing.Size(647, 490);
             this.gb_BoxMain.TabIndex = 0;
             this.gb_BoxMain.TabStop = false;
             this.gb_BoxMain.Text = "Main";
+            // 
+            // dgv_Information
+            // 
+            this.dgv_Information.AllowUserToAddRows = false;
+            this.dgv_Information.AllowUserToDeleteRows = false;
+            this.dgv_Information.AllowUserToResizeColumns = false;
+            this.dgv_Information.AllowUserToResizeRows = false;
+            this.dgv_Information.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_Information.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Information.Location = new System.Drawing.Point(6, 206);
+            this.dgv_Information.MultiSelect = false;
+            this.dgv_Information.Name = "dgv_Information";
+            this.dgv_Information.ReadOnly = true;
+            this.dgv_Information.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Information.Size = new System.Drawing.Size(628, 44);
+            this.dgv_Information.TabIndex = 7;
             // 
             // dgv_Main
             // 
@@ -83,16 +104,19 @@
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.ReadOnly = true;
             this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Main.Size = new System.Drawing.Size(485, 217);
-            this.dgv_Main.TabIndex = 11;
+            this.dgv_Main.Size = new System.Drawing.Size(485, 181);
+            this.dgv_Main.StandardTab = true;
+            this.dgv_Main.TabIndex = 6;
+            this.dgv_Main.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Main_CellClick);
             this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Main_CellDoubleClick);
+            this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dgv_Main_KeyDown);
             // 
             // btn_Remove
             // 
-            this.btn_Remove.Location = new System.Drawing.Point(194, 242);
+            this.btn_Remove.Location = new System.Drawing.Point(497, 139);
             this.btn_Remove.Name = "btn_Remove";
-            this.btn_Remove.Size = new System.Drawing.Size(88, 26);
-            this.btn_Remove.TabIndex = 10;
+            this.btn_Remove.Size = new System.Drawing.Size(137, 27);
+            this.btn_Remove.TabIndex = 4;
             this.btn_Remove.Text = "Remove";
             this.btn_Remove.UseVisualStyleBackColor = true;
             this.btn_Remove.Click += new System.EventHandler(this.Btn_Remove_Click);
@@ -112,36 +136,36 @@
             this.tb_Search.Location = new System.Drawing.Point(6, 19);
             this.tb_Search.Name = "tb_Search";
             this.tb_Search.Size = new System.Drawing.Size(131, 20);
-            this.tb_Search.TabIndex = 7;
+            this.tb_Search.TabIndex = 1;
             this.tb_Search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Search_KeyPress);
             this.tb_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Tb_Search_KeyUp);
             // 
             // btn_EditData
             // 
-            this.btn_EditData.Location = new System.Drawing.Point(100, 242);
+            this.btn_EditData.Location = new System.Drawing.Point(497, 106);
             this.btn_EditData.Name = "btn_EditData";
-            this.btn_EditData.Size = new System.Drawing.Size(88, 26);
-            this.btn_EditData.TabIndex = 6;
+            this.btn_EditData.Size = new System.Drawing.Size(137, 27);
+            this.btn_EditData.TabIndex = 3;
             this.btn_EditData.Text = "Edit";
             this.btn_EditData.UseVisualStyleBackColor = true;
             this.btn_EditData.Click += new System.EventHandler(this.Btn_EditData_Click);
             // 
             // btn_CreateRandomData
             // 
-            this.btn_CreateRandomData.Location = new System.Drawing.Point(288, 242);
+            this.btn_CreateRandomData.Location = new System.Drawing.Point(497, 172);
             this.btn_CreateRandomData.Name = "btn_CreateRandomData";
-            this.btn_CreateRandomData.Size = new System.Drawing.Size(128, 26);
-            this.btn_CreateRandomData.TabIndex = 4;
+            this.btn_CreateRandomData.Size = new System.Drawing.Size(137, 27);
+            this.btn_CreateRandomData.TabIndex = 5;
             this.btn_CreateRandomData.Text = "Create Random Data";
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
             this.btn_CreateRandomData.Click += new System.EventHandler(this.Btn_CreateRandomData_Click);
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(6, 242);
+            this.btn_Add.Location = new System.Drawing.Point(497, 73);
             this.btn_Add.Name = "btn_Add";
-            this.btn_Add.Size = new System.Drawing.Size(88, 26);
-            this.btn_Add.TabIndex = 1;
+            this.btn_Add.Size = new System.Drawing.Size(137, 27);
+            this.btn_Add.TabIndex = 2;
             this.btn_Add.Text = "Add Vehicle";
             this.btn_Add.UseVisualStyleBackColor = true;
             this.btn_Add.Click += new System.EventHandler(this.Btn_Add_Click);
@@ -152,7 +176,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(669, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -168,31 +192,38 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // ms_NewFileTool
+            // 
+            this.ms_NewFileTool.Name = "ms_NewFileTool";
+            this.ms_NewFileTool.Size = new System.Drawing.Size(112, 22);
+            this.ms_NewFileTool.Text = "New";
+            this.ms_NewFileTool.Click += new System.EventHandler(this.Ms_NewFileTool_Click);
+            // 
             // ms_SaveTool
             // 
             this.ms_SaveTool.Name = "ms_SaveTool";
-            this.ms_SaveTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_SaveTool.Size = new System.Drawing.Size(112, 22);
             this.ms_SaveTool.Text = "Save";
             this.ms_SaveTool.Click += new System.EventHandler(this.Ms_SaveTools_Click);
             // 
             // ms_SaveAsTool
             // 
             this.ms_SaveAsTool.Name = "ms_SaveAsTool";
-            this.ms_SaveAsTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_SaveAsTool.Size = new System.Drawing.Size(112, 22);
             this.ms_SaveAsTool.Text = "Save as";
             this.ms_SaveAsTool.Click += new System.EventHandler(this.Ms_SaveAsTool_Click);
             // 
             // ms_OpenTool
             // 
             this.ms_OpenTool.Name = "ms_OpenTool";
-            this.ms_OpenTool.Size = new System.Drawing.Size(152, 22);
+            this.ms_OpenTool.Size = new System.Drawing.Size(112, 22);
             this.ms_OpenTool.Text = "Open";
             this.ms_OpenTool.Click += new System.EventHandler(this.Ms_LoadTools_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.Ms_ExitTools_Click);
             // 
@@ -200,33 +231,29 @@
             // 
             this.ofd_Main.FileName = "openFileDialog1";
             // 
-            // ms_NewFileTool
-            // 
-            this.ms_NewFileTool.Name = "ms_NewFileTool";
-            this.ms_NewFileTool.Size = new System.Drawing.Size(152, 22);
-            this.ms_NewFileTool.Text = "New";
-            this.ms_NewFileTool.Click += new System.EventHandler(this.Ms_NewFileTool_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 309);
+            this.ClientSize = new System.Drawing.Size(752, 549);
             this.Controls.Add(this.gb_BoxMain);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "ModelLoader";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.gb_BoxMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Information)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.gb_BoxSubMain1.ResumeLayout(false);
             this.gb_BoxSubMain1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs_Information)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,6 +280,7 @@
         private System.Windows.Forms.OpenFileDialog ofd_Main;
         private System.Windows.Forms.SaveFileDialog sfd_Main;
         private System.Windows.Forms.ToolStripMenuItem ms_NewFileTool;
+        private System.Windows.Forms.DataGridView dgv_Information;
+        private System.Windows.Forms.BindingSource bs_Information;
     }
 }
-

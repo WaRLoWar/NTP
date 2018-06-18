@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model;
 using System.IO;
-using System.Runtime.Serialization.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WinForm
 {
@@ -18,12 +19,12 @@ namespace WinForm
     {
         #region Private Fields
         private SecondaryForm _secondaryForm;
+        private List<IVehicle> _vehicles;
+        private JsonSerializerSettings setting;
+        private RandomVehicle _randomVehicle;
         private DialogResult _dialogResult;
         private bool _isNeedSave = false;
-        private bool _isFileCreated = false;
-        private List<IVehicle> _vehicles;
-        private DataContractJsonSerializer _serialized;
-        private RandomVehicle _randomVehicle;
+        private bool _isFileCreated = false;        
         #endregion Private Fields   
 
         #region Default Setting
@@ -33,27 +34,26 @@ namespace WinForm
         public MainForm()
         {
             InitializeComponent();
-            DefaultSetting();
-            List<Type> typeList = new List<Type>
-            {
-                typeof(Car),
-                typeof(Boat),
-                typeof(Helicopter)
-            };           
-            _serialized = new DataContractJsonSerializer(typeof(List<IVehicle>),typeList);
+            DefaultSetting();        
+            setting = new JsonSerializerSettings();
+            setting.TypeNameHandling = TypeNameHandling.Auto;
         }
         /// <summary>
         /// Default Setting
         /// </summary>
         private void DefaultSetting()
         {
-            btn_CreateRandomData.Visible = System.Diagnostics.Debugger.IsAttached;
+            #if !DEBUG
+            btn_CreateRandomData.Visible = false;           
+            #endif
             _vehicles = new List<IVehicle>();
             bs_Main.DataSource = _vehicles;
             dgv_Main.DataSource = bs_Main;
             dgv_Main.RowHeadersVisible = false;
             dgv_Main.Columns[0].Width = 80;
             dgv_Main.MultiSelect = false;
+            dgv_Information.RowHeadersVisible = false;            
+            dgv_Information.DataSource = bs_Information;            
             tb_Search.MaxLength = 20;
             ms_SaveTool.ShortcutKeys = Keys.Control | Keys.S;
             ms_SaveAsTool.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
@@ -97,10 +97,55 @@ namespace WinForm
         /// <param name="e"></param>
         private void Dgv_Main_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            EditData();
+            EditData();           
         }
+
+        /// <summary>
+        /// The selection of all information about the line
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Dgv_Main_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Dgv_Main_ClickAndKeyEnter(sender);
+        }
+
+        /// <summary>
+        /// Action when you press Enter or Click in the field dgv_Main
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Dgv_Main_ClickAndKeyEnter(object sender)
+        {
+            var current = bs_Main.Current;
+            if (current is Car carVehicle)
+            {
+                bs_Information.DataSource = carVehicle;
+            }
+            else if (current is Boat boatVehicle)
+            {
+                bs_Information.DataSource = boatVehicle;
+            }
+            else if (current is Helicopter helicopterVehicle)
+            {
+                bs_Information.DataSource = helicopterVehicle;
+            }
+        }
+        /// <summary>
+        /// Action when you press Enter in the field dgv_Main
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Dgv_Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Dgv_Main_ClickAndKeyEnter(sender);
+                e.Handled = true;
+            }
+        }        
         #endregion Action with Form Main and DataGridView
-    
+
         #region Buttons
 
         /// <summary>
@@ -221,10 +266,9 @@ namespace WinForm
         private void Ms_SaveTools_Click(object sender, EventArgs e)
         {
             if (_isFileCreated)
-            { 
-                FileStream fStream = new FileStream(sfd_Main.FileName, FileMode.OpenOrCreate);
-                _serialized.WriteObject(fStream, _vehicles);
-                fStream.Dispose();                
+            {               
+                string json = JsonConvert.SerializeObject(_vehicles, setting);
+                File.WriteAllText(sfd_Main.FileName, json);
                 _isNeedSave = false;
             }
             else
@@ -242,10 +286,9 @@ namespace WinForm
             DialogResult result = ofd_Main.ShowDialog();
             if (result == DialogResult.OK)
             {
-                bs_Main.Clear();
-                FileStream fStream= new FileStream(ofd_Main.FileName, FileMode.OpenOrCreate);
-                List<IVehicle> deserialized = (List<IVehicle>)_serialized.ReadObject(fStream);
-                fStream.Dispose();
+                bs_Main.Clear();         
+                string json = File.ReadAllText(ofd_Main.FileName);
+                var deserialized = JsonConvert.DeserializeObject<List<IVehicle>>(json,setting);
                 foreach (IVehicle vehicle in deserialized)
                 {
                     bs_Main.Add(vehicle);
@@ -277,10 +320,10 @@ namespace WinForm
                 sfd_Main.Filter = "Vehicle|*.vehicle";
                 DialogResult result = sfd_Main.ShowDialog();
                 if (result == DialogResult.OK)
-                {
-                    FileStream fStream = new FileStream(sfd_Main.FileName, FileMode.OpenOrCreate);
-                    _serialized.WriteObject(fStream, _vehicles);
-                    fStream.Dispose();
+                {                                     
+                    string json = JsonConvert.SerializeObject(_vehicles, setting);
+                    File.WriteAllText(sfd_Main.FileName, json);
+                    MessageBox.Show(json);
                     _isNeedSave = false;
                     _isFileCreated = true;
                 }
@@ -303,14 +346,19 @@ namespace WinForm
         /// <param name="e"></param>
         private void Ms_NewFileTool_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Create a new table ! Are you sure ?", "Attention", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-            if (result == DialogResult.Yes)
+            if (_vehicles.Any())
             {
-                ClosingForm();
-                bs_Main.Clear();
-                _isNeedSave = true;
-            }            
+                DialogResult result = MessageBox.Show("Create a new table ! Are you sure ?", "Attention",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                if (result == DialogResult.Yes)
+                {
+                    ClosingForm();                   
+                }
+            }
+            bs_Main.Clear();
+            _isNeedSave = true;
+            _isFileCreated = false;
         }            
 
         /// <summary>
@@ -320,7 +368,7 @@ namespace WinForm
         {
             _secondaryForm = new SecondaryForm();
             IVehicle current = (IVehicle)bs_Main.Current;
-            _secondaryForm.SetVehicleData(current);
+            _secondaryForm.SetVehicle(current);
             _dialogResult = _secondaryForm.ShowDialog();
             if (_dialogResult == DialogResult.OK)
             {
@@ -339,6 +387,7 @@ namespace WinForm
         {
             return (_vehicles.Any() && _isNeedSave);
         }
+
         #endregion MenuStrip        
     }
 }
