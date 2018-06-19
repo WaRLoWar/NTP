@@ -300,7 +300,7 @@ namespace WinForm
         {
             if (!IsNeedSaveData())
             {
-                MessageBox.Show("List is empty. Nothing to save");
+                MessageBox.Show("Nothing to save");
             }
             else
             {
@@ -310,8 +310,7 @@ namespace WinForm
                 if (result == DialogResult.OK)
                 {                                     
                     string json = JsonConvert.SerializeObject(_vehicles, setting);
-                    File.WriteAllText(sfd_Main.FileName, json);
-                    MessageBox.Show(json);
+                    File.WriteAllText(sfd_Main.FileName, json);                    
                     _isNeedSave = false;
                     _isFileCreated = true;
                 }

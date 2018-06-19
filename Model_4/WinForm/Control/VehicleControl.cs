@@ -40,6 +40,9 @@ namespace WinForm
             helicopterControl_First.Location = startLocation;                       
         }
 
+        /// <summary>
+        /// Interaction with vehicle
+        /// </summary>
         public IVehicle Vehicle
         {
             get => _vehicle;
@@ -76,7 +79,7 @@ namespace WinForm
 
 
         /// <summary>
-        /// 
+        /// Checking the received vehicle
         /// </summary>
         /// <param name="data"></param>
         private void CheckVehicle(IVehicle data)

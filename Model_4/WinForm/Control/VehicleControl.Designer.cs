@@ -58,7 +58,7 @@
             this.rbtn_Car.Location = new System.Drawing.Point(6, 19);
             this.rbtn_Car.Name = "rbtn_Car";
             this.rbtn_Car.Size = new System.Drawing.Size(41, 17);
-            this.rbtn_Car.TabIndex = 0;
+            this.rbtn_Car.TabIndex = 1;
             this.rbtn_Car.TabStop = true;
             this.rbtn_Car.Text = "Car";
             this.rbtn_Car.UseVisualStyleBackColor = true;
@@ -70,7 +70,7 @@
             this.rbtn_Boat.Location = new System.Drawing.Point(51, 19);
             this.rbtn_Boat.Name = "rbtn_Boat";
             this.rbtn_Boat.Size = new System.Drawing.Size(47, 17);
-            this.rbtn_Boat.TabIndex = 1;
+            this.rbtn_Boat.TabIndex = 2;
             this.rbtn_Boat.TabStop = true;
             this.rbtn_Boat.Text = "Boat";
             this.rbtn_Boat.UseVisualStyleBackColor = true;
@@ -82,7 +82,7 @@
             this.rbtn_Helicopter.Location = new System.Drawing.Point(104, 19);
             this.rbtn_Helicopter.Name = "rbtn_Helicopter";
             this.rbtn_Helicopter.Size = new System.Drawing.Size(73, 17);
-            this.rbtn_Helicopter.TabIndex = 2;
+            this.rbtn_Helicopter.TabIndex = 3;
             this.rbtn_Helicopter.TabStop = true;
             this.rbtn_Helicopter.Text = "Helicopter";
             this.rbtn_Helicopter.UseVisualStyleBackColor = true;
@@ -93,7 +93,7 @@
             this.btn_OK.Location = new System.Drawing.Point(9, 319);
             this.btn_OK.Name = "btn_OK";
             this.btn_OK.Size = new System.Drawing.Size(110, 25);
-            this.btn_OK.TabIndex = 5;
+            this.btn_OK.TabIndex = 7;
             this.btn_OK.Text = "OK";
             this.btn_OK.UseVisualStyleBackColor = true;
             this.btn_OK.Click += new System.EventHandler(this.Btn_OK_Click);
@@ -103,34 +103,34 @@
             this.btn_Cancel.Location = new System.Drawing.Point(154, 319);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(110, 25);
-            this.btn_Cancel.TabIndex = 6;
+            this.btn_Cancel.TabIndex = 8;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
             // 
             // helicopterControl_First
             // 
-           
+            this.helicopterControl_First.HelicopterVehicle = null;
             this.helicopterControl_First.Location = new System.Drawing.Point(280, 319);
             this.helicopterControl_First.Name = "helicopterControl_First";
             this.helicopterControl_First.Size = new System.Drawing.Size(277, 261);
-            this.helicopterControl_First.TabIndex = 4;
+            this.helicopterControl_First.TabIndex = 6;
             // 
             // boatControl_First
             // 
-           
+            this.boatControl_First.BoatVehicle = null;
             this.boatControl_First.Location = new System.Drawing.Point(283, 52);
             this.boatControl_First.Name = "boatControl_First";
             this.boatControl_First.Size = new System.Drawing.Size(277, 261);
-            this.boatControl_First.TabIndex = 3;
+            this.boatControl_First.TabIndex = 5;
             // 
             // carControl_First
             // 
-          
+            this.carControl_First.CarVehicle = null;
             this.carControl_First.Location = new System.Drawing.Point(0, 52);
             this.carControl_First.Name = "carControl_First";
             this.carControl_First.Size = new System.Drawing.Size(277, 261);
-            this.carControl_First.TabIndex = 2;
+            this.carControl_First.TabIndex = 4;
             // 
             // VehicleControl
             // 

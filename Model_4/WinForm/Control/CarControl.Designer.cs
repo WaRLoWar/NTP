@@ -63,14 +63,14 @@
             this.cb_Type.Location = new System.Drawing.Point(120, 19);
             this.cb_Type.Name = "cb_Type";
             this.cb_Type.Size = new System.Drawing.Size(125, 21);
-            this.cb_Type.TabIndex = 7;
+            this.cb_Type.TabIndex = 5;
             // 
             // tb_FuelConsuption
             // 
             this.tb_FuelConsuption.Location = new System.Drawing.Point(120, 72);
             this.tb_FuelConsuption.Name = "tb_FuelConsuption";
             this.tb_FuelConsuption.Size = new System.Drawing.Size(125, 20);
-            this.tb_FuelConsuption.TabIndex = 9;
+            this.tb_FuelConsuption.TabIndex = 7;
             this.tb_FuelConsuption.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_FuelConsuption_KeyPress);
             this.tb_FuelConsuption.Leave += new System.EventHandler(this.Tb_FuelConsuption_Leave);
             // 
@@ -79,7 +79,7 @@
             this.tb_Power.Location = new System.Drawing.Point(120, 46);
             this.tb_Power.Name = "tb_Power";
             this.tb_Power.Size = new System.Drawing.Size(125, 20);
-            this.tb_Power.TabIndex = 8;
+            this.tb_Power.TabIndex = 6;
             this.tb_Power.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Power_KeyPress);
             this.tb_Power.Leave += new System.EventHandler(this.Tb_Power_Leave);
             // 
@@ -131,7 +131,7 @@
             this.gb_DistinctiveCharacteristic.Location = new System.Drawing.Point(6, 148);
             this.gb_DistinctiveCharacteristic.Name = "gb_DistinctiveCharacteristic";
             this.gb_DistinctiveCharacteristic.Size = new System.Drawing.Size(258, 103);
-            this.gb_DistinctiveCharacteristic.TabIndex = 13;
+            this.gb_DistinctiveCharacteristic.TabIndex = 5;
             this.gb_DistinctiveCharacteristic.TabStop = false;
             this.gb_DistinctiveCharacteristic.Text = "Distinctive Characteristic";
             // 
@@ -148,7 +148,7 @@
             this.gb_General.Location = new System.Drawing.Point(6, 9);
             this.gb_General.Name = "gb_General";
             this.gb_General.Size = new System.Drawing.Size(258, 133);
-            this.gb_General.TabIndex = 12;
+            this.gb_General.TabIndex = 1;
             this.gb_General.TabStop = false;
             this.gb_General.Text = "General";
             // 
@@ -157,7 +157,7 @@
             this.tb_Cost.Location = new System.Drawing.Point(120, 71);
             this.tb_Cost.Name = "tb_Cost";
             this.tb_Cost.Size = new System.Drawing.Size(125, 20);
-            this.tb_Cost.TabIndex = 5;
+            this.tb_Cost.TabIndex = 3;
             this.tb_Cost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Cost_KeyPress);
             // 
             // dtp_Date
@@ -168,7 +168,7 @@
             this.dtp_Date.MinDate = new System.DateTime(1753, 1, 3, 0, 0, 0, 0);
             this.dtp_Date.Name = "dtp_Date";
             this.dtp_Date.Size = new System.Drawing.Size(125, 20);
-            this.dtp_Date.TabIndex = 6;
+            this.dtp_Date.TabIndex = 4;
             this.dtp_Date.Value = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             // 
             // l_Cost
@@ -194,7 +194,7 @@
             this.tb_Name.Location = new System.Drawing.Point(120, 19);
             this.tb_Name.Name = "tb_Name";
             this.tb_Name.Size = new System.Drawing.Size(125, 20);
-            this.tb_Name.TabIndex = 3;
+            this.tb_Name.TabIndex = 1;
             this.tb_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Name_KeyPress);
             // 
             // l_Name
@@ -211,7 +211,7 @@
             this.tb_SerialNumber.Location = new System.Drawing.Point(120, 45);
             this.tb_SerialNumber.Name = "tb_SerialNumber";
             this.tb_SerialNumber.Size = new System.Drawing.Size(125, 20);
-            this.tb_SerialNumber.TabIndex = 4;
+            this.tb_SerialNumber.TabIndex = 2;
             this.tb_SerialNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_SerialNumber_KeyPress);
             this.tb_SerialNumber.Leave += new System.EventHandler(this.Tb_SerialNumber_Leave);
             // 

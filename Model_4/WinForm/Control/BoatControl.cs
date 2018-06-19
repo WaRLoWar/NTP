@@ -18,7 +18,7 @@ namespace WinForm
         /// <summary>
         /// Default Setting
         /// </summary>
-        public void DefaultSettingBoat()
+        private void DefaultSettingBoat()
         {
             tb_Name.MaxLength = 25;
             tb_Cost.MaxLength = 12;
@@ -28,9 +28,23 @@ namespace WinForm
             dtp_Date.MinDate = new DateTime(1900, 01, 01);
             tb_Speed.MaxLength = 2;            
             tb_Draft.MaxLength = 2;
-            tb_BoatCapacity.MaxLength = 2;            
+            tb_BoatCapacity.MaxLength = 2;
+            SettingTabStop();
         }
 
+        /// <summary>
+        /// Prohibition of interaction via 'Tab'
+        /// </summary>
+        private void SettingTabStop()
+        {
+            l_Name.TabStop = false;
+            l_BoatCapacity.TabStop = false;
+            l_Cost.TabStop = false;
+            l_Draft.TabStop = false;
+            l_ManufacturesYear.TabStop = false;
+            l_Speed.TabStop = false;
+            l_SerialNumber.TabStop = false;
+        }
         /// <summary>
         /// Interaction with the class 'Boat'
         /// </summary>
@@ -51,9 +65,7 @@ namespace WinForm
                 dataBoat.Speed = Convert.ToDouble(tb_Speed.Text);
                 dataBoat.Draft = Convert.ToDouble(tb_Draft.Text);
                 dataBoat.BoatCapacity = Convert.ToUInt32(tb_BoatCapacity.Text);
-                return dataBoat;
-            
-                
+                return dataBoat;                            
             }
             set
             {

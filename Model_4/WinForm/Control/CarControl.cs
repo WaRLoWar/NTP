@@ -26,7 +26,7 @@ namespace WinForm
         /// <summary>
         /// Default Setting
         /// </summary>
-        public void DefaultSettingCar()
+        private void DefaultSettingCar()
         {
             tb_Name.MaxLength = 25;
             tb_Cost.MaxLength = 12;
@@ -37,9 +37,23 @@ namespace WinForm
             cb_Type.Text = @"Null";
             cb_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             tb_Power.MaxLength = 3;
-            tb_FuelConsuption.MaxLength = 2;                       
+            tb_FuelConsuption.MaxLength = 2;         
+            SettingTabStop();
         }
 
+        /// <summary>
+        /// Prohibition of interaction via 'Tab'
+        /// </summary>
+        private void SettingTabStop()
+        {
+            l_Name.TabStop = false;
+            l_CarInterior.TabStop = false;
+            l_Cost.TabStop = false;
+            l_FuelConsuption.TabStop = false;
+            l_ManufacturesYear.TabStop = false;
+            l_Power.TabStop = false;
+            l_SerialNumber.TabStop = false;
+        }
         /// <summary>
         /// Interaction with the class 'Car'
         /// </summary>

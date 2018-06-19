@@ -29,6 +29,21 @@ namespace WinForm
             tb_Range.MaxLength = 4;
             tb_Capacity.MaxLength = 4;
             tb_Speed.MaxLength = 3;
+            SettingTabStop();
+        }
+
+        /// <summary>
+        /// Prohibition of interaction via 'Tab'
+        /// </summary>
+        private void SettingTabStop()
+        {
+            l_Name.TabStop = false;
+            l_Capacity.TabStop = false;
+            l_Cost.TabStop = false;
+            l_Range.TabStop = false;
+            l_ManufacturesYear.TabStop = false;
+            l_Speed.TabStop = false;
+            l_SerialNumber.TabStop = false;
         }
 
         /// <summary>

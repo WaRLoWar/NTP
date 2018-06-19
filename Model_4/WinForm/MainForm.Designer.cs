@@ -79,7 +79,7 @@
             this.vehicleControl_MainForm.Location = new System.Drawing.Point(497, 10);
             this.vehicleControl_MainForm.Name = "vehicleControl_MainForm";
             this.vehicleControl_MainForm.Size = new System.Drawing.Size(280, 317);
-            this.vehicleControl_MainForm.TabIndex = 10;
+            this.vehicleControl_MainForm.TabIndex = 3;
             this.vehicleControl_MainForm.Vehicle = null;
             // 
             // dgv_Main
@@ -95,7 +95,7 @@
             this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_Main.Size = new System.Drawing.Size(485, 181);
             this.dgv_Main.StandardTab = true;
-            this.dgv_Main.TabIndex = 6;
+            this.dgv_Main.TabIndex = 2;
             this.dgv_Main.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Main_CellClick);
             this.dgv_Main.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Main_CellDoubleClick);
             this.dgv_Main.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dgv_Main_KeyDown);
@@ -105,7 +105,7 @@
             this.btn_Remove.Location = new System.Drawing.Point(351, 260);
             this.btn_Remove.Name = "btn_Remove";
             this.btn_Remove.Size = new System.Drawing.Size(140, 30);
-            this.btn_Remove.TabIndex = 4;
+            this.btn_Remove.TabIndex = 6;
             this.btn_Remove.Text = "Remove";
             this.btn_Remove.UseVisualStyleBackColor = true;
             this.btn_Remove.Click += new System.EventHandler(this.Btn_Remove_Click);
@@ -116,7 +116,7 @@
             this.gb_BoxSubMain1.Location = new System.Drawing.Point(6, 19);
             this.gb_BoxSubMain1.Name = "gb_BoxSubMain1";
             this.gb_BoxSubMain1.Size = new System.Drawing.Size(168, 48);
-            this.gb_BoxSubMain1.TabIndex = 9;
+            this.gb_BoxSubMain1.TabIndex = 1;
             this.gb_BoxSubMain1.TabStop = false;
             this.gb_BoxSubMain1.Text = "Search";
             // 
@@ -134,7 +134,7 @@
             this.btn_EditData.Location = new System.Drawing.Point(176, 260);
             this.btn_EditData.Name = "btn_EditData";
             this.btn_EditData.Size = new System.Drawing.Size(140, 30);
-            this.btn_EditData.TabIndex = 3;
+            this.btn_EditData.TabIndex = 5;
             this.btn_EditData.Text = "Edit";
             this.btn_EditData.UseVisualStyleBackColor = true;
             this.btn_EditData.Click += new System.EventHandler(this.Btn_EditData_Click);
@@ -144,7 +144,7 @@
             this.btn_CreateRandomData.Location = new System.Drawing.Point(176, 296);
             this.btn_CreateRandomData.Name = "btn_CreateRandomData";
             this.btn_CreateRandomData.Size = new System.Drawing.Size(140, 30);
-            this.btn_CreateRandomData.TabIndex = 5;
+            this.btn_CreateRandomData.TabIndex = 7;
             this.btn_CreateRandomData.Text = "Create Random Data";
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
             this.btn_CreateRandomData.Click += new System.EventHandler(this.Btn_CreateRandomData_Click);
@@ -154,7 +154,7 @@
             this.btn_Add.Location = new System.Drawing.Point(6, 260);
             this.btn_Add.Name = "btn_Add";
             this.btn_Add.Size = new System.Drawing.Size(140, 30);
-            this.btn_Add.TabIndex = 2;
+            this.btn_Add.TabIndex = 4;
             this.btn_Add.Text = "Add Vehicle";
             this.btn_Add.UseVisualStyleBackColor = true;
             this.btn_Add.Click += new System.EventHandler(this.Btn_Add_Click);
@@ -184,35 +184,35 @@
             // ms_NewFileTool
             // 
             this.ms_NewFileTool.Name = "ms_NewFileTool";
-            this.ms_NewFileTool.Size = new System.Drawing.Size(112, 22);
+            this.ms_NewFileTool.Size = new System.Drawing.Size(152, 22);
             this.ms_NewFileTool.Text = "New";
             this.ms_NewFileTool.Click += new System.EventHandler(this.Ms_NewFileTool_Click);
             // 
             // ms_SaveTool
             // 
             this.ms_SaveTool.Name = "ms_SaveTool";
-            this.ms_SaveTool.Size = new System.Drawing.Size(112, 22);
+            this.ms_SaveTool.Size = new System.Drawing.Size(152, 22);
             this.ms_SaveTool.Text = "Save";
             this.ms_SaveTool.Click += new System.EventHandler(this.Ms_SaveTools_Click);
             // 
             // ms_SaveAsTool
             // 
             this.ms_SaveAsTool.Name = "ms_SaveAsTool";
-            this.ms_SaveAsTool.Size = new System.Drawing.Size(112, 22);
+            this.ms_SaveAsTool.Size = new System.Drawing.Size(152, 22);
             this.ms_SaveAsTool.Text = "Save as";
             this.ms_SaveAsTool.Click += new System.EventHandler(this.Ms_SaveAsTool_Click);
             // 
             // ms_OpenTool
             // 
             this.ms_OpenTool.Name = "ms_OpenTool";
-            this.ms_OpenTool.Size = new System.Drawing.Size(112, 22);
+            this.ms_OpenTool.Size = new System.Drawing.Size(152, 22);
             this.ms_OpenTool.Text = "Open";
             this.ms_OpenTool.Click += new System.EventHandler(this.Ms_LoadTools_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.Ms_ExitTools_Click);
             // 
