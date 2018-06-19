@@ -43,7 +43,7 @@ namespace WinForm
                     return null;
                 }
                 Helicopter dataHelicopter = new Helicopter();
-                dataHelicopter.TypeVehicle = "Boat";
+                dataHelicopter.TypeVehicle = "Helicopter";
                 dataHelicopter.Name = tb_Name.Text;
                 dataHelicopter.SerialNumber = tb_SerialNumber.Text;
                 dataHelicopter.Cost = Convert.ToDouble(tb_Cost.Text);

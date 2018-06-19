@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gb_BoxMain = new System.Windows.Forms.GroupBox();
-            this.dgv_Information = new System.Windows.Forms.DataGridView();
+            this.vehicleControl_MainForm = new WinForm.VehicleControl();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.gb_BoxSubMain1 = new System.Windows.Forms.GroupBox();
@@ -50,20 +50,17 @@
             this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
             this.ofd_Main = new System.Windows.Forms.OpenFileDialog();
             this.sfd_Main = new System.Windows.Forms.SaveFileDialog();
-            this.bs_Information = new System.Windows.Forms.BindingSource(this.components);
             this.gb_BoxMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Information)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.gb_BoxSubMain1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bs_Information)).BeginInit();
             this.SuspendLayout();
             // 
             // gb_BoxMain
             // 
             this.gb_BoxMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.gb_BoxMain.Controls.Add(this.dgv_Information);
+            this.gb_BoxMain.Controls.Add(this.vehicleControl_MainForm);
             this.gb_BoxMain.Controls.Add(this.dgv_Main);
             this.gb_BoxMain.Controls.Add(this.btn_Remove);
             this.gb_BoxMain.Controls.Add(this.gb_BoxSubMain1);
@@ -72,26 +69,18 @@
             this.gb_BoxMain.Controls.Add(this.btn_Add);
             this.gb_BoxMain.Location = new System.Drawing.Point(12, 27);
             this.gb_BoxMain.Name = "gb_BoxMain";
-            this.gb_BoxMain.Size = new System.Drawing.Size(647, 490);
+            this.gb_BoxMain.Size = new System.Drawing.Size(788, 340);
             this.gb_BoxMain.TabIndex = 0;
             this.gb_BoxMain.TabStop = false;
             this.gb_BoxMain.Text = "Main";
             // 
-            // dgv_Information
+            // vehicleControl_MainForm
             // 
-            this.dgv_Information.AllowUserToAddRows = false;
-            this.dgv_Information.AllowUserToDeleteRows = false;
-            this.dgv_Information.AllowUserToResizeColumns = false;
-            this.dgv_Information.AllowUserToResizeRows = false;
-            this.dgv_Information.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_Information.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Information.Location = new System.Drawing.Point(6, 206);
-            this.dgv_Information.MultiSelect = false;
-            this.dgv_Information.Name = "dgv_Information";
-            this.dgv_Information.ReadOnly = true;
-            this.dgv_Information.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_Information.Size = new System.Drawing.Size(628, 44);
-            this.dgv_Information.TabIndex = 7;
+            this.vehicleControl_MainForm.Location = new System.Drawing.Point(497, 10);
+            this.vehicleControl_MainForm.Name = "vehicleControl_MainForm";
+            this.vehicleControl_MainForm.Size = new System.Drawing.Size(280, 317);
+            this.vehicleControl_MainForm.TabIndex = 10;
+            this.vehicleControl_MainForm.Vehicle = null;
             // 
             // dgv_Main
             // 
@@ -100,7 +89,7 @@
             this.dgv_Main.AllowUserToResizeColumns = false;
             this.dgv_Main.AllowUserToResizeRows = false;
             this.dgv_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Main.Location = new System.Drawing.Point(6, 19);
+            this.dgv_Main.Location = new System.Drawing.Point(6, 73);
             this.dgv_Main.Name = "dgv_Main";
             this.dgv_Main.ReadOnly = true;
             this.dgv_Main.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -113,9 +102,9 @@
             // 
             // btn_Remove
             // 
-            this.btn_Remove.Location = new System.Drawing.Point(497, 139);
+            this.btn_Remove.Location = new System.Drawing.Point(351, 260);
             this.btn_Remove.Name = "btn_Remove";
-            this.btn_Remove.Size = new System.Drawing.Size(137, 27);
+            this.btn_Remove.Size = new System.Drawing.Size(140, 30);
             this.btn_Remove.TabIndex = 4;
             this.btn_Remove.Text = "Remove";
             this.btn_Remove.UseVisualStyleBackColor = true;
@@ -124,9 +113,9 @@
             // gb_BoxSubMain1
             // 
             this.gb_BoxSubMain1.Controls.Add(this.tb_Search);
-            this.gb_BoxSubMain1.Location = new System.Drawing.Point(497, 19);
+            this.gb_BoxSubMain1.Location = new System.Drawing.Point(6, 19);
             this.gb_BoxSubMain1.Name = "gb_BoxSubMain1";
-            this.gb_BoxSubMain1.Size = new System.Drawing.Size(143, 48);
+            this.gb_BoxSubMain1.Size = new System.Drawing.Size(168, 48);
             this.gb_BoxSubMain1.TabIndex = 9;
             this.gb_BoxSubMain1.TabStop = false;
             this.gb_BoxSubMain1.Text = "Search";
@@ -135,16 +124,16 @@
             // 
             this.tb_Search.Location = new System.Drawing.Point(6, 19);
             this.tb_Search.Name = "tb_Search";
-            this.tb_Search.Size = new System.Drawing.Size(131, 20);
+            this.tb_Search.Size = new System.Drawing.Size(156, 20);
             this.tb_Search.TabIndex = 1;
             this.tb_Search.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Tb_Search_KeyPress);
             this.tb_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Tb_Search_KeyUp);
             // 
             // btn_EditData
             // 
-            this.btn_EditData.Location = new System.Drawing.Point(497, 106);
+            this.btn_EditData.Location = new System.Drawing.Point(176, 260);
             this.btn_EditData.Name = "btn_EditData";
-            this.btn_EditData.Size = new System.Drawing.Size(137, 27);
+            this.btn_EditData.Size = new System.Drawing.Size(140, 30);
             this.btn_EditData.TabIndex = 3;
             this.btn_EditData.Text = "Edit";
             this.btn_EditData.UseVisualStyleBackColor = true;
@@ -152,9 +141,9 @@
             // 
             // btn_CreateRandomData
             // 
-            this.btn_CreateRandomData.Location = new System.Drawing.Point(497, 172);
+            this.btn_CreateRandomData.Location = new System.Drawing.Point(176, 296);
             this.btn_CreateRandomData.Name = "btn_CreateRandomData";
-            this.btn_CreateRandomData.Size = new System.Drawing.Size(137, 27);
+            this.btn_CreateRandomData.Size = new System.Drawing.Size(140, 30);
             this.btn_CreateRandomData.TabIndex = 5;
             this.btn_CreateRandomData.Text = "Create Random Data";
             this.btn_CreateRandomData.UseVisualStyleBackColor = true;
@@ -162,9 +151,9 @@
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(497, 73);
+            this.btn_Add.Location = new System.Drawing.Point(6, 260);
             this.btn_Add.Name = "btn_Add";
-            this.btn_Add.Size = new System.Drawing.Size(137, 27);
+            this.btn_Add.Size = new System.Drawing.Size(140, 30);
             this.btn_Add.TabIndex = 2;
             this.btn_Add.Text = "Add Vehicle";
             this.btn_Add.UseVisualStyleBackColor = true;
@@ -176,7 +165,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(812, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -235,7 +224,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 549);
+            this.ClientSize = new System.Drawing.Size(812, 379);
             this.Controls.Add(this.gb_BoxMain);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -246,14 +235,12 @@
             this.Text = "ModelLoader";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.gb_BoxMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Information)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).EndInit();
             this.gb_BoxSubMain1.ResumeLayout(false);
             this.gb_BoxSubMain1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bs_Main)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bs_Information)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,7 +267,6 @@
         private System.Windows.Forms.OpenFileDialog ofd_Main;
         private System.Windows.Forms.SaveFileDialog sfd_Main;
         private System.Windows.Forms.ToolStripMenuItem ms_NewFileTool;
-        private System.Windows.Forms.DataGridView dgv_Information;
-        private System.Windows.Forms.BindingSource bs_Information;
+        private VehicleControl vehicleControl_MainForm;
     }
 }

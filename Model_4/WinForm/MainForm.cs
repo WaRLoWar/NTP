@@ -51,14 +51,13 @@ namespace WinForm
             dgv_Main.DataSource = bs_Main;
             dgv_Main.RowHeadersVisible = false;
             dgv_Main.Columns[0].Width = 80;
-            dgv_Main.MultiSelect = false;
-            dgv_Information.RowHeadersVisible = false;            
-            dgv_Information.DataSource = bs_Information;            
+            dgv_Main.MultiSelect = false;             
             tb_Search.MaxLength = 20;
             ms_SaveTool.ShortcutKeys = Keys.Control | Keys.S;
             ms_SaveAsTool.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
             ms_OpenTool.ShortcutKeys = Keys.Control | Keys.O;
             ms_NewFileTool.ShortcutKeys = Keys.Control | Keys.N;
+            vehicleControl_MainForm.ReadOnly = true;            
         }
         #endregion Default Setting
 
@@ -117,19 +116,8 @@ namespace WinForm
         /// <param name="e"></param>
         private void Dgv_Main_ClickAndKeyEnter(object sender)
         {
-            var current = bs_Main.Current;
-            if (current is Car carVehicle)
-            {
-                bs_Information.DataSource = carVehicle;
-            }
-            else if (current is Boat boatVehicle)
-            {
-                bs_Information.DataSource = boatVehicle;
-            }
-            else if (current is Helicopter helicopterVehicle)
-            {
-                bs_Information.DataSource = helicopterVehicle;
-            }
+            IVehicle current = (IVehicle)bs_Main.Current;           
+            vehicleControl_MainForm.Vehicle = current;
         }
         /// <summary>
         /// Action when you press Enter in the field dgv_Main
@@ -160,7 +148,7 @@ namespace WinForm
                 _isNeedSave = true;
                 try
                 {
-                    IVehicle newVehicle = _secondaryForm.GetVehicle();
+                    IVehicle newVehicle = _secondaryForm.Vehicle;
                     bs_Main.Add(newVehicle);
                 }
                 catch (Exception ex)
@@ -367,12 +355,12 @@ namespace WinForm
         private void EditData()
         {
             _secondaryForm = new SecondaryForm();
-            IVehicle current = (IVehicle)bs_Main.Current;
-            _secondaryForm.SetVehicle(current);
+            IVehicle current = (IVehicle)bs_Main.Current;                   
+            _secondaryForm.Vehicle = current;
             _dialogResult = _secondaryForm.ShowDialog();
             if (_dialogResult == DialogResult.OK)
             {
-                IVehicle newVehicle = _secondaryForm.GetVehicle();
+                IVehicle newVehicle = _secondaryForm.Vehicle;
                 int index = bs_Main.CurrencyManager.Position;
                 bs_Main.RemoveAt(index);
                 bs_Main.Insert(index, newVehicle);

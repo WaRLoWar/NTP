@@ -8,56 +8,95 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.Design;
+using System.Diagnostics.Tracing;
 using Model;
 
 namespace WinForm
 {
     public partial class VehicleControl : UserControl
     {
-        private DialogResult _result;
-
+        private IVehicle _vehicle;
+        /// <summary>
+        /// Сonstructor
+        /// </summary>
         public VehicleControl()
         {            
             InitializeComponent();
-            DefaultSettingView();            
+            DefaultSettingVehicle();            
         }
 
-        private void DefaultSettingView()
+        /// <summary>
+        /// Default Setting
+        /// </summary>
+        private void DefaultSettingVehicle()
         {
             VisibilityControl();
             this.Size= new Size(280, 350);
             rbtn_Car.Checked = true;
             carControl_First.Visible = true;
-            ReadOnly = false;           
+            ReadOnly = true;           
             Point startLocation = carControl_First.Location;
             boatControl_First.Location = startLocation;
             helicopterControl_First.Location = startLocation;                       
         }
 
+        public IVehicle Vehicle
+        {
+            get => _vehicle;
+            set
+            {
+                if (value == null) return;
+                _vehicle = value;
+                CheckVehicle(_vehicle);
+            }
+        }
 
-        public IVehicle Vehicle { get; set; }
-
+        /// <summary>
+        /// The current type of transport
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButton_CheckedChange(object sender, EventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
-            VisibilityControl();
+            VisibilityControl();            
             if (rbtn_Car.Checked)
-            {                
-                carControl_First.Visible = true;               
-                carControl_First.CarVehicle = (Car)Vehicle;
+            {              
+                carControl_First.Visible = true;                              
             }
             else if (rbtn_Boat.Checked)
             {               
-                boatControl_First.Visible = true;
-                boatControl_First.BoatVehicle = (Boat) Vehicle;
+                boatControl_First.Visible = true;             
             }
             else if (rbtn_Helicopter.Checked)
             {
-                helicopterControl_First.Visible = true;
-                helicopterControl_First.HelicopterVehicle = (Helicopter) Vehicle;
-            }   
+                helicopterControl_First.Visible = true;     
+            }               
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        private void CheckVehicle(IVehicle data)
+        {
+            switch (data)
+            {
+                case Car car:
+                    rbtn_Car.Checked = true;
+                    carControl_First.CarVehicle = car;
+                    break;
+                case Boat boat:
+                    rbtn_Boat.Checked = true;
+                    boatControl_First.BoatVehicle = boat;
+                    break;
+                case Helicopter helicopter:
+                    rbtn_Helicopter.Checked = true;
+                    helicopterControl_First.HelicopterVehicle = helicopter;
+                    break;
+            }
+        }
         #region Management Control
 
 
@@ -98,19 +137,27 @@ namespace WinForm
         /// <param name="e"></param>
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
-            _result = DialogResult.Cancel;
+            ((Form)this.TopLevelControl).DialogResult = DialogResult.Cancel;            
             ((Form)this.TopLevelControl)?.Close();
         }
 
+        /// <summary>
+        /// OK button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_OK_Click(object sender, EventArgs e)
         {
-            _result = DialogResult.OK;
+            ((Form)this.TopLevelControl).DialogResult = DialogResult.OK;
             GetData();
             ((Form)this.TopLevelControl)?.Close();
         }
 
         #endregion Buttons
 
+        /// <summary>
+        /// Getting data from Control 
+        /// </summary>
         private void GetData()
         {
             if (rbtn_Car.Checked)
@@ -125,21 +172,13 @@ namespace WinForm
             {
                 Vehicle = helicopterControl_First.HelicopterVehicle;
             }
-        }
-
-        //private void ClearFields()
-        //{
-        //    _tb_Name.Text = "";
-        //    _tb_SerialNumber.Text = "";
-        //    _tb_Cost.Text = "";
-        //    _dtp_Date.Value = _dtp_Date.MaxDate;
-        //    _tb_FirstPersonal.Text = "";
-        //    _tb_SecondPersonal.Text = "";
-        //    _tb_ThirdPersonal.Text = "";
-        //}
-
+        }        
     }
 }
+
+
+
+
 
 
 

@@ -110,7 +110,7 @@
             // 
             // helicopterControl_First
             // 
-            this.helicopterControl_First.HelicopterVehicle = null;
+           
             this.helicopterControl_First.Location = new System.Drawing.Point(280, 319);
             this.helicopterControl_First.Name = "helicopterControl_First";
             this.helicopterControl_First.Size = new System.Drawing.Size(277, 261);
@@ -118,7 +118,7 @@
             // 
             // boatControl_First
             // 
-            this.boatControl_First.BoatVehicle = null;
+           
             this.boatControl_First.Location = new System.Drawing.Point(283, 52);
             this.boatControl_First.Name = "boatControl_First";
             this.boatControl_First.Size = new System.Drawing.Size(277, 261);
@@ -126,7 +126,7 @@
             // 
             // carControl_First
             // 
-            this.carControl_First.CarVehicle = null;
+          
             this.carControl_First.Location = new System.Drawing.Point(0, 52);
             this.carControl_First.Name = "carControl_First";
             this.carControl_First.Size = new System.Drawing.Size(277, 261);

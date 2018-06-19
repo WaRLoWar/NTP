@@ -64,14 +64,16 @@ namespace WinForm
             }
             set
             {
-                if (value == null) return;
-                tb_Name.Text = value.Name;
-                tb_Cost.Text = Convert.ToString(value.Cost);
-                tb_SerialNumber.Text = value.SerialNumber;
-                dtp_Date.Value = InputValidation.CheckDateTime(value.ManufacturesYear);
-                cb_Type.Text = value.Type;
-                tb_Power.Text = Convert.ToString(value.Power);
-                tb_FuelConsuption.Text = Convert.ToString(value.Consumption);
+                if (value != null)
+                {
+                    tb_Name.Text = value.Name;
+                    tb_Cost.Text = Convert.ToString(value.Cost);
+                    tb_SerialNumber.Text = value.SerialNumber;
+                    dtp_Date.Value = InputValidation.CheckDateTime(value.ManufacturesYear);
+                    cb_Type.Text = value.Type;
+                    tb_Power.Text = Convert.ToString(value.Power);
+                    tb_FuelConsuption.Text = Convert.ToString(value.Consumption);
+                }
             }
         }
 
