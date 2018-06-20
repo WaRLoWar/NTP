@@ -29,13 +29,13 @@ namespace WinForm
             tb_Speed.MaxLength = 2;            
             tb_Draft.MaxLength = 2;
             tb_BoatCapacity.MaxLength = 2;
-            SettingTabStop();
+            SettingTab();
         }
 
         /// <summary>
         /// Prohibition of interaction via 'Tab'
         /// </summary>
-        private void SettingTabStop()
+        private void SettingTab()
         {
             l_Name.TabStop = false;
             l_BoatCapacity.TabStop = false;

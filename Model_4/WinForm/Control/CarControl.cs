@@ -38,13 +38,13 @@ namespace WinForm
             cb_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             tb_Power.MaxLength = 3;
             tb_FuelConsuption.MaxLength = 2;         
-            SettingTabStop();
+            SettingTab();
         }
 
         /// <summary>
         /// Prohibition of interaction via 'Tab'
         /// </summary>
-        private void SettingTabStop()
+        private void SettingTab()
         {
             l_Name.TabStop = false;
             l_CarInterior.TabStop = false;

@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.gb_BoxMain = new System.Windows.Forms.GroupBox();
-            this.vehicleControl_MainForm = new WinForm.VehicleControl();
             this.dgv_Main = new System.Windows.Forms.DataGridView();
             this.btn_Remove = new System.Windows.Forms.Button();
             this.gb_BoxSubMain1 = new System.Windows.Forms.GroupBox();
@@ -50,6 +49,7 @@
             this.bs_Main = new System.Windows.Forms.BindingSource(this.components);
             this.ofd_Main = new System.Windows.Forms.OpenFileDialog();
             this.sfd_Main = new System.Windows.Forms.SaveFileDialog();
+            this.vehicleControl_MainForm = new WinForm.VehicleControl();
             this.gb_BoxMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Main)).BeginInit();
             this.gb_BoxSubMain1.SuspendLayout();
@@ -73,14 +73,6 @@
             this.gb_BoxMain.TabIndex = 0;
             this.gb_BoxMain.TabStop = false;
             this.gb_BoxMain.Text = "Main";
-            // 
-            // vehicleControl_MainForm
-            // 
-            this.vehicleControl_MainForm.Location = new System.Drawing.Point(497, 10);
-            this.vehicleControl_MainForm.Name = "vehicleControl_MainForm";
-            this.vehicleControl_MainForm.Size = new System.Drawing.Size(280, 317);
-            this.vehicleControl_MainForm.TabIndex = 3;
-            this.vehicleControl_MainForm.Vehicle = null;
             // 
             // dgv_Main
             // 
@@ -219,6 +211,14 @@
             // ofd_Main
             // 
             this.ofd_Main.FileName = "openFileDialog1";
+            // 
+            // vehicleControl_MainForm
+            // 
+            this.vehicleControl_MainForm.Location = new System.Drawing.Point(497, 10);
+            this.vehicleControl_MainForm.Name = "vehicleControl_MainForm";
+            this.vehicleControl_MainForm.Size = new System.Drawing.Size(280, 317);
+            this.vehicleControl_MainForm.TabIndex = 3;
+            this.vehicleControl_MainForm.Vehicle = null;
             // 
             // MainForm
             // 

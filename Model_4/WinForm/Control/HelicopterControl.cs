@@ -29,13 +29,13 @@ namespace WinForm
             tb_Range.MaxLength = 4;
             tb_Capacity.MaxLength = 4;
             tb_Speed.MaxLength = 3;
-            SettingTabStop();
+            SettingTab();
         }
 
         /// <summary>
         /// Prohibition of interaction via 'Tab'
         /// </summary>
-        private void SettingTabStop()
+        private void SettingTab()
         {
             l_Name.TabStop = false;
             l_Capacity.TabStop = false;

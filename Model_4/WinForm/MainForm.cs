@@ -17,12 +17,9 @@ namespace WinForm
 {
     public partial class MainForm : Form
     {
-        #region Private Fields
-        private SecondaryForm _secondaryForm;
+        #region Private Fields        
         private List<IVehicle> _vehicles;
-        private JsonSerializerSettings setting;
-        private RandomVehicle _randomVehicle;
-        private DialogResult _dialogResult;
+        private JsonSerializerSettings setting;               
         private bool _isNeedSave = false;
         private bool _isFileCreated = false;        
         #endregion Private Fields   
@@ -141,14 +138,14 @@ namespace WinForm
         /// </summary>        
         private void Btn_Add_Click(object sender, EventArgs e)
         {
-            _secondaryForm = new SecondaryForm();
-            _dialogResult = _secondaryForm.ShowDialog();
-            if (_dialogResult == DialogResult.OK)
+            SecondaryForm secondaryForm = new SecondaryForm();
+            DialogResult dialogResult = secondaryForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
                 _isNeedSave = true;
                 try
                 {
-                    IVehicle newVehicle = _secondaryForm.Vehicle;
+                    IVehicle newVehicle = secondaryForm.Vehicle;
                     bs_Main.Add(newVehicle);
                 }
                 catch (Exception ex)
@@ -165,8 +162,8 @@ namespace WinForm
         /// <param name="e"></param>
         private void Btn_CreateRandomData_Click(object sender, EventArgs e)
         {
-            _randomVehicle= new RandomVehicle();
-            IVehicle newVehicle = _randomVehicle.GetRandomVehicle();
+            var randomVehicle= new RandomVehicle();
+            IVehicle newVehicle = randomVehicle.GetRandomVehicle();
             bs_Main.Add(newVehicle);
             _isNeedSave = true;
         }
@@ -333,7 +330,7 @@ namespace WinForm
         /// <param name="e"></param>
         private void Ms_NewFileTool_Click(object sender, EventArgs e)
         {
-            if (_vehicles.Any())
+            if (_vehicles.Any())    
             {
                 DialogResult result = MessageBox.Show("Create a new table ! Are you sure ?", "Attention",
                     MessageBoxButtons.YesNo,
@@ -353,13 +350,13 @@ namespace WinForm
         /// </summary>
         private void EditData()
         {
-            _secondaryForm = new SecondaryForm();
-            IVehicle current = (IVehicle)bs_Main.Current;                   
-            _secondaryForm.Vehicle = current;
-            _dialogResult = _secondaryForm.ShowDialog();
-            if (_dialogResult == DialogResult.OK)
+            SecondaryForm secondaryForm = new SecondaryForm();
+            IVehicle current = (IVehicle)bs_Main.Current;
+            secondaryForm.Vehicle = current;
+            DialogResult dialogResult = secondaryForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                IVehicle newVehicle = _secondaryForm.Vehicle;
+                IVehicle newVehicle = secondaryForm.Vehicle;
                 int index = bs_Main.CurrencyManager.Position;
                 bs_Main.RemoveAt(index);
                 bs_Main.Insert(index, newVehicle);

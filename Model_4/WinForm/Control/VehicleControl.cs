@@ -15,7 +15,11 @@ namespace WinForm
 {
     public partial class VehicleControl : UserControl
     {
+        /// <summary>
+        /// Current vehicle
+        /// </summary>
         private IVehicle _vehicle;
+
         /// <summary>
         /// Сonstructor
         /// </summary>
@@ -152,7 +156,7 @@ namespace WinForm
         private void Btn_OK_Click(object sender, EventArgs e)
         {
             ((Form)this.TopLevelControl).DialogResult = DialogResult.OK;
-            GetData();
+            GetVehicle();
             ((Form)this.TopLevelControl)?.Close();
         }
 
@@ -161,7 +165,7 @@ namespace WinForm
         /// <summary>
         /// Getting data from Control 
         /// </summary>
-        private void GetData()
+        private void GetVehicle()
         {
             if (rbtn_Car.Checked)
             {
